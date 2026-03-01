@@ -1,30 +1,33 @@
-'use strict';
+'use client';
 
 import { CheckCircle2 } from 'lucide-react';
-
-const reasons = [
-    'Работаем официально по договору',
-    'Не берем предоплату',
-    'Мастера с профильным образованием',
-    'Используем профессиональный инструмент',
-    'Вывозим за собой строительный мусор',
-    'Составляем прозрачную смету',
-    'Даем гарантию до 2-х лет в письменном виде',
-    'Помогаем с закупкой материалов со скидкой'
-];
+import { useTranslations } from 'next-intl';
 
 export function WhyChooseUs() {
+    const t = useTranslations('WhyChooseUs');
+
+    const reasons = [
+        t('reasons.item1'),
+        t('reasons.item2'),
+        t('reasons.item3'),
+        t('reasons.item4'),
+        t('reasons.item5'),
+        t('reasons.item6'),
+        t('reasons.item7'),
+        t('reasons.item8')
+    ];
+
     return (
         <section className="py-24 bg-white">
             <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div>
                     <h2 className="text-3xl md:text-5xl font-heading font-extrabold text-primary-main mb-6">
-                        Мастера, которым <br /><span className="text-accent-cyan">можно доверять</span>
+                        {t('title_1')} <br /><span className="text-accent-cyan">{t('title_highlight')}</span>
                     </h2>
                     <div className="w-24 h-1 bg-accent-cyan rounded-full mb-8" />
 
                     <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-                        Наш подход отличается от "шабашников". Мы несем полную юридическую и моральную ответственность за качество выполненной работы. Ваша квартира или дом в надежных руках.
+                        {t('subtitle')}
                     </p>
 
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -44,11 +47,11 @@ export function WhyChooseUs() {
 
                     <div className="absolute -left-12 bottom-12 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4">
                         <div className="w-12 h-12 bg-accent-cyan/10 rounded-full flex items-center justify-center">
-                            <span className="text-accent-cyan font-extrabold text-xl">5+</span>
+                            <span className="text-accent-cyan font-extrabold text-xl">{t('exp_value')}</span>
                         </div>
                         <div>
-                            <p className="font-bold text-primary-main">Лет опыта</p>
-                            <p className="text-sm text-muted-foreground">У каждого мастера</p>
+                            <p className="font-bold text-primary-main">{t('exp_title')}</p>
+                            <p className="text-sm text-muted-foreground">{t('exp_desc')}</p>
                         </div>
                     </div>
                 </div>

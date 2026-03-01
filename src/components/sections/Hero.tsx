@@ -3,8 +3,11 @@
 import { ArrowRight, Calculator, PhoneCall } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export function Hero() {
+    const t = useTranslations('Hero');
+
     return (
         <section className="relative w-full min-h-[90vh] flex items-center bg-background-light overflow-hidden">
             {/* Background Decor */}
@@ -22,27 +25,27 @@ export function Hero() {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-green opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-success-green"></span>
                         </span>
-                        <span>Дежурный мастер свободен. Выезд за 40 минут.</span>
+                        <span>{t('badge')}</span>
                     </div>
 
                     <h1 className="text-5xl md:text-6xl font-heading font-extrabold leading-tight text-primary-main">
-                        Срочный Вызов <br />
-                        <span className="text-accent-cyan">Сантехника 24/7</span> <br />
-                        в Кишиневе
+                        {t('title_1')} <br />
+                        <span className="text-accent-cyan">{t('title_highlight')}</span> <br />
+                        {t('title_2')}
                     </h1>
 
                     <p className="text-lg md:text-xl text-muted-foreground max-w-lg">
-                        Устранение прорывов, монтаж труб и установка любой сантехники с гарантией до 2-х лет. Приезжаем быстро, делаем на совесть.
+                        {t('subtitle')}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
                         <a href="tel:+37360000000" className="inline-flex items-center justify-center space-x-2 bg-primary-main hover:bg-primary-main/90 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-main/20">
                             <PhoneCall className="w-5 h-5" />
-                            <span>Вызвать Мастера</span>
+                            <span>{t('call_master')}</span>
                         </a>
                         <a href="#calculator" className="inline-flex items-center justify-center space-x-2 bg-white text-primary-main border-2 border-primary-main/10 hover:border-accent-cyan hover:text-accent-cyan px-8 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 shadow-sm">
                             <Calculator className="w-5 h-5" />
-                            <span>Расчет Цены</span>
+                            <span>{t('calc_price')}</span>
                             <ArrowRight className="w-5 h-5" />
                         </a>
                     </div>
@@ -50,11 +53,11 @@ export function Hero() {
                     <div className="flex items-center space-x-4 pt-4 text-sm text-muted-foreground font-medium">
                         <div className="flex items-center space-x-1">
                             <span className="text-accent-cyan font-bold">✓</span>
-                            <span>Без предоплаты</span>
+                            <span>{t('no_prepay')}</span>
                         </div>
                         <div className="flex items-center space-x-1">
                             <span className="text-accent-cyan font-bold">✓</span>
-                            <span>Официальный договор</span>
+                            <span>{t('contract')}</span>
                         </div>
                     </div>
                 </motion.div>
@@ -65,14 +68,8 @@ export function Hero() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="relative hidden lg:block h-[600px] w-full"
                 >
-                    {/* Mock image placeholder generated for a premium plumbing aesthetic */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/20 to-primary-main/5 rounded-3xl border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center">
-                        {/* Using standard placeholder img until actual assets are provided */}
-                        <div className="w-full h-full bg-slate-200 animate-pulse relative">
-                            <div className="absolute inset-0 flex items-center justify-center text-slate-400 font-bold">
-                                [Nano Banana 2 Image: Professional plumber in uniform fixing a sink, clean modern interior]
-                            </div>
-                        </div>
+                        <Image src="https://placehold.co/800x800/e2e8f0/64748b?text=Hero+Image" alt={t('img_alt')} fill style={{ objectFit: 'cover' }} priority />
                     </div>
 
                     {/* Floating badge */}
@@ -82,11 +79,11 @@ export function Hero() {
                         className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl flex items-center space-x-4 border border-slate-100"
                     >
                         <div className="w-14 h-14 bg-success-green/10 rounded-full flex items-center justify-center">
-                            <span className="text-2xl font-bold text-success-green">2</span>
+                            <span className="text-2xl font-bold text-success-green">{t('warranty_years')}</span>
                         </div>
                         <div>
-                            <p className="font-bold text-primary-main leading-tight">Года</p>
-                            <p className="text-sm text-muted-foreground">Официальной гарантии</p>
+                            <p className="font-bold text-primary-main leading-tight">{t('warranty_label')}</p>
+                            <p className="text-sm text-muted-foreground">{t('warranty_desc')}</p>
                         </div>
                     </motion.div>
                 </motion.div>

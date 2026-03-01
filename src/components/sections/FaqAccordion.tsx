@@ -3,31 +3,19 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const faqs = [
-    {
-        q: 'Вы выезжаете в пригород Кишинева?',
-        a: 'Да, мы выезжаем во все пригороды (Яловены, Ставчены, Дурлешты и др.). Стоимость выезда может незначительно отличаться.'
-    },
-    {
-        q: 'Нужно ли мне самому покупать материалы?',
-        a: 'Не обязательно. Наш мастер может сам закупить все необходимое по оптовым ценам и предоставить вам чеки.'
-    },
-    {
-        q: 'Как быстро приезжает мастер при аварии?',
-        a: 'В случае прорыва трубы или другой аварийной ситуации дежурный мастер прибывает на место в течение 40 минут.'
-    },
-    {
-        q: 'Что будет, если после ухода мастера снова потечет?',
-        a: 'Мы даем официальную гарантию. Если проблема возникнет снова по нашей вине — мы устраним ее абсолютно бесплатно.'
-    },
-    {
-        q: 'Можно ли оплатить работу картой?',
-        a: 'Да, мы принимаем наличные, а также переводы на банковскую карту или оплату по IBAN счету (для юридических лиц).'
-    }
-];
+import { useTranslations } from 'next-intl';
 
 export function FaqAccordion() {
+    const t = useTranslations('FAQ');
+
+    const faqs = [
+        { q: t('items.item1.q'), a: t('items.item1.a') },
+        { q: t('items.item2.q'), a: t('items.item2.a') },
+        { q: t('items.item3.q'), a: t('items.item3.a') },
+        { q: t('items.item4.q'), a: t('items.item4.a') },
+        { q: t('items.item5.q'), a: t('items.item5.a') },
+    ];
+
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
@@ -35,7 +23,7 @@ export function FaqAccordion() {
             <div className="container mx-auto px-4 max-w-3xl">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-heading font-extrabold text-primary-main mb-6">
-                        Популярные <span className="text-accent-cyan">Вопросы</span>
+                        {t('title_1')} <span className="text-accent-cyan">{t('title_highlight')}</span>
                     </h2>
                     <div className="w-24 h-1 bg-accent-cyan mx-auto rounded-full" />
                 </div>

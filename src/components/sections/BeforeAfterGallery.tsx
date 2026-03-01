@@ -2,47 +2,55 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const MOCK_IMAGES = [
-    {
-        title: 'Замена радиатора в гостиной',
-        category: 'Отопление',
-        img: '/img-placeholder.png' // Replace with Nano Banana generations
-    },
-    {
-        title: 'Монтаж инсталляции Grohe',
-        category: 'Сантехника',
-        img: '/img-placeholder.png'
-    },
-    {
-        title: 'Комплексная разводка труб',
-        category: 'Трубы',
-        img: '/img-placeholder.png'
-    },
-    {
-        title: 'Установка душевой кабины',
-        category: 'Сантехника',
-        img: '/img-placeholder.png'
-    },
-];
-
-const CATEGORIES = ['Все', 'Отопление', 'Сантехника', 'Трубы'];
+import { useTranslations } from 'next-intl';
 
 export function BeforeAfterGallery() {
-    const [activeTab, setActiveTab] = useState('Все');
+    const t = useTranslations('Gallery');
 
-    const filtered = activeTab === 'Все' ? MOCK_IMAGES : MOCK_IMAGES.filter(i => i.category === activeTab);
+    const CATEGORIES = [
+        t('categories.all'),
+        t('categories.heating'),
+        t('categories.plumbing'),
+        t('categories.pipes')
+    ];
+
+    const MOCK_IMAGES = [
+        {
+            title: t('items.item1'),
+            category: t('categories.heating'),
+            img: '/img-placeholder.png' // Replace with Nano Banana generations
+        },
+        {
+            title: t('items.item2'),
+            category: t('categories.plumbing'),
+            img: '/img-placeholder.png'
+        },
+        {
+            title: t('items.item3'),
+            category: t('categories.pipes'),
+            img: '/img-placeholder.png'
+        },
+        {
+            title: t('items.item4'),
+            category: t('categories.plumbing'),
+            img: '/img-placeholder.png'
+        },
+    ];
+
+    const [activeTab, setActiveTab] = useState(CATEGORIES[0]);
+
+    const filtered = activeTab === CATEGORIES[0] ? MOCK_IMAGES : MOCK_IMAGES.filter(i => i.category === activeTab);
 
     return (
         <section className="py-24 bg-background-light">
             <div className="container mx-auto px-4 max-w-6xl">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-heading font-extrabold text-primary-main mb-6">
-                        Наши <span className="text-accent-cyan">Работы</span>
+                        {t('title_1')} <span className="text-accent-cyan">{t('title_highlight')}</span>
                     </h2>
                     <div className="w-24 h-1 bg-accent-cyan mx-auto rounded-full mb-6" />
                     <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                        Оцените качество и аккуратность наших монтажных работ на реальных объектах в Кишиневе.
+                        {t('subtitle')}
                     </p>
                 </div>
 
@@ -53,8 +61,8 @@ export function BeforeAfterGallery() {
                             key={cat}
                             onClick={() => setActiveTab(cat)}
                             className={`px-6 py-2 rounded-full font-bold transition-colors ${activeTab === cat
-                                    ? 'bg-primary-main text-white shadow-md'
-                                    : 'bg-white text-muted-foreground hover:bg-slate-100 hover:text-primary-main shadow-sm'
+                                ? 'bg-primary-main text-white shadow-md'
+                                : 'bg-white text-muted-foreground hover:bg-slate-100 hover:text-primary-main shadow-sm'
                                 }`}
                         >
                             {cat}

@@ -2,43 +2,47 @@
 
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { useState, useEffect } from 'react';
-
-const reviews = [
-    {
-        id: 1,
-        name: 'Ion Ceban',
-        date: '12 Октября 2023',
-        service: 'Замена радиаторов',
-        text: 'Очень оперативно! Трубу прорвало ночью в воскресенье. Мастер приехал через 35 минут, быстро перекрыл воду и всё починил. Рекомендую.',
-        rating: 5,
-    },
-    {
-        id: 2,
-        name: 'Мария Стати',
-        date: '05 Ноября 2023',
-        service: 'Установка сантехники',
-        text: 'Делали ремонт в ванной, мастера установили инсталляцию, душевую и раковину. Всё ровно, вода нигде не подтекает. Дали чек и гарантию. Спасибо!',
-        rating: 5,
-    },
-    {
-        id: 3,
-        name: 'Александр',
-        date: '28 Ноября 2023',
-        service: 'Сложный засор',
-        text: 'До этого вызывал другого сантехника, он ковырялся два часа и ничего не сделал. Ваш мастер приехал со спец аппаратом и прочистил трубу за 15 минут.',
-        rating: 5,
-    },
-];
+import { useTranslations } from 'next-intl';
 
 export function ReviewsCarousel() {
+    const t = useTranslations('Reviews');
+
+    const reviews = [
+        {
+            id: 1,
+            name: t('items.item1.name'),
+            date: t('items.item1.date'),
+            service: t('items.item1.service'),
+            text: t('items.item1.text'),
+            rating: 5,
+        },
+        {
+            id: 2,
+            name: t('items.item2.name'),
+            date: t('items.item2.date'),
+            service: t('items.item2.service'),
+            text: t('items.item2.text'),
+            rating: 5,
+        },
+        {
+            id: 3,
+            name: t('items.item3.name'),
+            date: t('items.item3.date'),
+            service: t('items.item3.service'),
+            text: t('items.item3.text'),
+            rating: 5,
+        },
+    ];
+
     const [current, setCurrent] = useState(0);
 
     const next = () => setCurrent((c) => (c + 1) % reviews.length);
     const prev = () => setCurrent((c) => (c === 0 ? reviews.length - 1 : c - 1));
 
     useEffect(() => {
-        const t = setInterval(next, 8000);
-        return () => clearInterval(t);
+        const timer = setInterval(next, 8000);
+        return () => clearInterval(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -46,11 +50,11 @@ export function ReviewsCarousel() {
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-heading font-extrabold text-primary-main mb-6">
-                        Отзывы <span className="text-accent-cyan">Клиентов</span>
+                        {t('title_1')} <span className="text-accent-cyan">{t('title_highlight')}</span>
                     </h2>
                     <div className="w-24 h-1 bg-accent-cyan mx-auto rounded-full mb-6" />
                     <p className="text-muted-foreground text-lg">
-                        Более 500 успешно выполненных заказов. Вот что говорят люди о нашей работе.
+                        {t('subtitle')}
                     </p>
                 </div>
 
