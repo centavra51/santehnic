@@ -1,0 +1,289 @@
+﻿
+> landing-santehnik@0.1.0 build
+> next build
+
+тЦ▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+node.exe : Error: Can't
+ resolve 'tailwindcss-a
+nimate' in 'C:\Users\ad
+min\Desktop\landing San
+tehnik\src\app\[locale]
+'
+строка:1 знак:1
++ & "C:\Program Files\n
+odejs/node.exe" "C:\Pro
+gram Files\nodejs/node_
+mo ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Error: Can't    
+ re...c\app\[locale    
+]':String) [], Rem    o
+teException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+    [2m[at finishWitho
+utResolve (C:\Users\adm
+in\Desktop\landing Sant
+ehnik\node_modules\enha
+nced-resolve\lib\Resolv
+er.js:586:18)][0m
+    [2m[at C:\Users\ad
+min\Desktop\landing San
+tehnik\node_modules\enh
+anced-resolve\lib\Resol
+ver.js:678:14][0m
+    [2m[at C:\Users\ad
+min\Desktop\landing San
+tehnik\node_modules\enh
+anced-resolve\lib\Resol
+ver.js:739:5][0m
+    [2m[at eval (eval 
+at create (C:\Users\adm
+in\Desktop\landing Sant
+ehnik\node_modules\tapa
+ble\lib\HookCodeFactory
+.js:31:10), <anonymous>
+:15:1)][0m
+    [2m[at C:\Users\ad
+min\Desktop\landing San
+tehnik\node_modules\enh
+anced-resolve\lib\Resol
+ver.js:739:5][0m
+    [2m[at eval (eval 
+at create (C:\Users\adm
+in\Desktop\landing Sant
+ehnik\node_modules\tapa
+ble\lib\HookCodeFactory
+.js:31:10), <anonymous>
+:27:1)][0m
+    [2m[at C:\Users\ad
+min\Desktop\landing San
+tehnik\node_modules\enh
+anced-resolve\lib\Descr
+iptionFilePlugin.js:89:
+43][0m
+    [2m[at C:\Users\ad
+min\Desktop\landing San
+tehnik\node_modules\enh
+anced-resolve\lib\Resol
+ver.js:739:5][0m
+    [2m[at eval (eval 
+at create (C:\Users\adm
+in\Desktop\landing Sant
+ehnik\node_modules\tapa
+ble\lib\HookCodeFactory
+.js:31:10), <anonymous>
+:15:1)][0m
+    [2m[at C:\Users\ad
+min\Desktop\landing San
+tehnik\node_modules\enh
+anced-resolve\lib\Resol
+ver.js:739:5][0m {
+  details: "resolve 'ta
+ilwindcss-animate' in '
+C:\\Users\\admin\\Deskt
+op\\landing Santehnik\\
+src\\app\\[locale]'\n" 
++
+    '  Parsed request i
+s a module\n' +
+    '  using descriptio
+n file: C:\\Users\\admi
+n\\Desktop\\landing San
+tehnik\\package.json (r
+elative path: ./src/app
+/[locale])\n' +
+    '    resolve as mod
+ule\n' +
+    "      C:\\Users\\a
+dmin\\Desktop\\landing 
+Santehnik\\src\\app\\[l
+ocale]\\node_modules do
+esn't exist or is not a
+ directory\n" +
+    "      C:\\Users\\a
+dmin\\Desktop\\landing 
+Santehnik\\src\\app\\no
+de_modules doesn't exis
+t or is not a directory
+\n" +
+    "      C:\\Users\\a
+dmin\\Desktop\\landing 
+Santehnik\\src\\node_mo
+dules doesn't exist or 
+is not a directory\n" +
+    '      looking for 
+modules in C:\\Users\\a
+dmin\\Desktop\\landing 
+Santehnik\\node_modules
+\n' +
+    '        single fil
+e module\n' +
+    '          using de
+scription file: C:\\Use
+rs\\admin\\Desktop\\lan
+ding Santehnik\\package
+.json (relative path: .
+/node_modules/tailwindc
+ss-animate)\n' +
+    '            no ext
+ension\n' +
+    "              C:\\
+Users\\admin\\Desktop\\
+landing Santehnik\\node
+_modules\\tailwindcss-a
+nimate doesn't exist\n"
+ +
+    '            .js\n'
+ +
+    "              C:\\
+Users\\admin\\Desktop\\
+landing Santehnik\\node
+_modules\\tailwindcss-a
+nimate.js doesn't exist
+\n" +
+    '            .json\
+n' +
+    "              C:\\
+Users\\admin\\Desktop\\
+landing Santehnik\\node
+_modules\\tailwindcss-a
+nimate.json doesn't exi
+st\n" +
+    '            .node\
+n' +
+    "              C:\\
+Users\\admin\\Desktop\\
+landing Santehnik\\node
+_modules\\tailwindcss-a
+nimate.node doesn't exi
+st\n" +
+    '            .ts\n'
+ +
+    "              C:\\
+Users\\admin\\Desktop\\
+landing Santehnik\\node
+_modules\\tailwindcss-a
+nimate.ts doesn't exist
+\n" +
+    "        C:\\Users\
+\admin\\Desktop\\landin
+g Santehnik\\node_modul
+es\\tailwindcss-animate
+ doesn't exist\n" +
+    "      C:\\Users\\a
+dmin\\Desktop\\node_mod
+ules doesn't exist or i
+s not a directory\n" +
+    "      C:\\Users\\a
+dmin\\node_modules does
+n't exist or is not a d
+irectory\n" +
+    "      C:\\Users\\n
+ode_modules doesn't exi
+st or is not a director
+y\n" +
+    "      C:\\node_mod
+ules doesn't exist or i
+s not a directory"
+}
+
+> Build error occurred
+Error: Turbopack build 
+failed with 1 errors:
+./src/app/[locale]/glob
+als.css
+Error evaluating Node.j
+s code
+CssSyntaxError: tailwin
+dcss: C:\Users\admin\De
+sktop\landing Santehnik
+\src\app\[locale]\globa
+ls.css:1:1: Can't resol
+ve 'tailwindcss-animate
+' in 'C:\Users\admin\De
+sktop\landing Santehnik
+\src\app\[locale]'
+    at Input.error (nod
+e_modules/postcss/lib/i
+nput.js:135:16) [C:\Use
+rs\admin\Desktop\landin
+g Santehnik\.next\build
+\chunks\node_modules_fe
+693df6._.js:4651:22]
+    at Root.error (node
+_modules/postcss/lib/no
+de.js:146:32) [C:\Users
+\admin\Desktop\landing 
+Santehnik\.next\build\c
+hunks\node_modules_fe69
+3df6._.js:928:38]
+    [at Object.Once (C:
+\Users\admin\Desktop\la
+nding Santehnik\node_mo
+dules\@tailwindcss\post
+css\dist\index.js:10:69
+13)]
+    at async LazyResult
+.runAsync (node_modules
+/postcss/lib/lazy-resul
+t.js:293:11) [C:\Users\
+admin\Desktop\landing S
+antehnik\.next\build\ch
+unks\node_modules_fe693
+df6._.js:6206:21]
+    at async transform 
+(turbopack:///[turbopac
+k-node]/transforms/post
+css.ts:70:34) [C:\Users
+\admin\Desktop\landing 
+Santehnik\.next\build\c
+hunks\[root-of-the-serv
+er]__51225daf._.js:146:
+36]
+    at async run (turbo
+pack:///[turbopack-node
+]/ipc/evaluate.ts:92:23
+) [C:\Users\admin\Deskt
+op\landing Santehnik\.n
+ext\build\chunks\[root-
+of-the-server]__974941e
+d._.js:443:31]
+
+Import trace:
+  Client Component Brow
+ser:
+    ./src/app/[locale]/
+globals.css [Client Com
+ponent Browser]
+    ./src/app/[locale]/
+layout.tsx [Server Comp
+onent]
+
+
+    at async transform 
+(turbopack:///[turbopac
+k-node]/transforms/post
+css.ts:70:34) [C:\Users
+\admin\Desktop\landing 
+Santehnik\.next\build\c
+hunks\[root-of-the-serv
+er]__51225daf._.js:146:
+36])
+    at async run (turbo
+pack:///[turbopack-node
+]/ipc/evaluate.ts:92:23
+) [C:\Users\admin\Deskt
+op\landing Santehnik\.n
+ext\build\chunks\[root-
+of-the-server]__974941e
+d._.js:443:31])
