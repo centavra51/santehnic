@@ -69,7 +69,7 @@ export function Hero() {
                     className="relative hidden lg:block h-[600px] w-full"
                 >
                     <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/20 to-primary-main/5 rounded-3xl border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center">
-                        <Image src="https://placehold.co/800x800/e2e8f0/64748b?text=Hero+Image" alt={t('img_alt')} fill style={{ objectFit: 'cover' }} priority />
+                        <Image src="/hero-bg.png" alt={t('img_alt')} fill style={{ objectFit: 'cover' }} priority />
                     </div>
 
                     {/* Floating badge */}

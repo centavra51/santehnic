@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 export function BeforeAfterGallery() {
     const t = useTranslations('Gallery');
@@ -18,22 +19,22 @@ export function BeforeAfterGallery() {
         {
             title: t('items.item1'),
             category: t('categories.heating'),
-            img: '/img-placeholder.png' // Replace with Nano Banana generations
+            img: '/gallery-heating.png'
         },
         {
             title: t('items.item2'),
             category: t('categories.plumbing'),
-            img: '/img-placeholder.png'
+            img: '/gallery-plumbing1.png'
         },
         {
             title: t('items.item3'),
             category: t('categories.pipes'),
-            img: '/img-placeholder.png'
+            img: '/gallery-pipes.png'
         },
         {
             title: t('items.item4'),
             category: t('categories.plumbing'),
-            img: '/img-placeholder.png'
+            img: '/gallery-plumbing2.png'
         },
     ];
 
@@ -81,14 +82,15 @@ export function BeforeAfterGallery() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 transition={{ duration: 0.3 }}
-                                className="group relative rounded-3xl overflow-hidden aspect-square bg-white shadow-lg border border-slate-100 cursor-pointer"
+                                className="group relative rounded-3xl overflow-hidden aspect-square bg-slate-200 shadow-lg border border-slate-100 cursor-pointer"
                             >
-                                {/* Fallback pattern until image is supplied */}
-                                <div className="absolute inset-0 bg-slate-200 flex items-center justify-center">
-                                    <div className="text-center p-4">
-                                        <span className="text-slate-400 font-bold break-words">[Nano Banana Img: {item.title}]</span>
-                                    </div>
-                                </div>
+                                <Image
+                                    src={item.img}
+                                    alt={item.title}
+                                    fill
+                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
 
                                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary-main/90 to-transparent p-6 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                                     <span className="text-accent-cyan text-sm font-bold uppercase tracking-wider">{item.category}</span>

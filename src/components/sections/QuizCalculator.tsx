@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, CheckCircle2, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 type QuizState = {
     serviceType: string;
@@ -20,16 +21,18 @@ const INITIAL_STATE: QuizState = {
     photoUrl: null,
 };
 
-const SERVICE_RATES: Record<string, number> = {
-    'Устранение засора': 400,
-    'Замена смесителя': 300,
-    'Установка унитаза': 600,
-    'Разводка труб': 800,
-    'Монтаж отопления': 1000,
-    'Аварийный выезд': 500,
-};
-
 export function QuizCalculator() {
+    const t = useTranslations('QuizCalculator');
+
+    const SERVICE_RATES: Record<string, { key: string, label: string, price: number }> = {
+        'clear_blockage': { key: 'clear_blockage', label: t('services.clear_blockage'), price: 400 },
+        'replace_mixer': { key: 'replace_mixer', label: t('services.replace_mixer'), price: 300 },
+        'install_toilet': { key: 'install_toilet', label: t('services.install_toilet'), price: 600 },
+        'pipe_routing': { key: 'pipe_routing', label: t('services.pipe_routing'), price: 800 },
+        'heating_install': { key: 'heating_install', label: t('services.heating_install'), price: 1000 },
+        'emergency_call': { key: 'emergency_call', label: t('services.emergency_call'), price: 500 },
+    };
+
     const [step, setStep] = useState(1);
     const [data, setData] = useState<QuizState>(INITIAL_STATE);
     const [isClient, setIsClient] = useState(false);
@@ -53,14 +56,14 @@ export function QuizCalculator() {
     }, [step, data, isClient]);
 
     const calculateTotal = () => {
-        let base = SERVICE_RATES[data.serviceType] || 0;
+        const service = SERVICE_RATES[data.serviceType];
+        let base = service ? service.price : 0;
 
-        // Simple logic for demonstration. In admin panel this would be editable coefficients.
-        if (data.serviceType === 'Разводка труб') {
-            base += data.meters * 50; // 50 MDL per meter
+        if (data.serviceType === 'pipe_routing') {
+            base += data.meters * 50;
         }
 
-        base += (data.rooms - 1) * 100; // 100 MDL per extra room
+        base += (data.rooms - 1) * 100;
 
         if (data.urgency === 'night') base *= 1.5;
         if (data.urgency === 'weekend') base *= 1.2;
@@ -76,7 +79,7 @@ export function QuizCalculator() {
 
     const isStepValid = () => {
         if (step === 1 && !data.serviceType) return false;
-        if (step === 2 && data.serviceType === 'Разводка труб' && data.meters <= 0) return false;
+        if (step === 2 && data.serviceType === 'pipe_routing' && data.meters <= 0) return false;
         return true;
     };
 
@@ -85,10 +88,10 @@ export function QuizCalculator() {
             <div className="container mx-auto px-4 max-w-4xl">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-5xl font-heading font-extrabold text-primary-main mb-4">
-                        Калькулятор <span className="text-accent-cyan">Цен</span>
+                        {t('title')} <span className="text-accent-cyan">{t('title_highlight')}</span>
                     </h2>
                     <p className="text-muted-foreground text-lg">
-                        Ответьте на несколько вопросов, чтобы узнать точную стоимость работ
+                        {t('subtitle')}
                     </p>
                 </div>
 
@@ -104,26 +107,26 @@ export function QuizCalculator() {
                     </div>
 
                     <div className="mb-8 flex justify-between items-center text-sm font-medium text-muted-foreground mt-2">
-                        <span>Шаг {step} из 5</span>
-                        {step === 5 && <span className="text-success-green flex items-center gap-1"><CheckCircle2 className="w-4 h-4" /> Расчет готов</span>}
+                        <span>{t('step', { step: step, total: 5 })}</span>
+                        {step === 5 && <span className="text-success-green flex items-center gap-1"><CheckCircle2 className="w-4 h-4" /> {t('step_ready')}</span>}
                     </div>
 
                     <div className="min-h-[300px]">
                         <AnimatePresence mode="wait">
                             {step === 1 && (
                                 <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                                    <h3 className="text-2xl font-bold text-primary-main mb-6">Какая услуга вам нужна?</h3>
+                                    <h3 className="text-2xl font-bold text-primary-main mb-6">{t('step1_title')}</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        {Object.keys(SERVICE_RATES).map(service => (
+                                        {Object.values(SERVICE_RATES).map(service => (
                                             <button
-                                                key={service}
-                                                onClick={() => updateData({ serviceType: service })}
-                                                className={`p-4 border-2 rounded-xl text-left transition-all ${data.serviceType === service
+                                                key={service.key}
+                                                onClick={() => updateData({ serviceType: service.key })}
+                                                className={`p-4 border-2 rounded-xl text-left transition-all ${data.serviceType === service.key
                                                     ? 'border-accent-cyan bg-accent-cyan/5 text-primary-main font-bold shadow-md'
                                                     : 'border-slate-200 hover:border-slate-300 text-muted-foreground hover:bg-white'
                                                     }`}
                                             >
-                                                {service}
+                                                {service.label}
                                             </button>
                                         ))}
                                     </div>
@@ -132,11 +135,11 @@ export function QuizCalculator() {
 
                             {step === 2 && (
                                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                                    <h3 className="text-2xl font-bold text-primary-main mb-6">Детали помещения</h3>
+                                    <h3 className="text-2xl font-bold text-primary-main mb-6">{t('step2_title')}</h3>
 
-                                    {data.serviceType === 'Разводка труб' && (
+                                    {data.serviceType === 'pipe_routing' && (
                                         <div className="mb-8">
-                                            <label className="block text-sm font-bold text-primary-main mb-2">Примерный метраж труб (от 1 до 100 м)</label>
+                                            <label className="block text-sm font-bold text-primary-main mb-2">{t('meters_title')}</label>
                                             <input
                                                 type="number"
                                                 min="1"
@@ -144,13 +147,13 @@ export function QuizCalculator() {
                                                 value={data.meters || ''}
                                                 onChange={(e) => updateData({ meters: parseInt(e.target.value) || 0 })}
                                                 className="w-full max-w-sm p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-accent-cyan outline-none"
-                                                placeholder="Например, 10"
+                                                placeholder={t('meters_placeholder')}
                                             />
                                         </div>
                                     )}
 
                                     <div>
-                                        <label className="block text-sm font-bold text-primary-main mb-2">Количество помещений/точек</label>
+                                        <label className="block text-sm font-bold text-primary-main mb-2">{t('rooms_title')}</label>
                                         <div className="flex items-center gap-4">
                                             <button
                                                 onClick={() => updateData({ rooms: Math.max(1, data.rooms - 1) })}
@@ -172,12 +175,12 @@ export function QuizCalculator() {
 
                             {step === 3 && (
                                 <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                                    <h3 className="text-2xl font-bold text-primary-main mb-6">Срочность работ</h3>
+                                    <h3 className="text-2xl font-bold text-primary-main mb-6">{t('step3_title')}</h3>
                                     <div className="flex flex-col gap-4 max-w-md">
                                         {[
-                                            { id: 'standard', label: 'В плановом порядке (будни)' },
-                                            { id: 'weekend', label: 'В выходной день (+20%)' },
-                                            { id: 'night', label: 'Ночной аварийный выезд (+50%)' },
+                                            { id: 'standard', label: t('urgency.standard') },
+                                            { id: 'weekend', label: t('urgency.weekend') },
+                                            { id: 'night', label: t('urgency.night') },
                                         ].map(u => (
                                             <label
                                                 key={u.id}
@@ -198,13 +201,13 @@ export function QuizCalculator() {
 
                             {step === 4 && (
                                 <motion.div key="step4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                                    <h3 className="text-2xl font-bold text-primary-main mb-6">Прикрепить фото (необязательно)</h3>
-                                    <p className="text-muted-foreground mb-6">Если у вас есть фото проблемы, прикрепите его, чтобы мастер мог взять нужные запчасти.</p>
+                                    <h3 className="text-2xl font-bold text-primary-main mb-6">{t('step4_title')}</h3>
+                                    <p className="text-muted-foreground mb-6">{t('step4_desc')}</p>
 
                                     <div className="border-2 border-dashed border-slate-300 rounded-xl p-12 text-center hover:bg-slate-50 transition-colors cursor-pointer text-muted-foreground flex flex-col items-center gap-4 relative">
                                         <AlertCircle className="w-8 h-8 opacity-50" />
-                                        <p className="font-medium">Нажмите или перетащите файл сюда</p>
-                                        <p className="text-sm opacity-70">PNG, JPG до 5 MB</p>
+                                        <p className="font-medium">{t('drag_drop')}</p>
+                                        <p className="text-sm opacity-70">{t('file_format')}</p>
                                         <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" />
                                     </div>
                                 </motion.div>
@@ -215,29 +218,31 @@ export function QuizCalculator() {
                                     <div className="w-20 h-20 bg-success-green/10 rounded-full flex items-center justify-center mx-auto mb-6">
                                         <CheckCircle2 className="w-10 h-10 text-success-green" />
                                     </div>
-                                    <h3 className="text-2xl md:text-3xl font-bold text-primary-main mb-2">Предварительный расчет</h3>
-                                    <p className="text-muted-foreground mb-8">Итоговая сумма зависит от точных материалов и дополнительных нюансов.</p>
+                                    <h3 className="text-2xl md:text-3xl font-bold text-primary-main mb-2">{t('step5_title')}</h3>
+                                    <p className="text-muted-foreground mb-8">{t('step5_desc')}</p>
 
                                     <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-lg max-w-sm mx-auto mb-8 relative">
                                         <div className="text-5xl font-extrabold text-primary-main tracking-tight mb-2">
                                             {calculateTotal()} <span className="text-2xl text-muted-foreground font-medium">MDL</span>
                                         </div>
                                         <div className="text-sm font-medium text-success-green bg-success-green/10 inline-block px-3 py-1 rounded-full">
-                                            Вызов мастера: 0 MDL (при заказе)
+                                            {t('call_fee')}
                                         </div>
                                     </div>
 
                                     <button
                                         onClick={() => {
-                                            window.location.href = `#order?service=${encodeURIComponent(data.serviceType)}&price=${calculateTotal()}`;
+                                            const serviceName = SERVICE_RATES[data.serviceType]?.label || data.serviceType;
+                                            const hash = `#order?service=${encodeURIComponent(serviceName)}&price=${calculateTotal()}`;
+                                            window.location.href = hash;
                                         }}
                                         className="inline-flex items-center justify-center space-x-2 bg-primary-main hover:bg-primary-main/90 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-main/20 w-full sm:w-auto"
                                     >
-                                        Зафиксировать Цену и Вызвать Мастера
+                                        {t('btn_fix_price')}
                                     </button>
 
                                     <button onClick={() => { setStep(1); setData(INITIAL_STATE); }} className="block mx-auto mt-6 text-sm font-bold text-muted-foreground hover:text-primary-main transition-colors">
-                                        Расчитать заново
+                                        {t('btn_restart')}
                                     </button>
                                 </motion.div>
                             )}
@@ -252,7 +257,7 @@ export function QuizCalculator() {
                                 disabled={step === 1}
                                 className={`flex items-center gap-2 font-bold px-4 py-2 rounded-lg transition-colors ${step === 1 ? 'opacity-0 pointer-events-none' : 'text-muted-foreground hover:bg-slate-100 hover:text-primary-main'}`}
                             >
-                                <ChevronLeft className="w-5 h-5" /> Назад
+                                <ChevronLeft className="w-5 h-5" /> {t('btn_prev')}
                             </button>
 
                             <button
@@ -263,7 +268,7 @@ export function QuizCalculator() {
                                     : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                     }`}
                             >
-                                Далее <ChevronRight className="w-5 h-5" />
+                                {t('btn_next')} <ChevronRight className="w-5 h-5" />
                             </button>
                         </div>
                     )}

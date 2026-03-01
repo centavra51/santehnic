@@ -1,290 +1,327 @@
 {
-    "Navbar": {
-        "brand_pro": "PRO",
-        "services": "Servicii",
-        "calculator": "Calculator",
-        "reviews": "Recenzii",
-        "faq": "FAQ",
-        "blog": "Blog",
-        "phone": "+373 60 000 000"
-    },
-    "Hero": {
-        "badge": "Lucrăm 24/7 în Chișinău",
-        "title_1": "Instalator",
-        "title_highlight": "Profesionist",
-        "title_2": "cu garanție",
-        "subtitle": "Deplasare urgentă în 40 de minute. Prețuri oneste, fără suprataxe. Rezolvăm orice problemă, de la o scurgere până la instalarea cazangeriei.",
-        "call_master": "Cheamă meșterul",
-        "calc_price": "Calculează prețul",
-        "no_prepay": "Fără plată în avans",
-        "contract": "Lucrăm prin contract",
-        "img_alt": "Instalator profesionist la lucru",
-        "warranty_years": "2",
-        "warranty_label": "Ani Garanție",
-        "warranty_desc": "Pentru toate tipurile de lucrări"
-    },
-    "Benefits": {
-        "title_1": "De ce suntem",
-        "title_highlight": "aleși",
-        "title_2": "?",
-        "subtitle": "Prețuim timpul și banii dumneavoastră, de aceea oferim condiții transparente și cea mai înaltă calitate a muncii.",
-        "items": {
-            "time": {
-                "title": "Deplasare urgentă",
-                "desc": "Meșterul de gardă va ajunge la fața locului în decurs de 40 de minute sau la ora convenabilă pentru dvs."
-            },
-            "warranty": {
-                "title": "Garanție până la 2 ani",
-                "desc": "Oferim garanție scrisă oficială pentru toate lucrările efectuate."
-            },
-            "payment": {
-                "title": "Plata pentru rezultat",
-                "desc": "Fără plăți ascunse. Plătiți doar după ce verificați lucrarea efectuată."
-            },
-            "parts": {
-                "title": "Piese disponibile",
-                "desc": "Meșterul aduce cu el toate consumabilele și instrumentele de bază necesare."
-            },
-            "area": {
-                "title": "Chișinău și suburbii",
-                "desc": "Ne deplasăm în toate sectoarele Chișinăului, precum și pe o rază de 30 km de oraș."
-            },
-            "clean": {
-                "title": "Curățenie și ordine",
-                "desc": "Lucrăm curat, evacuăm deșeurile de construcție după finalizarea instalării."
-            }
-        }
-    },
-    "Services": {
-        "title": "Serviciile Noastre",
-        "subtitle": "Efectuăm o gamă completă de lucrări sanitare de orice complexitate în apartamente, case și oficii.",
-        "calc_btn": "Calculează",
-        "items": {
-            "clog": {
-                "title": "Desfundarea țevilor",
-                "desc": "Curățarea țevilor, eliminarea blocajelor complexe din chiuvete, toalete și țevi cu echipament special.",
-                "price": "de la 400 MDL"
-            },
-            "mixer": {
-                "title": "Instalare baterie/robinet",
-                "desc": "Montarea și reparația bateriilor/robinetelor în baie și bucătărie. Înlocuirea cartușelor și garniturilor.",
-                "price": "de la 300 MDL"
-            },
-            "toilet": {
-                "title": "Montare veceu",
-                "desc": "Instalarea sistemelor încastrate, a vaselor WC de pardoseală, a bideurilor. Reparația rezervoarelor și a mecanismelor de spălare.",
-                "price": "de la 600 MDL"
-            },
-            "pipes": {
-                "title": "Sistemul de conducte",
-                "desc": "Înlocuirea țevilor vechi ale coloanei, instalarea rețelelor de alimentare cu apă și canalizare din polipropilenă.",
-                "price": "de la 1200 MDL"
-            },
-            "heating": {
-                "title": "Calorifere pentru încălzire",
-                "desc": "Înlocuirea bateriilor, instalarea noilor calorifere de încălzire, instalarea suporturilor pentru prosoape.",
-                "price": "de la 700 MDL"
-            },
-            "appliances": {
-                "title": "Conectarea electrocasnicelor",
-                "desc": "Conectarea corectă a mașinilor de spălat rufe și vase, instalarea boilerelor.",
-                "price": "de la 450 MDL"
-            }
-        }
-    },
-    "HowWeWork": {
-        "title_1": "Cum",
-        "title_highlight": "lucrăm",
-        "subtitle": "Un proces transparent și clar, de la primul apel până la problema complet rezolvată.",
-        "items": {
-            "step1": {
-                "title": "Apel sau Cerere",
-                "desc": "Descrieți problema la telefon sau lăsați o cerere. Meșterul de gardă vă va consulta gratuit."
-            },
-            "step2": {
-                "title": "Calcularea costului",
-                "desc": "Vom estima un preț aproximativ (sau exact) la telefon, pe baza descrierii sau fotografiilor dvs."
-            },
-            "step3": {
-                "title": "Deplasarea meșterului",
-                "desc": "Meșterul ajunge în 40 de minute sau la ora stabilită, cu toate uneltele și piesele necesare."
-            },
-            "step4": {
-                "title": "Efectuarea lucrărilor",
-                "desc": "Demontare și montare atentă, înlăturarea problemei respectând toate normele de construcție."
-            },
-            "step5": {
-                "title": "Plată și Garanție",
-                "desc": "Verificați lucrul. Plata se face prin orice metodă convenabilă, se eliberează o garanție oficială."
-            }
-        }
-    },
-    "Gallery": {
-        "title_1": "Lucrările",
-        "title_highlight": "Noastre",
-        "subtitle": "Apreciați calitatea și acuratețea lucrărilor noastre de montaj pe obiecte reale din Chișinău.",
-        "categories": {
-            "all": "Toate",
-            "heating": "Încălzire",
-            "plumbing": "Instalații Sanitare",
-            "pipes": "Țevi"
-        },
-        "items": {
-            "item1": "Înlocuirea caloriferului în living",
-            "item2": "Montarea instalației Grohe",
-            "item3": "Montaj complex de țevi",
-            "item4": "Instalarea cabinei de duș"
-        }
-    },
-    "Prices": {
-        "title_1": "Prețuri",
-        "title_highlight": "Transparente",
-        "subtitle": "Lucrăm conform unei liste de prețuri fixe. Meșterul confirmă costul exact înainte de lucrare. Fără plăți ascunse.",
-        "col1": "Denumirea serviciului",
-        "col2": "Preț",
-        "items": {
-            "item1": {
-                "name": "Deplasarea și diagnosticare",
-                "price": "Gratuit (în caz de reparație)"
-            },
-            "item2": {
-                "name": "Înlăturare blocaj simplu",
-                "price": "de la 400 MDL"
-            },
-            "item3": {
-                "name": "Înlăturare blocaj complex",
-                "price": "de la 700 MDL"
-            },
-            "item4": {
-                "name": "Schimbarea bateriei/robinetului",
-                "price": "de la 300 MDL"
-            },
-            "item5": {
-                "name": "Instalare apometre (pereche)",
-                "price": "de la 600 MDL"
-            },
-            "item6": {
-                "name": "Montare veceu",
-                "price": "de la 600 MDL"
-            },
-            "item7": {
-                "name": "Montare chiuvetă/lavoar",
-                "price": "de la 450 MDL"
-            },
-            "item8": {
-                "name": "Conectare mașină de spălat",
-                "price": "de la 400 MDL"
-            },
-            "item9": {
-                "name": "Montaj boiler (cu conectare țevi)",
-                "price": "de la 800 MDL"
-            },
-            "item10": {
-                "name": "Schimbare calorifer (încălzire)",
-                "price": "de la 700 MDL"
-            }
-        },
-        "note": "* Prețurile nu includ costul materialelor și consumabilelor.",
-        "calc_btn": "Calcul Exact"
-    },
-    "WhyChooseUs": {
-        "title_1": "Meșteri în care",
-        "title_highlight": "puteți avea încredere",
-        "subtitle": "Abordarea noastră diferă de cea a amatorilor. Purtăm responsabilitate juridică și morală deplină pentru calitatea muncii efectuate. Apartamentul sau casa dumneavoastră este pe mâini sigure.",
-        "reasons": {
-            "item1": "Lucrăm oficial, pe bază de contract",
-            "item2": "Nu luăm plată în avans",
-            "item3": "Meșteri cu studii de profil",
-            "item4": "Folosim instrumente profesionale",
-            "item5": "Evacuăm gunoiul de construcție",
-            "item6": "Întocmim deviz transparent",
-            "item7": "Oferim garanție de până la 2 ani în scris",
-            "item8": "Ajutăm la achiziționarea materialelor cu reducere"
-        },
-        "exp_value": "5+",
-        "exp_title": "Ani de experiență",
-        "exp_desc": "La fiecare meșter"
-    },
-    "Reviews": {
-        "title_1": "Recenziile",
-        "title_highlight": "Clienților",
-        "subtitle": "Peste 500 de comenzi îndeplinite cu succes. Iată ce spun oamenii despre activitatea noastră.",
-        "items": {
-            "item1": {
-                "name": "Ion Ceban",
-                "date": "12 Octombrie 2023",
-                "service": "Înlocuirea caloriferelor",
-                "text": "Foarte operativ! Țeava s-a spart duminică noaptea. Meșterul a ajuns în 35 de minute, a oprit rapid apa și a reparat totul. Recomand."
-            },
-            "item2": {
-                "name": "Maria Stati",
-                "date": "05 Noiembrie 2023",
-                "service": "Instalarea sanitarelor",
-                "text": "Am făcut reparație în baie, meșterii au instalat sistemul încastrat, dușul și chiuveta. Totul este drept, nu curge nicăieri. Au oferit bon și garanție. Mulțumesc!"
-            },
-            "item3": {
-                "name": "Alexandru",
-                "date": "28 Noiembrie 2023",
-                "service": "Blocaj complex",
-                "text": "Înainte am chemat alt instalator, a lucrat două ore și n-a făcut nimic. Meșterul vostru a venit cu aparat special și a desfundat țeava în 15 minute."
-            }
-        }
-    },
-    "FAQ": {
-        "title_1": "Întrebări",
-        "title_highlight": "Frecvente",
-        "items": {
-            "item1": {
-                "q": "Vă deplasați în suburbiile Chișinăului?",
-                "a": "Da, ne deplasăm în toate suburbiile (Ialoveni, Stăuceni, Durlești etc.). Costul deplasării poate fi ușor diferit."
-            },
-            "item2": {
-                "q": "Trebuie să cumpăr materialele singur?",
-                "a": "Nu este obligatoriu. Meșterul nostru poate achiziționa tot necesarul la prețuri en-gros și vă va prezenta bonurile fiscale."
-            },
-            "item3": {
-                "q": "Cât de repede ajunge meșterul în caz de avarie?",
-                "a": "În cazul spargerii unei țevi sau al altei situații de urgență, meșterul de gardă ajunge la fața locului în decurs de 40 de minute."
-            },
-            "item4": {
-                "q": "Ce se întâmplă dacă începe să curgă din nou după plecarea meșterului?",
-                "a": "Oferim garanție oficială. Dacă problema reapare din vina noastră, o vom remedia absolut gratuit."
-            },
-            "item5": {
-                "q": "Se poate achita lucrarea cu cardul?",
-                "a": "Da, acceptăm numerar, precum și transferuri pe card bancar sau plată la cont IBAN (pentru persoane juridice)."
-            }
-        }
-    },
-    "ContactForm": {
-        "success_title": "Cerere Acceptată!",
-        "success_desc": "Meșterul de gardă vă va contacta în curând la numărul indicat pentru confirmarea deplasării.",
-        "success_btn": "Expediază o nouă cerere",
-        "title_1": "Chemați",
-        "title_highlight": "Meșterul",
-        "subtitle": "Lăsați cererea online și noi vă resunăm în 5 minute. Dacă situația e urgentă, este mai bine să sunați direct.",
-        "schedule_title": "Program de lucru: 24/7",
-        "schedule_desc": "Fără zile de odihnă și sărbători. Deplasarea pe timp de noapte (22:00 - 07:00) se tarifează suplimentar.",
-        "form_title": "Formular Cerere",
-        "fields": {
-            "name_label": "Numele dvs. *",
-            "name_placeholder": "Ion Ivan",
-            "name_error": "Numele trebuie să conțină minim 2 caractere",
-            "phone_label": "Telefon *",
-            "phone_placeholder": "+373 (__) __ __ __",
-            "phone_error": "Introduceți un număr de telefon corect",
-            "address_label": "Adresa deplasării *",
-            "address_placeholder": "Stradă, Casă, Apartament",
-            "address_error": "Indicați strada, casa, apartamentul",
-            "desc_label": "Descrierea problemei",
-            "desc_placeholder": "De exemplu, curge țeava în bucătărie sub chiuvetă...",
-            "desc_calc_prefix": "Serviciu din calculator",
-            "desc_calc_price": "Preț preliminar"
-        },
-        "consent_text_1": "Sunt de acord cu prelucrarea datelor cu caracter personal conform",
-        "consent_link": "politicii de confidențialitate",
-        "consent_error": "Este necesar acordul pentru prelucrarea datelor",
-        "submit_btn": "Finalizare Comandă",
-        "submitting": "Expediere..."
+  "Navbar": {
+    "brand_pro": "PRO",
+    "services": "Servicii",
+    "calculator": "Calculator",
+    "reviews": "Recenzii",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "phone": "+373 60 000 000"
+  },
+  "Hero": {
+    "badge": "Lucrăm 24/7 în Chișinău",
+    "title_1": "Instalator",
+    "title_highlight": "Profesionist",
+    "title_2": "cu garanție",
+    "subtitle": "Deplasare urgentă în 40 de minute. Prețuri oneste, fără suprataxe. Rezolvăm orice problemă, de la o scurgere până la instalarea cazangeriei.",
+    "call_master": "Cheamă meșterul",
+    "calc_price": "Calculează prețul",
+    "no_prepay": "Fără plată în avans",
+    "contract": "Lucrăm prin contract",
+    "img_alt": "Instalator profesionist la lucru",
+    "warranty_years": "2",
+    "warranty_label": "Ani Garanție",
+    "warranty_desc": "Pentru toate tipurile de lucrări"
+  },
+  "Benefits": {
+    "title_1": "De ce suntem",
+    "title_highlight": "aleși",
+    "title_2": "?",
+    "subtitle": "Prețuim timpul și banii dumneavoastră, de aceea oferim condiții transparente și cea mai înaltă calitate a muncii.",
+    "items": {
+      "time": {
+        "title": "Deplasare urgentă",
+        "desc": "Meșterul de gardă va ajunge la fața locului în decurs de 40 de minute sau la ora convenabilă pentru dvs."
+      },
+      "warranty": {
+        "title": "Garanție până la 2 ani",
+        "desc": "Oferim garanție scrisă oficială pentru toate lucrările efectuate."
+      },
+      "payment": {
+        "title": "Plata pentru rezultat",
+        "desc": "Fără plăți ascunse. Plătiți doar după ce verificați lucrarea efectuată."
+      },
+      "parts": {
+        "title": "Piese disponibile",
+        "desc": "Meșterul aduce cu el toate consumabilele și instrumentele de bază necesare."
+      },
+      "area": {
+        "title": "Chișinău și suburbii",
+        "desc": "Ne deplasăm în toate sectoarele Chișinăului, precum și pe o rază de 30 km de oraș."
+      },
+      "clean": {
+        "title": "Curățenie și ordine",
+        "desc": "Lucrăm curat, evacuăm deșeurile de construcție după finalizarea instalării."
+      }
     }
+  },
+  "Services": {
+    "title": "Serviciile Noastre",
+    "subtitle": "Efectuăm o gamă completă de lucrări sanitare de orice complexitate în apartamente, case și oficii.",
+    "calc_btn": "Calculează",
+    "items": {
+      "clog": {
+        "title": "Desfundarea țevilor",
+        "desc": "Curățarea țevilor, eliminarea blocajelor complexe din chiuvete, toalete și țevi cu echipament special.",
+        "price": "de la 400 MDL"
+      },
+      "mixer": {
+        "title": "Instalare baterie/robinet",
+        "desc": "Montarea și reparația bateriilor/robinetelor în baie și bucătărie. Înlocuirea cartușelor și garniturilor.",
+        "price": "de la 300 MDL"
+      },
+      "toilet": {
+        "title": "Montare veceu",
+        "desc": "Instalarea sistemelor încastrate, a vaselor WC de pardoseală, a bideurilor. Reparația rezervoarelor și a mecanismelor de spălare.",
+        "price": "de la 600 MDL"
+      },
+      "pipes": {
+        "title": "Sistemul de conducte",
+        "desc": "Înlocuirea țevilor vechi ale coloanei, instalarea rețelelor de alimentare cu apă și canalizare din polipropilenă.",
+        "price": "de la 1200 MDL"
+      },
+      "heating": {
+        "title": "Calorifere pentru încălzire",
+        "desc": "Înlocuirea bateriilor, instalarea noilor calorifere de încălzire, instalarea suporturilor pentru prosoape.",
+        "price": "de la 700 MDL"
+      },
+      "appliances": {
+        "title": "Conectarea electrocasnicelor",
+        "desc": "Conectarea corectă a mașinilor de spălat rufe și vase, instalarea boilerelor.",
+        "price": "de la 450 MDL"
+      }
+    }
+  },
+  "HowWeWork": {
+    "title_1": "Cum",
+    "title_highlight": "lucrăm",
+    "subtitle": "Un proces transparent și clar, de la primul apel până la problema complet rezolvată.",
+    "items": {
+      "step1": {
+        "title": "Apel sau Cerere",
+        "desc": "Descrieți problema la telefon sau lăsați o cerere. Meșterul de gardă vă va consulta gratuit."
+      },
+      "step2": {
+        "title": "Calcularea costului",
+        "desc": "Vom estima un preț aproximativ (sau exact) la telefon, pe baza descrierii sau fotografiilor dvs."
+      },
+      "step3": {
+        "title": "Deplasarea meșterului",
+        "desc": "Meșterul ajunge în 40 de minute sau la ora stabilită, cu toate uneltele și piesele necesare."
+      },
+      "step4": {
+        "title": "Efectuarea lucrărilor",
+        "desc": "Demontare și montare atentă, înlăturarea problemei respectând toate normele de construcție."
+      },
+      "step5": {
+        "title": "Plată și Garanție",
+        "desc": "Verificați lucrul. Plata se face prin orice metodă convenabilă, se eliberează o garanție oficială."
+      }
+    }
+  },
+  "Gallery": {
+    "title_1": "Lucrările",
+    "title_highlight": "Noastre",
+    "subtitle": "Apreciați calitatea și acuratețea lucrărilor noastre de montaj pe obiecte reale din Chișinău.",
+    "categories": {
+      "all": "Toate",
+      "heating": "Încălzire",
+      "plumbing": "Instalații Sanitare",
+      "pipes": "Țevi"
+    },
+    "items": {
+      "item1": "Înlocuirea caloriferului în living",
+      "item2": "Montarea instalației Grohe",
+      "item3": "Montaj complex de țevi",
+      "item4": "Instalarea cabinei de duș"
+    }
+  },
+  "Prices": {
+    "title_1": "Prețuri",
+    "title_highlight": "Transparente",
+    "subtitle": "Lucrăm conform unei liste de prețuri fixe. Meșterul confirmă costul exact înainte de lucrare. Fără plăți ascunse.",
+    "col1": "Denumirea serviciului",
+    "col2": "Preț",
+    "items": {
+      "item1": {
+        "name": "Deplasarea și diagnosticare",
+        "price": "Gratuit (în caz de reparație)"
+      },
+      "item2": {
+        "name": "Înlăturare blocaj simplu",
+        "price": "de la 400 MDL"
+      },
+      "item3": {
+        "name": "Înlăturare blocaj complex",
+        "price": "de la 700 MDL"
+      },
+      "item4": {
+        "name": "Schimbarea bateriei/robinetului",
+        "price": "de la 300 MDL"
+      },
+      "item5": {
+        "name": "Instalare apometre (pereche)",
+        "price": "de la 600 MDL"
+      },
+      "item6": {
+        "name": "Montare veceu",
+        "price": "de la 600 MDL"
+      },
+      "item7": {
+        "name": "Montare chiuvetă/lavoar",
+        "price": "de la 450 MDL"
+      },
+      "item8": {
+        "name": "Conectare mașină de spălat",
+        "price": "de la 400 MDL"
+      },
+      "item9": {
+        "name": "Montaj boiler (cu conectare țevi)",
+        "price": "de la 800 MDL"
+      },
+      "item10": {
+        "name": "Schimbare calorifer (încălzire)",
+        "price": "de la 700 MDL"
+      }
+    },
+    "note": "* Prețurile nu includ costul materialelor și consumabilelor.",
+    "calc_btn": "Calcul Exact"
+  },
+  "WhyChooseUs": {
+    "title_1": "Meșteri în care",
+    "title_highlight": "puteți avea încredere",
+    "subtitle": "Abordarea noastră diferă de cea a amatorilor. Purtăm responsabilitate juridică și morală deplină pentru calitatea muncii efectuate. Apartamentul sau casa dumneavoastră este pe mâini sigure.",
+    "reasons": {
+      "item1": "Lucrăm oficial, pe bază de contract",
+      "item2": "Nu luăm plată în avans",
+      "item3": "Meșteri cu studii de profil",
+      "item4": "Folosim instrumente profesionale",
+      "item5": "Evacuăm gunoiul de construcție",
+      "item6": "Întocmim deviz transparent",
+      "item7": "Oferim garanție de până la 2 ani în scris",
+      "item8": "Ajutăm la achiziționarea materialelor cu reducere"
+    },
+    "exp_value": "5+",
+    "exp_title": "Ani de experiență",
+    "exp_desc": "La fiecare meșter"
+  },
+  "Reviews": {
+    "title_1": "Recenziile",
+    "title_highlight": "Clienților",
+    "subtitle": "Peste 500 de comenzi îndeplinite cu succes. Iată ce spun oamenii despre activitatea noastră.",
+    "items": {
+      "item1": {
+        "name": "Ion Ceban",
+        "date": "12 Octombrie 2023",
+        "service": "Înlocuirea caloriferelor",
+        "text": "Foarte operativ! Țeava s-a spart duminică noaptea. Meșterul a ajuns în 35 de minute, a oprit rapid apa și a reparat totul. Recomand."
+      },
+      "item2": {
+        "name": "Maria Stati",
+        "date": "05 Noiembrie 2023",
+        "service": "Instalarea sanitarelor",
+        "text": "Am făcut reparație în baie, meșterii au instalat sistemul încastrat, dușul și chiuveta. Totul este drept, nu curge nicăieri. Au oferit bon și garanție. Mulțumesc!"
+      },
+      "item3": {
+        "name": "Alexandru",
+        "date": "28 Noiembrie 2023",
+        "service": "Blocaj complex",
+        "text": "Înainte am chemat alt instalator, a lucrat două ore și n-a făcut nimic. Meșterul vostru a venit cu aparat special și a desfundat țeava în 15 minute."
+      }
+    }
+  },
+  "FAQ": {
+    "title_1": "Întrebări",
+    "title_highlight": "Frecvente",
+    "items": {
+      "item1": {
+        "q": "Vă deplasați în suburbiile Chișinăului?",
+        "a": "Da, ne deplasăm în toate suburbiile (Ialoveni, Stăuceni, Durlești etc.). Costul deplasării poate fi ușor diferit."
+      },
+      "item2": {
+        "q": "Trebuie să cumpăr materialele singur?",
+        "a": "Nu este obligatoriu. Meșterul nostru poate achiziționa tot necesarul la prețuri en-gros și vă va prezenta bonurile fiscale."
+      },
+      "item3": {
+        "q": "Cât de repede ajunge meșterul în caz de avarie?",
+        "a": "În cazul spargerii unei țevi sau al altei situații de urgență, meșterul de gardă ajunge la fața locului în decurs de 40 de minute."
+      },
+      "item4": {
+        "q": "Ce se întâmplă dacă începe să curgă din nou după plecarea meșterului?",
+        "a": "Oferim garanție oficială. Dacă problema reapare din vina noastră, o vom remedia absolut gratuit."
+      },
+      "item5": {
+        "q": "Se poate achita lucrarea cu cardul?",
+        "a": "Da, acceptăm numerar, precum și transferuri pe card bancar sau plată la cont IBAN (pentru persoane juridice)."
+      }
+    }
+  },
+  "ContactForm": {
+    "success_title": "Cerere Acceptată!",
+    "success_desc": "Meșterul de gardă vă va contacta în curând la numărul indicat pentru confirmarea deplasării.",
+    "success_btn": "Expediază o nouă cerere",
+    "title_1": "Chemați",
+    "title_highlight": "Meșterul",
+    "subtitle": "Lăsați cererea online și noi vă resunăm în 5 minute. Dacă situația e urgentă, este mai bine să sunați direct.",
+    "schedule_title": "Program de lucru: 24/7",
+    "schedule_desc": "Fără zile de odihnă și sărbători. Deplasarea pe timp de noapte (22:00 - 07:00) se tarifează suplimentar.",
+    "form_title": "Formular Cerere",
+    "fields": {
+      "name_label": "Numele dvs. *",
+      "name_placeholder": "Ion Ivan",
+      "name_error": "Numele trebuie să conțină minim 2 caractere",
+      "phone_label": "Telefon *",
+      "phone_placeholder": "+373 (__) __ __ __",
+      "phone_error": "Introduceți un număr de telefon corect",
+      "address_label": "Adresa deplasării *",
+      "address_placeholder": "Stradă, Casă, Apartament",
+      "address_error": "Indicați strada, casa, apartamentul",
+      "desc_label": "Descrierea problemei",
+      "desc_placeholder": "De exemplu, curge țeava în bucătărie sub chiuvetă...",
+      "desc_calc_prefix": "Serviciu din calculator",
+      "desc_calc_price": "Preț preliminar"
+    },
+    "consent_text_1": "Sunt de acord cu prelucrarea datelor cu caracter personal conform",
+    "consent_link": "politicii de confidențialitate",
+    "consent_error": "Este necesar acordul pentru prelucrarea datelor",
+    "submit_btn": "Finalizare Comandă",
+    "submitting": "Expediere..."
+  },
+  "QuizCalculator": {
+    "title": "Calculator",
+    "title_highlight": "de Prețuri",
+    "subtitle": "Răspundeți la câteva întrebări pentru a afla costul exact al lucrărilor",
+    "step": "Pasul {step} din 5",
+    "step_ready": "Calcul finalizat",
+    "step1_title": "De ce serviciu aveți nevoie?",
+    "services": {
+      "clear_blockage": "Desfundare canalizare",
+      "replace_mixer": "Înlocuire baterie",
+      "install_toilet": "Instalare vas WC",
+      "pipe_routing": "Instalații țevi",
+      "heating_install": "Montaj încălzire",
+      "emergency_call": "Intervenție de urgență"
+    },
+    "step2_title": "Detalii încăpere",
+    "meters_title": "Metraj aproximativ țevi (1 - 100 m)",
+    "meters_placeholder": "Exemplu, 10",
+    "rooms_title": "Număr de încăperi/puncte",
+    "step3_title": "Urgența lucrării",
+    "urgency": {
+      "standard": "În regim normal (zile lucrătoare)",
+      "weekend": "În weekend (+20%)",
+      "night": "Intervenție de urgență noaptea (+50%)"
+    },
+    "step4_title": "Atașați o fotografie (opțional)",
+    "step4_desc": "Dacă aveți o poză a problemei, atașați-o pentru ca meșterul să ia piesele potrivite.",
+    "drag_drop": "Apăsați sau trageți fișierul aici",
+    "file_format": "PNG, JPG până la 5 MB",
+    "step5_title": "Calcul estimativ",
+    "step5_desc": "Suma finală depinde de materialele exacte și detaliile suplimentare.",
+    "call_fee": "Deplasarea meșterului: 0 MDL (la comandă)",
+    "btn_fix_price": "Aplicați Prețul și Chemați Meșterul",
+    "btn_restart": "Recalculați",
+    "btn_prev": "Înapoi",
+    "btn_next": "Următorul"
+  }
 }
