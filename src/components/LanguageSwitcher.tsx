@@ -2,14 +2,20 @@
 
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/routing';
+import { useParams } from 'next/navigation';
 
 export function LanguageSwitcher() {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
+    const params = useParams();
 
     const handleLocaleChange = (newLocale: 'ru' | 'ro') => {
-        router.replace(pathname, { locale: newLocale });
+        router.replace(
+            // @ts-expect-error -- Generic component cannot know all strict params at compile time
+            { pathname, params },
+            { locale: newLocale }
+        );
     };
 
     return (

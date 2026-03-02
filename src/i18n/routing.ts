@@ -10,8 +10,17 @@ export const routing = defineRouting({
             ru: '/stati',
             ro: '/articole'
         },
+        '/articles/[slug]': {
+            ru: '/stati/[slug]',
+            ro: '/articole/[slug]'
+        },
         '/faq': '/faq',
-        '/admin': '/admin'
+        '/admin': '/admin',
+        '/admin/calculator': '/admin/calculator',
+        '/admin/blog': '/admin/blog',
+        '/admin/blog/new': '/admin/blog/new',
+        '/admin/blog/[id]': '/admin/blog/[id]',
+        '/admin/login': '/admin/login'
     }
 });
 
