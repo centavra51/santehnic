@@ -4,9 +4,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/layout/Footer';
-import { FloatingContact } from '@/components/FloatingContact';
 import './globals.css';
 
 const inter = Inter({ subsets: ['cyrillic', 'latin'], variable: '--font-inter' });
@@ -35,10 +32,7 @@ export default async function LocaleLayout({
     <html lang={locale} className="scroll-smooth relative">
       <body className={`${inter.variable} ${montserrat.variable} font-sans antialiased text-[#0A2540] flex flex-col min-h-screen`}>
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <Footer />
-          <FloatingContact />
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
