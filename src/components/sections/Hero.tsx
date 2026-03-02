@@ -39,8 +39,8 @@ export function Hero() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <a href="tel:+37360000000" className="inline-flex items-center justify-center space-x-2 bg-primary-main hover:bg-primary-main/90 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-main/20">
-                            <PhoneCall className="w-5 h-5" />
+                        <a href="#order" className="inline-flex items-center justify-center space-x-2 bg-primary-main hover:bg-primary-main/90 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-main/20">
+                            <span className="w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></span>
                             <span>{t('call_master')}</span>
                         </a>
                         <a href="#calculator" className="inline-flex items-center justify-center space-x-2 bg-white text-primary-main border-2 border-primary-main/10 hover:border-accent-cyan hover:text-accent-cyan px-8 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 shadow-sm">

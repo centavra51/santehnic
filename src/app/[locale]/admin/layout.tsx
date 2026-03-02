@@ -1,7 +1,17 @@
-import Link from 'next/link';
+'use client';
+
+import { Link, useRouter } from '@/i18n/routing';
 import { LayoutDashboard, Users, Settings, LogOut } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        const supabase = createClient();
+        await supabase.auth.signOut();
+        window.location.href = '/ru/admin/login';
+    };
     return (
         <div className="flex h-screen bg-slate-50">
             {/* Sidebar */}
@@ -28,7 +38,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </nav>
 
                 <div className="p-4 border-t border-white/10">
-                    <button className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
+                    <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <LogOut className="w-5 h-5 text-accent-cyan" />
                         <span className="font-medium">Выйти</span>
                     </button>
@@ -41,7 +51,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <Link href="/admin" className="text-xl font-heading font-extrabold text-primary-main">
                         Santehnik<span className="text-accent-cyan">Admin</span>
                     </Link>
-                    <button className="text-slate-500">
+                    <button onClick={handleLogout} className="text-slate-500 hover:text-primary-main transition-colors">
                         <LogOut className="w-6 h-6" />
                     </button>
                 </header>
