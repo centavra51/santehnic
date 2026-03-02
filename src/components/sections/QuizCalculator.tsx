@@ -216,6 +216,7 @@ export function QuizCalculator() {
                                         ].map(u => (
                                             <label
                                                 key={u.id}
+                                                onClick={() => updateData({ urgency: u.id })}
                                                 className={`flex items-center gap-4 p-4 border-2 rounded-xl cursor-pointer transition-colors ${data.urgency === u.id
                                                     ? 'border-accent-cyan bg-accent-cyan/5'
                                                     : 'border-slate-200 hover:border-slate-300 bg-white'
@@ -240,7 +241,22 @@ export function QuizCalculator() {
                                         <AlertCircle className="w-8 h-8 opacity-50" />
                                         <p className="font-medium">{t('drag_drop')}</p>
                                         <p className="text-sm opacity-70">{t('file_format')}</p>
-                                        <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" />
+                                        <input
+                                            type="file"
+                                            className="absolute inset-0 opacity-0 cursor-pointer"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                if (file) {
+                                                    updateData({ photoUrl: file.name });
+                                                }
+                                            }}
+                                        />
+                                        {data.photoUrl && (
+                                            <div className="absolute top-4 right-4 bg-accent-cyan/10 text-accent-cyan px-3 py-1 rounded-full text-xs font-bold border border-accent-cyan/30 z-10 flex items-center gap-2">
+                                                <CheckCircle2 className="w-3 h-3" />
+                                                Загружено: {data.photoUrl}
+                                            </div>
+                                        )}
                                     </div>
                                 </motion.div>
                             )}
@@ -267,6 +283,12 @@ export function QuizCalculator() {
                                             const serviceName = serviceRates[data.serviceType]?.label || data.serviceType;
                                             const hash = `#order?service=${encodeURIComponent(serviceName)}&price=${calculateTotal()}`;
                                             window.location.href = hash;
+                                            // Ensure the form gets populated correctly on navigation
+                                            setTimeout(() => {
+                                                const event = new Event('popstate');
+                                                window.dispatchEvent(event);
+                                                document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
+                                            }, 50);
                                         }}
                                         className="inline-flex items-center justify-center space-x-2 bg-primary-main hover:bg-primary-main/90 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-main/20 w-full sm:w-auto"
                                     >

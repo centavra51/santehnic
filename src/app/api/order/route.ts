@@ -32,14 +32,12 @@ export async function POST(req: Request) {
             return NextResponse.json({ success: true, dummy: true });
         }
 
-        const message = `
-🚨 **Новая Заявка: Сантехник** 🚨
+        const message = `🚨 <b>Новая Заявка: Сантехник</b> 🚨
 
 👤 Имя: ${body.name}
 📱 Телефон: ${body.phone}
 📍 Адрес: ${body.address}
-📝 Проблема: ${body.description || 'Не указана'}
-    `;
+📝 Проблема: ${body.description || 'Не указана'}`;
 
         const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: 'POST',
@@ -49,7 +47,7 @@ export async function POST(req: Request) {
             body: JSON.stringify({
                 chat_id: chatId,
                 text: message,
-                parse_mode: 'Markdown',
+                parse_mode: 'html',
             }),
         });
 

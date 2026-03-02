@@ -38,7 +38,7 @@ export function HowWeWork() {
         <section className="py-24 bg-primary-main text-white overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-2xl mx-auto mb-20">
-                    <h2 className="text-3xl md:text-5xl font-heading font-extrabold mb-6">
+                    <h2 className="text-3xl md:text-5xl font-heading font-extrabold text-white mb-6">
                         {t('title_1')} <span className="text-accent-cyan">{t('title_highlight')}</span>
                     </h2>
                     <div className="w-24 h-1 bg-accent-cyan mx-auto rounded-full mb-6" />
