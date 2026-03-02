@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { FloatingContact } from '@/components/FloatingContact';
 import './globals.css';
 
 const inter = Inter({ subsets: ['cyrillic', 'latin'], variable: '--font-inter' });
@@ -37,6 +38,7 @@ export default async function LocaleLayout({
           <Navbar />
           <div className="flex-1">{children}</div>
           <Footer />
+          <FloatingContact />
         </NextIntlClientProvider>
       </body>
     </html>
