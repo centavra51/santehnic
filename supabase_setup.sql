@@ -111,3 +111,44 @@ CREATE TRIGGER update_articles_modtime
     BEFORE UPDATE ON public.articles
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
+
+-- 5. Create the `site_images` table for CMS Global Images
+CREATE TABLE IF NOT EXISTS public.site_images (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    key TEXT NOT NULL UNIQUE,
+    image_url TEXT NOT NULL,
+    description TEXT,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Initial values for basic images
+INSERT INTO public.site_images (key, image_url, description) VALUES
+('hero_bg', '/hero-bg.png', 'Главное фоновое изображение (Hero Section)'),
+('gallery_1', '/plumbing-hero.jpg', 'Галерея: Изображение 1'),
+('gallery_2', '/gallery-heating.jpg', 'Галерея: Изображение 2'),
+('gallery_3', '/gallery-plumbing-1.jpg', 'Галерея: Изображение 3'),
+('gallery_4', '/gallery-plumbing-2.jpg', 'Галерея: Изображение 4'),
+('gallery_5', '/gallery-pipes.jpg', 'Галерея: Изображение 5'),
+('why_choose_us', '/why-choose-us.png', 'Секция "Почему мы" (Боковое фото)')
+ON CONFLICT (key) DO NOTHING;
+
+-- Policies for site_images
+ALTER TABLE public.site_images ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read-only access to site_images"
+ON public.site_images FOR SELECT
+USING (true);
+
+CREATE POLICY "Allow authenticated users to update site_images"
+ON public.site_images FOR ALL
+USING (auth.role() = 'authenticated');
+
+CREATE TRIGGER update_site_images_modtime
+    BEFORE UPDATE ON public.site_images
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+-- Instructions for Supabase Storage:
+-- 1. Create a public bucket named `site-media`
+-- 2. Allow all users to SELECT from `site-media`
+-- 3. Allow only authenticated users to INSERT/UPDATE/DELETE in `site-media`

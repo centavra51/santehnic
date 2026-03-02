@@ -2,8 +2,13 @@
 
 import { CheckCircle2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
-export function WhyChooseUs() {
+interface WhyChooseUsProps {
+    backgroundImage?: string;
+}
+
+export function WhyChooseUs({ backgroundImage }: WhyChooseUsProps) {
     const t = useTranslations('WhyChooseUs');
 
     const reasons = [
@@ -41,8 +46,8 @@ export function WhyChooseUs() {
                 </div>
 
                 <div className="relative">
-                    <div className="aspect-[4/5] rounded-3xl bg-slate-200 shadow-2xl overflow-hidden border-8 border-white flex items-center justify-center">
-                        <span className="text-slate-400 font-bold p-8 text-center">[Nano Banana 2 Img: Trustworthy professional plumber showing contract/smiling]</span>
+                    <div className="aspect-[4/5] rounded-3xl bg-slate-200 shadow-2xl overflow-hidden border-8 border-white flex items-center justify-center relative">
+                        <Image src={backgroundImage || "/why-choose-us.png"} alt={t('title_1')} fill style={{ objectFit: 'cover' }} />
                     </div>
 
                     <div className="absolute -left-12 bottom-12 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4">

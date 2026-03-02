@@ -1,7 +1,7 @@
 'use client';
 
 import { Link, useRouter } from '@/i18n/routing';
-import { LayoutDashboard, Users, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, Settings, LogOut, FileText, Image as ImageIcon } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -34,6 +34,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <Link href="/admin/blog" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <Users className="w-5 h-5 text-accent-cyan" />
                         <span className="font-medium">Блог (Статьи)</span>
+                    </Link>
+                    <Link href="/admin/images" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
+                        <ImageIcon className="w-5 h-5 text-accent-cyan" />
+                        <span className="font-medium">Изображения</span>
                     </Link>
                 </nav>
 

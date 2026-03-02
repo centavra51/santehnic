@@ -5,7 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-export function BeforeAfterGallery() {
+interface BeforeAfterGalleryProps {
+    images?: Record<string, string>;
+}
+
+export function BeforeAfterGallery({ images }: BeforeAfterGalleryProps) {
     const t = useTranslations('Gallery');
 
     const CATEGORIES = [
@@ -19,22 +23,22 @@ export function BeforeAfterGallery() {
         {
             title: t('items.item1'),
             category: t('categories.heating'),
-            img: '/gallery-heating.png'
+            img: images?.['gallery_1'] || '/gallery-heating.png'
         },
         {
             title: t('items.item2'),
             category: t('categories.plumbing'),
-            img: '/gallery-plumbing1.png'
+            img: images?.['gallery_2'] || '/gallery-plumbing1.png'
         },
         {
             title: t('items.item3'),
             category: t('categories.pipes'),
-            img: '/gallery-pipes.png'
+            img: images?.['gallery_3'] || '/gallery-pipes.png'
         },
         {
             title: t('items.item4'),
             category: t('categories.plumbing'),
-            img: '/gallery-plumbing2.png'
+            img: images?.['gallery_4'] || '/gallery-plumbing2.png'
         },
     ];
 

@@ -11,21 +11,22 @@ import { WhyChooseUs } from '@/components/sections/WhyChooseUs';
 import { FaqAccordion } from '@/components/sections/FaqAccordion';
 import { ContactForm } from '@/components/sections/ContactForm';
 import { LocalBusinessSchema } from '@/components/seo/LocalBusinessSchema';
+import { getSiteImages } from '@/lib/supabase/images';
 
-export default function HomePage({ params }: { params: { locale: string } }) {
-  const t = useTranslations('Index');
+export default async function HomePage({ params }: { params: { locale: string } }) {
+  const images = await getSiteImages();
 
   return (
     <main className="flex flex-col w-full">
       <LocalBusinessSchema locale={params.locale} />
-      <Hero />
+      <Hero backgroundImage={images['hero_bg']} />
       <Benefits />
       <ServicesGrid />
       <QuizCalculator />
       <HowWeWork />
-      <BeforeAfterGallery />
+      <BeforeAfterGallery images={images} />
       <PricesTable />
-      <WhyChooseUs />
+      <WhyChooseUs backgroundImage={images['why_choose_us']} />
       <ReviewsCarousel />
       <FaqAccordion />
       <ContactForm />

@@ -5,7 +5,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 
-export function Hero() {
+interface HeroProps {
+    backgroundImage?: string;
+}
+
+export function Hero({ backgroundImage }: HeroProps) {
     const t = useTranslations('Hero');
 
     return (
@@ -69,7 +73,7 @@ export function Hero() {
                     className="relative hidden lg:block h-[600px] w-full"
                 >
                     <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/20 to-primary-main/5 rounded-3xl border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center">
-                        <Image src="/hero-bg.png" alt={t('img_alt')} fill style={{ objectFit: 'cover' }} priority />
+                        <Image src={backgroundImage || "/hero-bg.png"} alt={t('img_alt')} fill style={{ objectFit: 'cover' }} priority />
                     </div>
 
                     {/* Floating badge */}

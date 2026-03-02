@@ -20,6 +20,7 @@ export const routing = defineRouting({
         '/admin/blog': '/admin/blog',
         '/admin/blog/new': '/admin/blog/new',
         '/admin/blog/[id]': '/admin/blog/[id]',
+        '/admin/images': '/admin/images',
         '/admin/login': '/admin/login'
     }
 });
