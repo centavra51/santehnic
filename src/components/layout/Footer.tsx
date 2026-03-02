@@ -32,10 +32,10 @@ export function Footer() {
                     <div>
                         <h4 className="text-white font-bold text-lg mb-6">{t('nav_title')}</h4>
                         <ul className="space-y-4 text-sm font-medium">
-                            <li><a href="/#services" className="hover:text-accent-cyan transition-colors">{nt('services')}</a></li>
-                            <li><a href="/#calculator" className="hover:text-accent-cyan transition-colors">{nt('calculator')}</a></li>
-                            <li><a href="/#reviews" className="hover:text-accent-cyan transition-colors">{nt('reviews')}</a></li>
-                            <li><a href="/#faq" className="hover:text-accent-cyan transition-colors">{nt('faq')}</a></li>
+                            <li><a href="#services" className="hover:text-accent-cyan transition-colors">{nt('services')}</a></li>
+                            <li><a href="#calculator" className="hover:text-accent-cyan transition-colors">{nt('calculator')}</a></li>
+                            <li><a href="#reviews" className="hover:text-accent-cyan transition-colors">{nt('reviews')}</a></li>
+                            <li><a href="#faq" className="hover:text-accent-cyan transition-colors">{nt('faq')}</a></li>
                             <li><Link href="/articles" className="hover:text-accent-cyan transition-colors">{nt('blog')}</Link></li>
                         </ul>
                     </div>
