@@ -13,13 +13,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2">
-                    <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors">
+                    <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <LayoutDashboard className="w-5 h-5 text-accent-cyan" />
                         <span className="font-medium">Заявки (Leads)</span>
                     </Link>
                     <Link href="/admin/calculator" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <Settings className="w-5 h-5 text-accent-cyan" />
                         <span className="font-medium">Цены (Калькулятор)</span>
+                    </Link>
+                    <Link href="/admin/blog" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
+                        <Users className="w-5 h-5 text-accent-cyan" />
+                        <span className="font-medium">Блог (Статьи)</span>
                     </Link>
                 </nav>
 

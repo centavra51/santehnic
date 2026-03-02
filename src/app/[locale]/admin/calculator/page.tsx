@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Save, Loader2 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 const INITIAL_RATES = {
     'Устранение засора': 400,
@@ -17,14 +18,43 @@ const INITIAL_RATES = {
 export default function CalculatorSettingsPage() {
     const [rates, setRates] = useState(INITIAL_RATES);
     const [saving, setSaving] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    const handleSave = () => {
+    useEffect(() => {
+        const fetchRates = async () => {
+            const supabase = createClient();
+            const { data } = await supabase.from('calculator_settings').select('service_name, price_mdl');
+            if (data && data.length > 0) {
+                const newRates = { ...INITIAL_RATES };
+                data.forEach(item => {
+                    if (item.service_name in newRates) {
+                        newRates[item.service_name as keyof typeof INITIAL_RATES] = Number(item.price_mdl);
+                    }
+                });
+                setRates(newRates);
+            }
+            setLoading(false);
+        };
+        fetchRates();
+    }, []);
+
+    const handleSave = async () => {
         setSaving(true);
-        // Simulate Supabase save
-        setTimeout(() => {
-            setSaving(false);
+        const supabase = createClient();
+
+        const updates = Object.entries(rates).map(([key, value]) => ({
+            service_name: key,
+            price_mdl: value
+        }));
+
+        const { error } = await supabase.from('calculator_settings').upsert(updates, { onConflict: 'service_name' });
+
+        setSaving(false);
+        if (error) {
+            alert('Ошибка при сохранении: ' + error.message);
+        } else {
             alert('Цены успешно обновлены!');
-        }, 1000);
+        }
     };
 
     return (

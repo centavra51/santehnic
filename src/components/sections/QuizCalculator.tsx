@@ -24,14 +24,16 @@ const INITIAL_STATE: QuizState = {
 export function QuizCalculator() {
     const t = useTranslations('QuizCalculator');
 
-    const SERVICE_RATES: Record<string, { key: string, label: string, price: number }> = {
+    const [serviceRates, setServiceRates] = useState<Record<string, { key: string, label: string, price: number }>>({
         'clear_blockage': { key: 'clear_blockage', label: t('services.clear_blockage'), price: 400 },
         'replace_mixer': { key: 'replace_mixer', label: t('services.replace_mixer'), price: 300 },
         'install_toilet': { key: 'install_toilet', label: t('services.install_toilet'), price: 600 },
         'pipe_routing': { key: 'pipe_routing', label: t('services.pipe_routing'), price: 800 },
         'heating_install': { key: 'heating_install', label: t('services.heating_install'), price: 1000 },
         'emergency_call': { key: 'emergency_call', label: t('services.emergency_call'), price: 500 },
-    };
+    });
+
+    const [baseMetrics, setBaseMetrics] = useState({ per_meter: 50, per_room: 100 });
 
     const [step, setStep] = useState(1);
     const [data, setData] = useState<QuizState>(INITIAL_STATE);
@@ -47,6 +49,36 @@ export function QuizCalculator() {
                 setStep(parsed.step || 1);
             } catch (e) { }
         }
+
+        const fetchRates = async () => {
+            const { createClient } = await import('@/lib/supabase/client');
+            const supabase = createClient();
+            const { data: ratesData } = await supabase.from('calculator_settings').select('service_name, price_mdl');
+
+            if (ratesData) {
+                setServiceRates(prev => {
+                    const next = { ...prev };
+                    ratesData.forEach(item => {
+                        const price = Number(item.price_mdl);
+                        if (item.service_name === 'Устранение засора') next['clear_blockage'].price = price;
+                        if (item.service_name === 'Замена смесителя') next['replace_mixer'].price = price;
+                        if (item.service_name === 'Установка унитаза') next['install_toilet'].price = price;
+                        if (item.service_name === 'Разводка труб') next['pipe_routing'].price = price;
+                        if (item.service_name === 'Монтаж отопления') next['heating_install'].price = price;
+                        if (item.service_name === 'Аварийный выезд') next['emergency_call'].price = price;
+
+                        setBaseMetrics(m => {
+                            const newM = { ...m };
+                            if (item.service_name === 'За метр трубы') newM.per_meter = price;
+                            if (item.service_name === 'За доп. помещение') newM.per_room = price;
+                            return newM;
+                        });
+                    });
+                    return next;
+                });
+            }
+        };
+        fetchRates();
     }, []);
 
     useEffect(() => {
@@ -56,14 +88,14 @@ export function QuizCalculator() {
     }, [step, data, isClient]);
 
     const calculateTotal = () => {
-        const service = SERVICE_RATES[data.serviceType];
+        const service = serviceRates[data.serviceType];
         let base = service ? service.price : 0;
 
         if (data.serviceType === 'pipe_routing') {
-            base += data.meters * 50;
+            base += data.meters * baseMetrics.per_meter;
         }
 
-        base += (data.rooms - 1) * 100;
+        base += (data.rooms - 1) * baseMetrics.per_room;
 
         if (data.urgency === 'night') base *= 1.5;
         if (data.urgency === 'weekend') base *= 1.2;
@@ -117,7 +149,7 @@ export function QuizCalculator() {
                                 <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                                     <h3 className="text-2xl font-bold text-primary-main mb-6">{t('step1_title')}</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        {Object.values(SERVICE_RATES).map(service => (
+                                        {Object.values(serviceRates).map(service => (
                                             <button
                                                 key={service.key}
                                                 onClick={() => updateData({ serviceType: service.key })}
@@ -232,7 +264,7 @@ export function QuizCalculator() {
 
                                     <button
                                         onClick={() => {
-                                            const serviceName = SERVICE_RATES[data.serviceType]?.label || data.serviceType;
+                                            const serviceName = serviceRates[data.serviceType]?.label || data.serviceType;
                                             const hash = `#order?service=${encodeURIComponent(serviceName)}&price=${calculateTotal()}`;
                                             window.location.href = hash;
                                         }}

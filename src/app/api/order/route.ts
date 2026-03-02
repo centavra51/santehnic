@@ -1,8 +1,24 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 export async function POST(req: Request) {
     try {
         const body = await req.json();
+
+        // Save to Supabase first
+        const supabase = await createClient();
+        const { error: dbError } = await supabase.from('leads').insert({
+            name: body.name,
+            phone: body.phone,
+            address: body.address || null,
+            service: body.service || null,
+            description: body.description || null,
+            status: 'new'
+        });
+
+        if (dbError) {
+            console.error('Supabase lead insert error:', dbError);
+        }
 
         // In production, fetch these securely from process.env
         // TELEGRAM_BOT_TOKEN
