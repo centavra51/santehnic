@@ -37,11 +37,25 @@ export function ContactForm() {
         }
     });
 
+    const [quizData, setQuizData] = useState<any>(null);
+
     useEffect(() => {
-        // Read from URL if navigated from calculator
+        // 1. Read from URL if navigated from calculator (legacy/quick links)
         const params = new URLSearchParams(window.location.search);
         const service = params.get('service');
         const price = params.get('price');
+
+        // 2. Read from LocalStorage (full quiz state)
+        const savedQuiz = localStorage.getItem('santehnik_quiz');
+        if (savedQuiz) {
+            try {
+                const parsed = JSON.parse(savedQuiz);
+                if (parsed.data && parsed.step === 5) {
+                    setQuizData(parsed.data);
+                }
+            } catch (e) { }
+        }
+
         if (service && price) {
             setValue('description', `${t('fields.desc_calc_prefix')}: ${service}. ${t('fields.desc_calc_price')}: ${price} MDL`);
             // Clean up URL without reloading
@@ -57,7 +71,10 @@ export function ContactForm() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    ...data,
+                    quiz_data: quizData
+                })
             });
             if (res.ok) {
                 setIsSuccess(true);

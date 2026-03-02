@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Save, ArrowLeft, Loader2 } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Upload, Link as LinkIcon, Image as ImageIcon } from 'lucide-react';
 import Link from 'next/link';
 
 export default function NewArticlePage() {
@@ -11,14 +11,50 @@ export default function NewArticlePage() {
     const [saving, setSaving] = useState(false);
 
     const [formData, setFormData] = useState({
-        title: '',
+        title_ru: '',
+        title_ro: '',
         slug: '',
-        excerpt: '',
+        excerpt_ru: '',
+        excerpt_ro: '',
+        content_ru: '',
+        content_ro: '',
         image_url: '',
-        content: '',
-        locale: 'ru',
         is_published: false
     });
+
+    const [uploading, setUploading] = useState(false);
+
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setUploading(true);
+        const supabase = createClient();
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `blog-${Date.now()}.${fileExt}`;
+            const { error: uploadError } = await supabase.storage
+                .from('site-media')
+                .upload(fileName, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: { publicUrl } } = supabase.storage.from('site-media').getPublicUrl(fileName);
+
+            // Set image_url if empty, otherwise add to content
+            if (!formData.image_url) {
+                setFormData(prev => ({ ...prev, image_url: publicUrl }));
+            }
+
+            // Copy to clipboard or alert
+            await navigator.clipboard.writeText(`![image](${publicUrl})`);
+            alert('Код изображения (Markdown) скопирован! Вставьте его в текст статьи.');
+        } catch (error: any) {
+            alert('Ошибка загрузки: ' + error.message);
+        } finally {
+            setUploading(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,12 +63,14 @@ export default function NewArticlePage() {
 
         const { error } = await supabase.from('articles').insert([
             {
-                title: formData.title,
+                title_ru: formData.title_ru,
+                title_ro: formData.title_ro,
                 slug: formData.slug,
-                excerpt: formData.excerpt,
+                excerpt_ru: formData.excerpt_ru,
+                excerpt_ro: formData.excerpt_ro,
+                content_ru: formData.content_ru,
+                content_ro: formData.content_ro,
                 image_url: formData.image_url,
-                content: formData.content,
-                locale: formData.locale,
                 is_published: formData.is_published
             }
         ]);
@@ -60,77 +98,123 @@ export default function NewArticlePage() {
 
             <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-6">
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-sm font-bold text-slate-700 mb-2">Заголовок</label>
-                        <input
-                            required
-                            type="text"
-                            value={formData.title}
-                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
-                            placeholder="Например: Как выбрать смеситель?"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-bold text-slate-700 mb-2">ЧПУ (Slug)</label>
-                        <input
-                            required
-                            type="text"
-                            value={formData.slug}
-                            onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                            className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
-                            placeholder="kak-vybrat-smesitel"
-                        />
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-sm font-bold text-slate-700 mb-2">Язык (Locale)</label>
-                        <select
-                            value={formData.locale}
-                            onChange={(e) => setFormData({ ...formData, locale: e.target.value })}
-                            className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
-                        >
-                            <option value="ru">Русский (RU)</option>
-                            <option value="ro">Румынский (RO)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-bold text-slate-700 mb-2">Изображение (URL)</label>
-                        <input
-                            type="text"
-                            value={formData.image_url}
-                            onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                            className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
-                            placeholder="/blog/image1.jpg"
-                        />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="space-y-4">
+                        <label className="block text-sm font-bold text-slate-700">Общие настройки</label>
+                        <div>
+                            <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">ЧПУ (Slug) *</label>
+                            <input
+                                required
+                                type="text"
+                                value={formData.slug}
+                                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                                className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan bg-white"
+                                placeholder="kak-vybrat-smesitel"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Превью-картинка (URL)</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    value={formData.image_url}
+                                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                                    className="flex-1 p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan bg-white"
+                                    placeholder="/blog/image1.jpg"
+                                />
+                                <label className="cursor-pointer bg-white border border-slate-200 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                                    {uploading ? <Loader2 className="w-5 h-5 animate-spin text-accent-cyan" /> : <Upload className="w-5 h-5 text-slate-500" />}
+                                    <input type="file" className="hidden" onChange={handleUpload} accept="image/*" />
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Краткое описание (Excerpt)</label>
-                    <textarea
-                        rows={3}
-                        value={formData.excerpt}
-                        onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                        className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
-                        placeholder="Краткое описание для карточки в списке статей..."
-                    />
-                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    {/* Russian Version */}
+                    <div className="space-y-6 border-r border-slate-100 pr-0 lg:pr-10">
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">RU</span>
+                            <h2 className="font-bold text-lg text-slate-800">Русская версия</h2>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 mb-2">Заголовок (RU)</label>
+                            <input
+                                required
+                                type="text"
+                                value={formData.title_ru}
+                                onChange={(e) => setFormData({ ...formData, title_ru: e.target.value })}
+                                className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                                placeholder="Заголовок на русском"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 mb-2">Краткое описание (RU)</label>
+                            <textarea
+                                rows={2}
+                                value={formData.excerpt_ru}
+                                onChange={(e) => setFormData({ ...formData, excerpt_ru: e.target.value })}
+                                className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                                placeholder="Для карточки в списке..."
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 mb-2 flex justify-between">
+                                Контент (RU)
+                                <span className="text-[10px] text-slate-400 font-normal mt-1">Поддерживает HTML/Markdown</span>
+                            </label>
+                            <textarea
+                                required
+                                rows={12}
+                                value={formData.content_ru}
+                                onChange={(e) => setFormData({ ...formData, content_ru: e.target.value })}
+                                className="w-full p-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan font-mono text-sm leading-relaxed"
+                            />
+                        </div>
+                    </div>
 
-                <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Контент (HTML/Markdown)</label>
-                    <textarea
-                        required
-                        rows={10}
-                        value={formData.content}
-                        onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                        className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan font-mono text-sm"
-                        placeholder="<h1>Наш опыт установки...</h1><p>Текст статьи</p>"
-                    />
+                    {/* Romanian Version */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">RO</span>
+                            <h2 className="font-bold text-lg text-slate-800">Versiunea Română</h2>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 mb-2">Titlu (RO)</label>
+                            <input
+                                required
+                                type="text"
+                                value={formData.title_ro}
+                                onChange={(e) => setFormData({ ...formData, title_ro: e.target.value })}
+                                className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                                placeholder="Titlul în română"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 mb-2">Descriere scurtă (RO)</label>
+                            <textarea
+                                rows={2}
+                                value={formData.excerpt_ro}
+                                onChange={(e) => setFormData({ ...formData, excerpt_ro: e.target.value })}
+                                className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                                placeholder="Pentru cardul din listă..."
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 mb-2 flex justify-between">
+                                Conținut (RO)
+                                <span className="text-[10px] text-slate-400 font-normal mt-1">Acceptă HTML/Markdown</span>
+                            </label>
+                            <textarea
+                                required
+                                rows={12}
+                                value={formData.content_ro}
+                                onChange={(e) => setFormData({ ...formData, content_ro: e.target.value })}
+                                className="w-full p-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan font-mono text-sm leading-relaxed"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-3 py-4 border-t border-slate-100">

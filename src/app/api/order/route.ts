@@ -7,12 +7,14 @@ export async function POST(req: Request) {
 
         // Save to Supabase first
         const supabase = await createClient();
+        const { name, phone, address, service, description, quiz_data } = body;
         const { error: dbError } = await supabase.from('leads').insert({
-            name: body.name,
-            phone: body.phone,
-            address: body.address || null,
-            service: body.service || null,
-            description: body.description || null,
+            name,
+            phone,
+            address: address || null,
+            service: service || null,
+            problem_description: description || null,
+            quiz_data: quiz_data || {},
             status: 'new'
         });
 
@@ -32,12 +34,25 @@ export async function POST(req: Request) {
             return NextResponse.json({ success: true, dummy: true });
         }
 
+        let quizDetails = "";
+        if (body.quiz_data) {
+            const q = body.quiz_data;
+            quizDetails = `
+🛠 <b>Детали Квиза:</b>
+• Тип: ${q.serviceType || '---'}
+• Метры: ${q.meters || 0}
+• Комнаты: ${q.rooms || 1}
+• Срочность: ${q.urgency || '---'}
+`;
+        }
+
         const message = `🚨 <b>Новая Заявка: Сантехник</b> 🚨
 
 👤 Имя: ${body.name}
 📱 Телефон: ${body.phone}
-📍 Адрес: ${body.address}
-📝 Проблема: ${body.description || 'Не указана'}`;
+📍 Адрес: ${body.address || 'Не указан'}
+📝 Описание: ${body.description || 'Не указана'}
+${quizDetails}`;
 
         const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: 'POST',

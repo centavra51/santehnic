@@ -1,17 +1,44 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Link, useRouter } from '@/i18n/routing';
-import { LayoutDashboard, Users, Settings, LogOut, FileText, Image as ImageIcon } from 'lucide-react';
+import { LayoutDashboard, Users, Settings, LogOut, FileText, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
 
+    const [sessionLoading, setSessionLoading] = useState(true);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                // Determine current locale to redirect properly
+                const locale = window.location.pathname.split('/')[1] || 'ru';
+                window.location.href = `/${locale}/admin/login`;
+            } else {
+                setSessionLoading(false);
+            }
+        };
+        checkSession();
+    }, [router]);
+
     const handleLogout = async () => {
         const supabase = createClient();
         await supabase.auth.signOut();
-        window.location.href = '/ru/admin/login';
+        const locale = window.location.pathname.split('/')[1] || 'ru';
+        window.location.href = `/${locale}/admin/login`;
     };
+
+    if (sessionLoading) {
+        return (
+            <div className="h-screen bg-slate-50 flex items-center justify-center">
+                <Loader2 className="w-10 h-10 animate-spin text-accent-cyan" />
+            </div>
+        );
+    }
     return (
         <div className="flex h-screen bg-slate-50">
             {/* Sidebar */}

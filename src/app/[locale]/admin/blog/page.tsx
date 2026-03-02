@@ -7,9 +7,9 @@ import { Loader2, Plus, Edit, Trash2 } from 'lucide-react';
 
 type Article = {
     id: string;
-    title: string;
+    title_ru: string;
+    title_ro: string;
     slug: string;
-    locale: string;
     is_published: boolean;
     created_at: string;
 };
@@ -21,7 +21,7 @@ export default function AdminBlogPage() {
     const fetchArticles = async () => {
         setLoading(true);
         const supabase = createClient();
-        const { data } = await supabase.from('articles').select('id, title, slug, locale, is_published, created_at').order('created_at', { ascending: false });
+        const { data } = await supabase.from('articles').select('id, title_ru, title_ro, slug, is_published, created_at').order('created_at', { ascending: false });
         if (data) setArticles(data);
         setLoading(false);
     };
@@ -63,8 +63,8 @@ export default function AdminBlogPage() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 text-sm uppercase tracking-wider">
-                                <th className="py-4 px-6 font-medium">Название / Ссылка</th>
-                                <th className="py-4 px-6 font-medium">Язык</th>
+                                <th className="py-4 px-6 font-medium">Заголовки (RU / RO)</th>
+                                <th className="py-4 px-6 font-medium">Ссылка (slug)</th>
                                 <th className="py-4 px-6 font-medium">Статус</th>
                                 <th className="py-4 px-6 font-medium">Дата добавления</th>
                                 <th className="py-4 px-6 font-medium text-right">Действия</th>
@@ -87,11 +87,11 @@ export default function AdminBlogPage() {
                             ) : articles.map(article => (
                                 <tr key={article.id} className="hover:bg-slate-50/50 transition-colors group">
                                     <td className="py-4 px-6">
-                                        <div className="font-bold text-primary-main">{article.title}</div>
-                                        <div className="text-sm text-slate-500 truncate max-w-xs block">/{article.locale}/articles/{article.slug}</div>
+                                        <div className="font-bold text-primary-main">{article.title_ru || '---'}</div>
+                                        <div className="text-sm text-slate-400 font-medium">{article.title_ro || '---'}</div>
                                     </td>
-                                    <td className="py-4 px-6 relative">
-                                        <span className="uppercase text-xs font-bold text-slate-500 bg-slate-100 rounded px-2 py-1">{article.locale}</span>
+                                    <td className="py-4 px-6">
+                                        <div className="text-sm text-slate-500 font-mono">/{article.slug}</div>
                                     </td>
                                     <td className="py-4 px-6">
                                         {article.is_published ? (

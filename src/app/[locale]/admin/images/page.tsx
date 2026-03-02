@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Loader2, Upload, Save, Image as ImageIcon } from 'lucide-react';
+import { Loader2, Upload, Database, Image as ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 
 type SiteImage = {
@@ -28,6 +28,32 @@ export default function AdminImagesPage() {
     useEffect(() => {
         fetchImages();
     }, []);
+
+    const handleSeed = async () => {
+        if (!confirm('Это создаст стандартные записи для изображений. Продолжить?')) return;
+        setLoading(true);
+        const supabase = createClient();
+
+        const initialImages = [
+            { key: 'hero_bg', image_url: '/hero-bg.png', description: 'Главное фоновое изображение (Hero Section)' },
+            { key: 'gallery_1', image_url: '/plumbing-hero.jpg', description: 'Галерея: Изображение 1' },
+            { key: 'gallery_2', image_url: '/gallery-heating.jpg', description: 'Галерея: Изображение 2' },
+            { key: 'gallery_3', image_url: '/gallery-plumbing-1.jpg', description: 'Галерея: Изображение 3' },
+            { key: 'gallery_4', image_url: '/gallery-plumbing-2.jpg', description: 'Галерея: Изображение 4' },
+            { key: 'gallery_5', image_url: '/gallery-pipes.jpg', description: 'Галерея: Изображение 5' },
+            { key: 'why_choose_us', image_url: '/why-choose-us.png', description: 'Секция "Почему мы" (Боковое фото)' }
+        ];
+
+        const { error } = await supabase.from('site_images').upsert(initialImages, { onConflict: 'key' });
+
+        if (error) {
+            alert('Ошибка седирования: ' + error.message);
+        } else {
+            alert('Данные успешно инициализированы!');
+            fetchImages();
+        }
+        setLoading(false);
+    };
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, imageKey: string, id: string) => {
         const file = e.target.files?.[0];
@@ -67,9 +93,20 @@ export default function AdminImagesPage() {
 
     return (
         <div>
-            <div className="mb-8">
-                <h1 className="text-3xl font-heading font-extrabold text-primary-main">Изображения Сайта</h1>
-                <p className="text-muted-foreground mt-2">Управление главными фотографиями и фонами.</p>
+            <div className="flex items-center justify-between mb-8">
+                <div>
+                    <h1 className="text-3xl font-heading font-extrabold text-primary-main">Изображения Сайта</h1>
+                    <p className="text-muted-foreground mt-2">Управление главными фотографиями и фонами.</p>
+                </div>
+                {images.length === 0 && !loading && (
+                    <button
+                        onClick={handleSeed}
+                        className="bg-accent-cyan hover:bg-accent-cyan/90 text-white font-bold px-6 py-3 rounded-xl flex items-center gap-2 transition-colors"
+                    >
+                        <Database className="w-5 h-5" />
+                        Инициализировать данные
+                    </button>
+                )}
             </div>
 
             {loading ? (

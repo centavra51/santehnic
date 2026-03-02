@@ -21,14 +21,16 @@ INSERT INTO public.calculator_settings (service_name, price_mdl) VALUES
 ON CONFLICT (service_name) DO UPDATE SET price_mdl = EXCLUDED.price_mdl;
 
 
--- 2. Create the `articles` table for the Blog
+-- 2. Create the `articles` table for the Blog (Bilingual in one row)
 CREATE TABLE IF NOT EXISTS public.articles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    title_ru TEXT NOT NULL,
-    title_ro TEXT NOT NULL,
+    title_ru TEXT,
+    title_ro TEXT,
     slug TEXT NOT NULL UNIQUE,
-    content_ru TEXT NOT NULL,
-    content_ro TEXT NOT NULL,
+    excerpt_ru TEXT,
+    excerpt_ro TEXT,
+    content_ru TEXT,
+    content_ro TEXT,
     image_url TEXT,
     is_published BOOLEAN DEFAULT false,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
@@ -44,6 +46,7 @@ CREATE TABLE IF NOT EXISTS public.leads (
     address TEXT,
     problem_description TEXT,
     service_type TEXT,
+    quiz_data JSONB DEFAULT '{}'::jsonb,
     status TEXT DEFAULT 'new' CHECK (status IN ('new', 'processing', 'done', 'cancelled')),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );

@@ -40,7 +40,7 @@ export function Navbar() {
                 </nav>
 
                 <div className="flex items-center space-x-4">
-                    <a href="tel:+37360000000" className="hidden lg:flex items-center space-x-2 text-sm font-bold hover:text-accent-cyan">
+                    <a href={`tel:${t('phone').replace(/\s/g, '')}`} className="hidden lg:flex items-center space-x-2 text-sm font-bold hover:text-accent-cyan">
                         <Phone className="h-4 w-4" />
                         <span>{t('phone')}</span>
                     </a>

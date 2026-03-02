@@ -323,5 +323,19 @@
     "btn_restart": "Recalculați",
     "btn_prev": "Înapoi",
     "btn_next": "Următorul"
+  },
+  "Footer": {
+    "desc": "Servicii sanitare fiabile în Chișinău și suburbii. Lucrăm 24/7, oferim garanție oficială.",
+    "nav_title": "Navigare",
+    "contacts_title": "Contacte",
+    "help_title": "Aveți nevoie de ajutor?",
+    "help_desc": "Lăsați numărul, vă resunăm în 5 minute.",
+    "schedule": "Zilnic 24/7",
+    "address": "Chișinău, str. Exemplu 123",
+    "ok": "Ок",
+    "phone_placeholder": "+373",
+    "rights": "Toate drepturile rezervate.",
+    "privacy": "Politica de confidențialitate",
+    "terms": "Termeni și condiții"
   }
 }

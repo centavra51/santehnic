@@ -6,30 +6,31 @@ import { Phone, MessageCircle, Send, X, MessageSquareText } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 export function FloatingContact() {
+    const tNav = useTranslations('Navbar');
     const [isOpen, setIsOpen] = useState(false);
-    // Ideally useTranslations for title if needed, or simple hardcoded tips
-    // But since it's global, let's keep it simple with icons and minimal text
+
+    const phoneNoRaw = tNav('phone').replace(/\s/g, '');
 
     const contacts = [
         {
             id: 'phone',
             icon: <Phone className="w-6 h-6" />,
-            label: '+373 60 000 000',
-            href: 'tel:+37360000000',
+            label: tNav('phone'),
+            href: `tel:${phoneNoRaw}`,
             color: 'bg-primary-main hover:bg-primary-main/90 text-white',
         },
         {
             id: 'viber',
             icon: <MessageSquareText className="w-6 h-6" />,
             label: 'Viber',
-            href: 'viber://chat?number=%2B37360000000',
+            href: `viber://chat?number=${encodeURIComponent(phoneNoRaw)}`,
             color: 'bg-[#7360f2] hover:bg-[#5f4de1] text-white',
         },
         {
             id: 'whatsapp',
             icon: <MessageCircle className="w-6 h-6" />,
             label: 'WhatsApp',
-            href: 'https://wa.me/37360000000',
+            href: `https://wa.me/${phoneNoRaw.replace('+', '')}`,
             color: 'bg-[#25D366] hover:bg-[#1ebe5d] text-white',
         },
         {
@@ -75,11 +76,13 @@ export function FloatingContact() {
 
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 ${isOpen ? 'bg-slate-800 text-white rotate-90' : 'bg-accent-cyan text-white animate-bounce-slow'
+                className={`group relative w-16 h-16 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(30,229,229,0.4)] transition-all duration-300 hover:scale-110 ${isOpen ? 'bg-slate-800 text-white rotate-90' : 'bg-accent-cyan text-white'
                     }`}
-                style={!isOpen ? { animation: 'bounce 2s infinite' } : {}}
             >
-                {isOpen ? <X className="w-8 h-8" /> : <MessageCircle className="w-8 h-8" />}
+                {!isOpen && (
+                    <span className="absolute inset-0 rounded-full bg-accent-cyan animate-ping opacity-25"></span>
+                )}
+                {isOpen ? <X className="w-8 h-8" /> : <MessageCircle className="w-8 h-8 group-hover:rotate-12 transition-transform" />}
             </button>
         </div>
     );
