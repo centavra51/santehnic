@@ -60,11 +60,13 @@ ALTER TABLE public.leads ENABLE ROW LEVEL SECURITY;
 
 -- Calculator Policies
 -- Anyone can read the prices
+DROP POLICY IF EXISTS "Allow public read-only access to calculator_settings" ON public.calculator_settings;
 CREATE POLICY "Allow public read-only access to calculator_settings"
 ON public.calculator_settings FOR SELECT
 USING (true);
 
 -- Only authenticated users can update prices
+DROP POLICY IF EXISTS "Allow authenticated users to update calculator_settings" ON public.calculator_settings;
 CREATE POLICY "Allow authenticated users to update calculator_settings"
 ON public.calculator_settings FOR ALL
 USING (auth.role() = 'authenticated');
@@ -72,11 +74,13 @@ USING (auth.role() = 'authenticated');
 
 -- Articles Policies
 -- Anyone can read published articles
+DROP POLICY IF EXISTS "Allow public read-only access to published articles" ON public.articles;
 CREATE POLICY "Allow public read-only access to published articles"
 ON public.articles FOR SELECT
 USING (is_published = true);
 
 -- Authenticated users can read all articles (even drafts) and manage them
+DROP POLICY IF EXISTS "Allow authenticated users full access to articles" ON public.articles;
 CREATE POLICY "Allow authenticated users full access to articles"
 ON public.articles FOR ALL
 USING (auth.role() = 'authenticated');
@@ -84,12 +88,14 @@ USING (auth.role() = 'authenticated');
 
 -- Leads Policies
 -- Anonymous users can INSER leads (submit forms)
+DROP POLICY IF EXISTS "Allow anonymous users to insert leads" ON public.leads;
 CREATE POLICY "Allow anonymous users to insert leads"
 ON public.leads FOR INSERT
 TO anon
 WITH CHECK (true);
 
 -- Only authenticated users can Read/Update/Delete leads
+DROP POLICY IF EXISTS "Allow authenticated users full access to leads" ON public.leads;
 CREATE POLICY "Allow authenticated users full access to leads"
 ON public.leads FOR ALL
 USING (auth.role() = 'authenticated');
@@ -105,11 +111,13 @@ END;
 $$ language 'plpgsql';
 
 -- Triggers for updated_at
+DROP TRIGGER IF EXISTS update_calculator_settings_modtime ON public.calculator_settings;
 CREATE TRIGGER update_calculator_settings_modtime
     BEFORE UPDATE ON public.calculator_settings
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_articles_modtime ON public.articles;
 CREATE TRIGGER update_articles_modtime
     BEFORE UPDATE ON public.articles
     FOR EACH ROW
@@ -138,14 +146,17 @@ ON CONFLICT (key) DO NOTHING;
 -- RLS for site_images
 ALTER TABLE public.site_images ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Allow public read-only access to site_images" ON public.site_images;
 CREATE POLICY "Allow public read-only access to site_images"
 ON public.site_images FOR SELECT
 USING (true);
 
+DROP POLICY IF EXISTS "Allow authenticated users to update site_images" ON public.site_images;
 CREATE POLICY "Allow authenticated users to update site_images"
 ON public.site_images FOR ALL
 USING (auth.role() = 'authenticated');
 
+DROP TRIGGER IF EXISTS update_site_images_modtime ON public.site_images;
 CREATE TRIGGER update_site_images_modtime
     BEFORE UPDATE ON public.site_images
     FOR EACH ROW
