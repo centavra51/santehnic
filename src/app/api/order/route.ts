@@ -43,6 +43,7 @@ export async function POST(req: Request) {
 • Метры: ${q.meters || 0}
 • Комнаты: ${q.rooms || 1}
 • Срочность: ${q.urgency || '---'}
+• Итоговая цена: ${q.totalPrice || '---'} MDL
 `;
         }
 

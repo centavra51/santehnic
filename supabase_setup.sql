@@ -115,7 +115,7 @@ CREATE TRIGGER update_articles_modtime
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
--- 5. Create the `site_images` table for CMS Global Images
+-- 5. Create the `site_images` table for CMS Global Images (CRITICAL FOR IMAGE MANAGEMENT)
 CREATE TABLE IF NOT EXISTS public.site_images (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     key TEXT NOT NULL UNIQUE,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS public.site_images (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Initial values for basic images
+-- INITIAL SEED DATA
 INSERT INTO public.site_images (key, image_url, description) VALUES
 ('hero_bg', '/hero-bg.png', 'Главное фоновое изображение (Hero Section)'),
 ('gallery_1', '/plumbing-hero.jpg', 'Галерея: Изображение 1'),
@@ -135,7 +135,7 @@ INSERT INTO public.site_images (key, image_url, description) VALUES
 ('why_choose_us', '/why-choose-us.png', 'Секция "Почему мы" (Боковое фото)')
 ON CONFLICT (key) DO NOTHING;
 
--- Policies for site_images
+-- RLS for site_images
 ALTER TABLE public.site_images ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Allow public read-only access to site_images"
@@ -150,6 +150,8 @@ CREATE TRIGGER update_site_images_modtime
     BEFORE UPDATE ON public.site_images
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
+
+-- IMPORTANT: RUN THE WHOLE SCRIPT IN SUPABASE SQL EDITOR TO ENSURE ALL TABLES EXIST!
 
 -- Instructions for Supabase Storage:
 -- 1. Create a public bucket named `site-media`

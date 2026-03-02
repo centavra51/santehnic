@@ -1,11 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
-import { Loader2 } from 'lucide-react';
-
-// This is just a stub for demonstrating the UI. 
-// In a real app, you would use @supabase/ssr for server-side auth/data.
+import { createClient } from '@/lib/supabase/client';
+import { Loader2, ClipboardList, Clock, MapPin, User, Info } from 'lucide-react';
 
 type Lead = {
     id: string;
@@ -13,31 +10,32 @@ type Lead = {
     name: string;
     phone: string;
     address: string;
-    description: string;
-    status: 'new' | 'processing' | 'done';
+    problem_description: string;
+    quiz_data: any;
+    status: 'new' | 'processing' | 'done' | 'cancelled';
 };
-
-const MOCK_LEADS: Lead[] = [
-    { id: '1', created_at: new Date().toISOString(), name: 'Иван', phone: '+373 69 123 456', address: 'Кишинев, Московский Проспект 10', description: 'Течет раковина', status: 'new' },
-    { id: '2', created_at: new Date(Date.now() - 3600000).toISOString(), name: 'Мария', phone: '+373 79 987 654', address: 'Рышкановка', description: 'Установка стиральной машины', status: 'processing' },
-];
 
 export default function AdminLeadsPage() {
     const [leads, setLeads] = useState<Lead[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const fetchLeads = async () => {
+        setLoading(true);
+        const supabase = createClient();
+        const { data, error } = await supabase
+            .from('leads')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error('Error fetching leads:', error);
+        } else {
+            setLeads(data || []);
+        }
+        setLoading(false);
+    };
+
     useEffect(() => {
-        // Simulate fetching from Supabase
-        const fetchLeads = async () => {
-            // const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-            // const { data } = await supabase.from('leads').select('*').order('created_at', { ascending: false });
-
-            setTimeout(() => {
-                setLeads(MOCK_LEADS);
-                setLoading(false);
-            }, 1000);
-        };
-
         fetchLeads();
     }, []);
 
@@ -82,21 +80,61 @@ export default function AdminLeadsPage() {
                             ) : leads.map(lead => (
                                 <tr key={lead.id} className="hover:bg-slate-50/50 transition-colors group">
                                     <td className="py-4 px-6 text-sm text-slate-500">
-                                        {new Date(lead.created_at).toLocaleString('ru-RU')}
+                                        <div className="flex items-center gap-2">
+                                            <Clock className="w-4 h-4 text-slate-400" />
+                                            {new Date(lead.created_at).toLocaleString('ru-RU')}
+                                        </div>
                                     </td>
                                     <td className="py-4 px-6">
-                                        <div className="font-bold text-primary-main">{lead.name}</div>
-                                        <div className="text-sm text-accent-cyan">{lead.phone}</div>
+                                        <div className="flex flex-col">
+                                            <div className="font-bold text-primary-main flex items-center gap-2">
+                                                <User className="w-4 h-4 text-slate-400" />
+                                                {lead.name}
+                                            </div>
+                                            <div className="text-sm text-accent-cyan font-medium">{lead.phone}</div>
+                                        </div>
                                     </td>
-                                    <td className="py-4 px-6 max-w-xs">
-                                        <div className="text-sm font-medium text-slate-700 truncate">{lead.address}</div>
-                                        <div className="text-sm text-slate-500 truncate">{lead.description}</div>
+                                    <td className="py-4 px-6">
+                                        <div className="space-y-1">
+                                            {lead.address && (
+                                                <div className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                                                    <MapPin className="w-4 h-4 text-slate-400" />
+                                                    {lead.address}
+                                                </div>
+                                            )}
+                                            {lead.problem_description && (
+                                                <div className="text-sm text-slate-500 flex items-start gap-2">
+                                                    <Info className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                                                    <span>{lead.problem_description}</span>
+                                                </div>
+                                            )}
+                                            {lead.quiz_data && Object.keys(lead.quiz_data).length > 0 && (
+                                                <div className="mt-2 p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs">
+                                                    <div className="font-bold text-primary-main mb-1 flex items-center gap-1 uppercase tracking-wider">
+                                                        <ClipboardList className="w-3.5 h-3.5" />
+                                                        Рассчитано через квиз
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-slate-600">
+                                                        <span>Услуга:</span> <span className="font-medium text-slate-900">{lead.quiz_data.serviceType || '---'}</span>
+                                                        <span>Метры:</span> <span className="font-medium text-slate-900">{lead.quiz_data.meters || 0}</span>
+                                                        <span>Комнаты:</span> <span className="font-medium text-slate-900">{lead.quiz_data.rooms || 1}</span>
+                                                        <span>Срочность:</span> <span className="font-medium text-slate-900">{lead.quiz_data.urgency || '---'}</span>
+                                                        {lead.quiz_data.totalPrice && (
+                                                            <>
+                                                                <span className="font-bold text-primary-main mt-1 pt-1 border-t border-slate-200">ИТОГО:</span>
+                                                                <span className="font-bold text-accent-cyan mt-1 pt-1 border-t border-slate-200">{lead.quiz_data.totalPrice} MDL</span>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="py-4 px-6">
                                         {getStatusBadge(lead.status)}
                                     </td>
                                     <td className="py-4 px-6 text-right">
-                                        <button className="text-sm font-medium text-accent-cyan hover:underline">
+                                        <button className="text-sm font-medium text-accent-cyan hover:underline bg-accent-cyan/5 px-3 py-1.5 rounded-lg border border-accent-cyan/20">
                                             Редактировать
                                         </button>
                                     </td>

@@ -83,7 +83,13 @@ export function QuizCalculator() {
 
     useEffect(() => {
         if (isClient) {
-            localStorage.setItem('santehnik_quiz', JSON.stringify({ step, data }));
+            localStorage.setItem('santehnik_quiz', JSON.stringify({
+                step,
+                data: {
+                    ...data,
+                    totalPrice: calculateTotal()
+                }
+            }));
         }
     }, [step, data, isClient]);
 
