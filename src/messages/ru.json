@@ -340,14 +340,15 @@
   },
   "Admin": {
     "sidebar": {
-      "leads": "Заявки (Leads)",
-      "calculator": "Цены (Калькулятор)",
-      "blog": "Блог (Статьи)",
+      "leads": "Заявки",
+      "calculator": "Цены",
+      "blog": "Блог",
       "images": "Изображения",
       "logout": "Выйти"
     },
     "leads": {
       "title": "Заявки",
+      "btn_refresh": "Обновить",
       "subtitle": "Управление поступающими лидами с сайта.",
       "col_date": "Дата / Время",
       "col_client": "Клиент",
@@ -365,6 +366,8 @@
       "quiz_urgency": "Срочность",
       "quiz_total": "ИТОГО",
       "btn_edit": "Редактировать",
+      "btn_delete": "Удалить",
+      "actions_delete": "Удалить заявку",
       "no_address": "Адрес не указан"
     },
     "login": {

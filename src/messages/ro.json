@@ -340,14 +340,15 @@
   },
   "Admin": {
     "sidebar": {
-      "leads": "Cereri (Leads)",
-      "calculator": "Prețuri (Calculator)",
-      "blog": "Blog (Articole)",
+      "leads": "Cereri",
+      "calculator": "Prețuri",
+      "blog": "Blog",
       "images": "Imagini",
       "logout": "Ieșire"
     },
     "leads": {
       "title": "Cereri",
+      "btn_refresh": "Actualizează",
       "subtitle": "Gestionarea cererilor primite de pe site.",
       "col_date": "Data / Ora",
       "col_client": "Client",
@@ -365,6 +366,8 @@
       "quiz_urgency": "Urgența",
       "quiz_total": "TOTAL",
       "btn_edit": "Editare",
+      "btn_delete": "Șterge",
+      "actions_delete": "Șterge cererea",
       "no_address": "Adresa nu este indicată"
     },
     "login": {

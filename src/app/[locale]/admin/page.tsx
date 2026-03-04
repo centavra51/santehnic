@@ -100,6 +100,45 @@ export default function AdminLeadsPage() {
         }
     };
 
+    const updateLeadStatus = async (leadId: string, currentStatus: string) => {
+        const statusMap: Record<string, string> = {
+            'new': 'processing',
+            'processing': 'done',
+            'done': 'new'
+        };
+        const nextStatus = statusMap[currentStatus] || 'new';
+
+        const supabase = createClient();
+        const { error } = await supabase
+            .from('leads')
+            .update({ status: nextStatus })
+            .eq('id', leadId);
+
+        if (!error) {
+            fetchLeads();
+        } else {
+            console.error('Update status error:', error);
+            alert('Failed to update status');
+        }
+    };
+
+    const deleteLead = async (leadId: string) => {
+        if (!window.confirm(t('actions_delete'))) return;
+
+        const supabase = createClient();
+        const { error } = await supabase
+            .from('leads')
+            .delete()
+            .eq('id', leadId);
+
+        if (!error) {
+            fetchLeads();
+        } else {
+            console.error('Delete error:', error);
+            alert('Failed to delete lead');
+        }
+    };
+
     return (
         <div>
             <div className="flex items-center justify-between mb-8">
@@ -121,7 +160,7 @@ export default function AdminLeadsPage() {
                         className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-colors"
                     >
                         <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                        {t('sidebar.leads')}
+                        {t('btn_refresh')}
                     </button>
                 </div>
             </div>
@@ -230,12 +269,23 @@ export default function AdminLeadsPage() {
                                         </div>
                                     </td>
                                     <td className="py-4 px-6">
-                                        {getStatusBadge(lead.status)}
+                                        <button
+                                            onClick={() => updateLeadStatus(lead.id, lead.status)}
+                                            className="transition-transform active:scale-95"
+                                        >
+                                            {getStatusBadge(lead.status)}
+                                        </button>
                                     </td>
                                     <td className="py-4 px-6 text-right">
-                                        <button className="text-sm font-medium text-accent-cyan hover:underline bg-accent-cyan/5 px-3 py-1.5 rounded-lg border border-accent-cyan/20">
-                                            {t('btn_edit')}
-                                        </button>
+                                        <div className="flex items-center justify-end gap-2">
+                                            <button
+                                                onClick={() => deleteLead(lead.id)}
+                                                className="p-2 text-slate-400 hover:text-destructive hover:bg-destructive/5 rounded-lg transition-colors"
+                                                title={t('btn_delete')}
+                                            >
+                                                <AlertCircle className="w-5 h-5" />
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
