@@ -43,7 +43,9 @@ export async function POST(req: Request) {
         });
 
         if (dbError) {
-            console.error('Supabase lead insert error:', dbError);
+            console.error('Supabase lead insert error details:', JSON.stringify(dbError, null, 2));
+        } else {
+            console.log('Lead successfully inserted into DB');
         }
 
         // ──────────────────────────────────────
@@ -81,6 +83,7 @@ export async function POST(req: Request) {
                 ? SERVICE_NAMES[q.serviceType].ru
                 : (q.serviceType || '—');
             const urgLabel = URGENCY_LABELS[q.urgency] || q.urgency || '—';
+            const photoLink = q.photoUrl ? `\n\n🖼 <b>Фото проблемы:</b> <a href="${q.photoUrl}">Открыть фото</a>` : '';
 
             quizBlock = `
 ┌─────────────────────────┐
@@ -92,7 +95,7 @@ export async function POST(req: Request) {
 │  ⏰ Срочность: <b>${urgLabel}</b>
 │
 │  💰 <b>ИТОГО: ${q.totalPrice || '—'} MDL</b>
-└─────────────────────────┘`;
+└─────────────────────────┘${photoLink}`;
         }
 
         // Build the main Telegram message

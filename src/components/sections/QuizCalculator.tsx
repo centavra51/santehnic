@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ChevronRight, ChevronLeft, CheckCircle2, AlertCircle, Loader2, Upload } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { createClient } from '@/lib/supabase/client';
 
 type QuizState = {
     serviceType: string;
@@ -38,6 +39,7 @@ export function QuizCalculator() {
     const [step, setStep] = useState(1);
     const [data, setData] = useState<QuizState>(INITIAL_STATE);
     const [isClient, setIsClient] = useState(false);
+    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
@@ -244,23 +246,51 @@ export function QuizCalculator() {
                                     <p className="text-muted-foreground mb-6">{t('step4_desc')}</p>
 
                                     <div className="border-2 border-dashed border-slate-300 rounded-xl p-12 text-center hover:bg-slate-50 transition-colors cursor-pointer text-muted-foreground flex flex-col items-center gap-4 relative">
-                                        <AlertCircle className="w-8 h-8 opacity-50" />
-                                        <p className="font-medium">{t('drag_drop')}</p>
+                                        {uploading ? (
+                                            <Loader2 className="w-8 h-8 animate-spin text-accent-cyan" />
+                                        ) : (
+                                            <Upload className="w-8 h-8 opacity-50" />
+                                        )}
+                                        <p className="font-medium">{uploading ? 'Загрузка...' : t('drag_drop')}</p>
                                         <p className="text-sm opacity-70">{t('file_format')}</p>
                                         <input
                                             type="file"
-                                            className="absolute inset-0 opacity-0 cursor-pointer"
-                                            onChange={(e) => {
+                                            disabled={uploading}
+                                            className="absolute inset-0 opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                                            onChange={async (e) => {
                                                 const file = e.target.files?.[0];
-                                                if (file) {
-                                                    updateData({ photoUrl: file.name });
+                                                if (!file) return;
+
+                                                setUploading(true);
+                                                try {
+                                                    const supabase = createClient();
+                                                    const fileExt = file.name.split('.').pop();
+                                                    const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+                                                    const filePath = `quiz-photos/${fileName}`;
+
+                                                    const { error: uploadError } = await supabase.storage
+                                                        .from('site-media')
+                                                        .upload(filePath, file);
+
+                                                    if (uploadError) throw uploadError;
+
+                                                    const { data: { publicUrl } } = supabase.storage
+                                                        .from('site-media')
+                                                        .getPublicUrl(filePath);
+
+                                                    updateData({ photoUrl: publicUrl });
+                                                } catch (error) {
+                                                    console.error('Error uploading image:', error);
+                                                    alert('Ошибка при загрузке изображения');
+                                                } finally {
+                                                    setUploading(false);
                                                 }
                                             }}
                                         />
                                         {data.photoUrl && (
                                             <div className="absolute top-4 right-4 bg-accent-cyan/10 text-accent-cyan px-3 py-1 rounded-full text-xs font-bold border border-accent-cyan/30 z-10 flex items-center gap-2">
                                                 <CheckCircle2 className="w-3 h-3" />
-                                                Загружено: {data.photoUrl}
+                                                Изображение загружено
                                             </div>
                                         )}
                                     </div>

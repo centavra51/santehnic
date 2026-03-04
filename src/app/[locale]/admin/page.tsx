@@ -12,6 +12,7 @@ type Lead = {
     phone: string;
     address: string;
     problem_description: string;
+    service_type: string;
     quiz_data: any;
     status: 'new' | 'processing' | 'done' | 'cancelled';
 };
@@ -32,7 +33,9 @@ export default function AdminLeadsPage() {
 
         if (error) {
             console.error('Error fetching leads:', error);
+            alert('Ошибка при загрузке заявок. Проверьте консоль.');
         } else {
+            console.log('Fetched leads:', data);
             setLeads(data || []);
         }
         setLoading(false);
@@ -105,13 +108,35 @@ export default function AdminLeadsPage() {
                                                     {lead.address}
                                                 </div>
                                             )}
+                                            {lead.service_type && (
+                                                <div className="text-sm font-bold text-accent-cyan flex items-center gap-2">
+                                                    <ClipboardList className="w-4 h-4" />
+                                                    {lead.service_type}
+                                                </div>
+                                            )}
                                             {lead.problem_description && (
                                                 <div className="text-sm text-slate-500 flex items-start gap-2">
                                                     <Info className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
                                                     <span>{lead.problem_description}</span>
                                                 </div>
                                             )}
-                                            {lead.quiz_data && Object.keys(lead.quiz_data).length > 0 && (
+                                            {lead.quiz_data && lead.quiz_data.photoUrl && (
+                                                <div className="mt-2">
+                                                    <a
+                                                        href={lead.quiz_data.photoUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-block p-1 bg-slate-100 rounded-lg border border-slate-200 hover:border-accent-cyan transition-colors"
+                                                    >
+                                                        <img
+                                                            src={lead.quiz_data.photoUrl}
+                                                            alt="Quiz issue"
+                                                            className="w-16 h-16 object-cover rounded-md"
+                                                        />
+                                                    </a>
+                                                </div>
+                                            )}
+                                            {lead.quiz_data && Object.keys(lead.quiz_data).length > 0 && lead.quiz_data.serviceType && (
                                                 <div className="mt-2 p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs">
                                                     <div className="font-bold text-primary-main mb-1 flex items-center gap-1 uppercase tracking-wider">
                                                         <ClipboardList className="w-3.5 h-3.5" />
