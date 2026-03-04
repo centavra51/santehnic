@@ -52,6 +52,11 @@ export function ContactForm() {
                 const parsed = JSON.parse(savedQuiz);
                 if (parsed.data && parsed.step === 5) {
                     setQuizData(parsed.data);
+                    // Auto-fill description with quiz info
+                    const svcLabel = parsed.data.serviceLabel || parsed.data.serviceType || '';
+                    if (svcLabel) {
+                        setValue('description', `${t('fields.desc_calc_prefix')}: ${svcLabel}. ${t('fields.desc_calc_price')}: ${parsed.data.totalPrice || '—'} MDL`);
+                    }
                 }
             } catch (e) { }
         }
@@ -61,6 +66,25 @@ export function ContactForm() {
             // Clean up URL without reloading
             window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
         }
+
+        // 3. Listen for quiz completion event (same-page navigation)
+        const handleQuizCompleted = (e: Event) => {
+            const customEvent = e as CustomEvent;
+            const payload = customEvent.detail;
+            if (payload) {
+                setQuizData(payload);
+                // Auto-fill description
+                const svcLabel = payload.serviceLabel || payload.serviceType || '';
+                if (svcLabel) {
+                    setValue('description', `${t('fields.desc_calc_prefix')}: ${svcLabel}. ${t('fields.desc_calc_price')}: ${payload.totalPrice || '—'} MDL`);
+                }
+            }
+        };
+
+        window.addEventListener('quizCompleted', handleQuizCompleted);
+        return () => {
+            window.removeEventListener('quizCompleted', handleQuizCompleted);
+        };
     }, [setValue, t]);
 
     const onSubmit = async (data: FormValues) => {

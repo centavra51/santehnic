@@ -287,12 +287,20 @@ export function QuizCalculator() {
                                     <button
                                         onClick={() => {
                                             const serviceName = serviceRates[data.serviceType]?.label || data.serviceType;
-                                            const hash = `#order?service=${encodeURIComponent(serviceName)}&price=${calculateTotal()}`;
-                                            window.location.href = hash;
-                                            // Ensure the form gets populated correctly on navigation
+                                            const quizPayload = {
+                                                ...data,
+                                                totalPrice: calculateTotal(),
+                                                serviceLabel: serviceName,
+                                            };
+                                            // Save to localStorage
+                                            localStorage.setItem('santehnik_quiz', JSON.stringify({
+                                                step: 5,
+                                                data: quizPayload
+                                            }));
+                                            // Dispatch custom event so ContactForm picks up the data immediately
+                                            window.dispatchEvent(new CustomEvent('quizCompleted', { detail: quizPayload }));
+                                            // Scroll to order form
                                             setTimeout(() => {
-                                                const event = new Event('popstate');
-                                                window.dispatchEvent(event);
                                                 document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
                                             }, 50);
                                         }}
