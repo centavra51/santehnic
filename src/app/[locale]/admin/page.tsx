@@ -53,6 +53,13 @@ export default function AdminLeadsPage() {
             alert('Ошибка при загрузке заявок. Проверьте консоль.');
         } else {
             console.log('Fetched leads:', data);
+            // Diagnostic mapping for schema verification
+            if (data && data.length > 0) {
+                console.log('--- DATABASE SCHEMA DIAGNOSTICS ---');
+                console.log('Available columns in leads table:', Object.keys(data[0]));
+                console.log('Recommended columns for full functionality: id, created_at, name, phone, address, service_type, problem_description, quiz_data, status');
+                console.log('--- END DIAGNOSTICS ---');
+            }
             setLeads(data || []);
         }
         setLoading(false);

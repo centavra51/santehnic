@@ -33,6 +33,8 @@ export async function POST(req: Request) {
         console.log('Lead Name:', name);
 
         const supabase = await createClient();
+
+        // Try FULL insertion first
         const { data: supabaseData, error: dbError, status: dbStatus } = await supabase
             .from('leads')
             .insert([{
@@ -46,16 +48,36 @@ export async function POST(req: Request) {
             }])
             .select();
 
+        let finalError = dbError;
+
+        // FALLBACK: If full insert fails, try a MINIMAL insert (Safe Mode)
+        // This handles cases where columns like 'service_type' or 'quiz_data' are missing
         if (dbError) {
-            console.error('CRITICAL: Supabase Lead Insertion Failed!');
-            console.error('Error Code:', dbError.code);
-            console.error('Error Message:', dbError.message);
-            console.error('Error Details:', dbError.details);
-            console.error('HTTP Status:', dbStatus);
+            console.warn('FULL insertion failed. Attempting MINIMAL (Safe Mode) insertion...');
+            console.warn('Reason:', dbError.message);
+
+            const { error: fallbackError } = await supabase
+                .from('leads')
+                .insert([{
+                    name,
+                    phone,
+                    address: address || null
+                }]);
+
+            if (fallbackError) {
+                console.error('CRITICAL: Both FULL and MINIMAL insertions failed!');
+                finalError = fallbackError;
+            } else {
+                console.log('SUCCESS: Lead saved using MINIMAL fallback (Safe Mode).');
+                finalError = null;
+            }
         } else {
-            console.log('SUCCESS: Lead saved to Supabase.');
-            console.log('Row inserted:', supabaseData);
-            console.log('HTTP Status:', dbStatus);
+            console.log('SUCCESS: Lead saved to Supabase (Full Data).');
+        }
+
+        if (finalError) {
+            console.error('Final Supabase Error:', finalError.message);
+            console.error('HTTP Status:', dbStatus);
         }
         console.log('--- END SUPABASE INSERTION ---');
 
