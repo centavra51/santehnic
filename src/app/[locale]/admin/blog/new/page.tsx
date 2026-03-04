@@ -3,8 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Save, ArrowLeft, Loader2, Upload, Link as LinkIcon, Image as ImageIcon, Bold, Italic, List, Heading1, Heading2, Minus } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Upload, Link as LinkIcon, Image as ImageIcon, Bold, Italic, List, Heading1, Heading2, Minus, Layout } from 'lucide-react';
 import Link from 'next/link';
+
+const TEMPLATES = {
+    step_by_step: {
+        ru: `# [Название инструкции]\n\nВ этом руководстве мы пошагово разберем, как [описание задачи].\n\n---\n\n## 🛠 Подготовка\nПеред началом вам понадобятся:\n- [Инструмент 1]\n- [Материал 1]\n- [Время: ~30 минут]\n\n---\n\n## Шаг 1: [Название шага]\n[Описание того, что нужно сделать на этом этапе. Будьте максимально подробны.]\n\n![подпись к фото](/blog/image.jpg)\n\n> [!] **Совет:** Чтобы упростить задачу, попробуйте [совет].\n\n---\n\n## Шаг 2: [Название шага]\n[Продолжаем процесс...]\n\n![подпись к фото](/blog/image.jpg)\n\n---\n\n## ✅ Итог\nПоздравляем! Вы успешно справились с [задачей].\n\n[Призыв к действию: напишите нам, если возникли сложности]`,
+        ro: `# [Titlul instrucțiunii]\n\nÎn acest ghid, vom analiza pas cu pas cum să [descrierea sarcinii].\n\n---\n\n## 🛠 Pregătire\nÎnainte de a începe, veți avea nevoie de:\n- [Instrument 1]\n- [Material 1]\n- [Timp: ~30 minute]\n\n---\n\n## Pasul 1: [Numele pasului]\n[Descrierea a ceea ce trebuie făcut în această etapă. Fiți cât mai detaliat.]\n\n![legendă foto](/blog/image.jpg)\n\n> [!] **Sfat:** Pentru a simplifica sarcina, încercați [sfat].\n\n---\n\n## Pasul 2: [Numele pasului]\n[Continuăm procesul...]\n\n![legendă foto](/blog/image.jpg)\n\n---\n\n## ✅ Rezultat\nFelicitări! Ați finalizat cu succes [sarcina].\n\n[Apel la acțiune: scrieți-ne dacă întâmpinați dificultăți]`
+    }
+};
 
 export default function NewArticlePage() {
     const router = useRouter();
@@ -25,6 +32,15 @@ export default function NewArticlePage() {
         seo_description_ru: '',
         seo_description_ro: ''
     });
+
+    const applyTemplate = (lang: 'ru' | 'ro') => {
+        if (confirm(lang === 'ru' ? 'Заменить текущий текст шаблоном?' : 'Înlocuiți textul curent cu șablonul?')) {
+            setFormData(prev => ({
+                ...prev,
+                [`content_${lang}`]: TEMPLATES.step_by_step[lang]
+            }));
+        }
+    };
 
     const [uploading, setUploading] = useState(false);
 
@@ -216,6 +232,11 @@ export default function NewArticlePage() {
                                     <button type="button" onClick={() => insertText('ru', '[текст](ссылка)', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Ссылка - Link">
                                         <LinkIcon className="w-5 h-5" />
                                     </button>
+                                    <div className="w-[1px] bg-slate-300 mx-1" />
+                                    <button type="button" onClick={() => applyTemplate('ru')} className="p-1.5 bg-accent-cyan/10 text-accent-cyan hover:bg-accent-cyan hover:text-white rounded-md transition-all flex items-center gap-1 px-2" title="Применить шаблон пошаговой инструкции">
+                                        <Layout className="w-4 h-4" />
+                                        <span className="text-xs font-bold">Шаблон</span>
+                                    </button>
                                 </div>
                             </label>
                             <textarea
@@ -305,6 +326,11 @@ export default function NewArticlePage() {
                                     </button>
                                     <button type="button" onClick={() => insertText('ro', '[text](link)', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Link">
                                         <LinkIcon className="w-5 h-5" />
+                                    </button>
+                                    <div className="w-[1px] bg-slate-300 mx-1" />
+                                    <button type="button" onClick={() => applyTemplate('ro')} className="p-1.5 bg-accent-cyan/10 text-accent-cyan hover:bg-accent-cyan hover:text-white rounded-md transition-all flex items-center gap-1 px-2" title="Aplicați șablonul instrucțiunilor pas cu pas">
+                                        <Layout className="w-4 h-4" />
+                                        <span className="text-xs font-bold">Șablon</span>
                                     </button>
                                 </div>
                             </label>

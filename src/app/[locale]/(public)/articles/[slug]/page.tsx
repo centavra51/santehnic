@@ -6,20 +6,23 @@ import Image from 'next/image';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }) {
     const p = await params;
+    const { slug, locale } = p;
     const supabase = await createClient();
     const { data: article } = await supabase
         .from('articles')
-        .select('title, excerpt')
-        .eq('slug', p.slug)
-        .eq('locale', p.locale)
+        .select('*')
+        .eq('slug', slug)
         .eq('is_published', true)
         .single();
 
     if (!article) return { title: 'Article Not Found' };
 
+    const title = locale === 'ru' ? article.seo_title_ru || article.title_ru : article.seo_title_ro || article.title_ro;
+    const description = locale === 'ru' ? article.seo_description_ru || article.excerpt_ru : article.seo_description_ro || article.excerpt_ro;
+
     return {
-        title: `${article.title} | Santehnik`,
-        description: article.excerpt || '',
+        title: title ? `${title} | Santehnik` : 'Santehnik',
+        description: description || '',
     };
 }
 
@@ -32,11 +35,17 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
         .from('articles')
         .select('*')
         .eq('slug', slug)
-        .eq('locale', locale)
         .eq('is_published', true)
         .single();
 
     if (error || !article) {
+        notFound();
+    }
+
+    const title = locale === 'ru' ? article.title_ru : article.title_ro;
+    const content = locale === 'ru' ? article.content_ru : article.content_ro;
+
+    if (!title || !content) {
         notFound();
     }
 
@@ -58,7 +67,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                         </time>
                     </div>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-primary-main leading-tight mb-6">
-                        {article.title}
+                        {title}
                     </h1>
                 </header>
 
@@ -66,7 +75,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                     <div className="relative w-full h-64 md:h-96 rounded-3xl overflow-hidden mb-12 shadow-md">
                         <Image
                             src={article.image_url}
-                            alt={article.title}
+                            alt={title}
                             fill
                             className="object-cover"
                             priority
@@ -75,8 +84,8 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                 )}
 
                 <div
-                    className="prose prose-lg md:prose-xl prose-slate max-w-none prose-headings:font-heading prose-headings:font-extrabold prose-a:text-accent-cyan hover:prose-a:text-accent-cyan/80 prose-img:rounded-2xl"
-                    dangerouslySetInnerHTML={{ __html: article.content }}
+                    className="article-content max-w-none"
+                    dangerouslySetInnerHTML={{ __html: content }}
                 />
             </article>
         </main>

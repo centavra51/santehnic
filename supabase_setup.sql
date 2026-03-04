@@ -33,6 +33,10 @@ CREATE TABLE IF NOT EXISTS public.articles (
     content_ro TEXT,
     image_url TEXT,
     is_published BOOLEAN DEFAULT false,
+    seo_title_ru TEXT,
+    seo_title_ro TEXT,
+    seo_description_ru TEXT,
+    seo_description_ro TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
