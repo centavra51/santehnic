@@ -15,6 +15,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const [sessionLoading, setSessionLoading] = useState(true);
 
     useEffect(() => {
+        // Skip session check on the login page itself to prevent redirect loop
+        const isLoginPage = window.location.pathname.includes('/admin/login');
+        if (isLoginPage) {
+            setSessionLoading(false);
+            return;
+        }
+
         const checkSession = async () => {
             const supabase = createClient();
             const { data: { session } } = await supabase.auth.getSession();
