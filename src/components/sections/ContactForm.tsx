@@ -73,11 +73,15 @@ export function ContactForm() {
                 },
                 body: JSON.stringify({
                     ...data,
-                    quiz_data: quizData
+                    service: quizData?.serviceType || null,
+                    quiz_data: quizData,
+                    source: quizData ? 'quiz' : 'form'
                 })
             });
             if (res.ok) {
                 setIsSuccess(true);
+                // Clean up quiz data from localStorage after successful submission
+                localStorage.removeItem('santehnik_quiz');
             }
         } catch (error) {
             console.error(error);

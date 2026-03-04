@@ -337,5 +337,45 @@
     "rights": "Все права защищены.",
     "privacy": "Политика конфиденциальности",
     "terms": "Пользовательское соглашение"
+  },
+  "Admin": {
+    "sidebar": {
+      "leads": "Заявки (Leads)",
+      "calculator": "Цены (Калькулятор)",
+      "blog": "Блог (Статьи)",
+      "images": "Изображения",
+      "logout": "Выйти"
+    },
+    "leads": {
+      "title": "Заявки",
+      "subtitle": "Управление поступающими лидами с сайта.",
+      "col_date": "Дата / Время",
+      "col_client": "Клиент",
+      "col_details": "Детали проблемы",
+      "col_status": "Статус",
+      "col_actions": "Действия",
+      "loading": "Загрузка заявок...",
+      "status_new": "Новая",
+      "status_processing": "В работе",
+      "status_done": "Готово",
+      "quiz_label": "Рассчитано через квиз",
+      "quiz_service": "Услуга",
+      "quiz_meters": "Метры",
+      "quiz_rooms": "Комнаты",
+      "quiz_urgency": "Срочность",
+      "quiz_total": "ИТОГО",
+      "btn_edit": "Редактировать",
+      "no_address": "Адрес не указан"
+    },
+    "login": {
+      "title": "Вход в Панель",
+      "subtitle": "Панель управления Santehnik",
+      "email_label": "Email администратора",
+      "email_placeholder": "admin@example.com",
+      "password_label": "Пароль",
+      "password_placeholder": "••••••••",
+      "btn_login": "Войти",
+      "error_credentials": "Неверный логин или пароль"
+    }
   }
 }

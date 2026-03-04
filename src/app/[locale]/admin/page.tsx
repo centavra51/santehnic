@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Loader2, ClipboardList, Clock, MapPin, User, Info } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 
 type Lead = {
     id: string;
@@ -18,6 +19,8 @@ type Lead = {
 export default function AdminLeadsPage() {
     const [leads, setLeads] = useState<Lead[]>([]);
     const [loading, setLoading] = useState(true);
+    const t = useTranslations('Admin.leads');
+    const locale = useLocale();
 
     const fetchLeads = async () => {
         setLoading(true);
@@ -41,9 +44,9 @@ export default function AdminLeadsPage() {
 
     const getStatusBadge = (status: string) => {
         switch (status) {
-            case 'new': return <span className="bg-destructive/10 text-destructive px-3 py-1 rounded-full text-xs font-bold uppercase">Новая</span>;
-            case 'processing': return <span className="bg-yellow-500/10 text-yellow-600 px-3 py-1 rounded-full text-xs font-bold uppercase">В работе</span>;
-            case 'done': return <span className="bg-success-green/10 text-success-green px-3 py-1 rounded-full text-xs font-bold uppercase">Готово</span>;
+            case 'new': return <span className="bg-destructive/10 text-destructive px-3 py-1 rounded-full text-xs font-bold uppercase">{t('status_new')}</span>;
+            case 'processing': return <span className="bg-yellow-500/10 text-yellow-600 px-3 py-1 rounded-full text-xs font-bold uppercase">{t('status_processing')}</span>;
+            case 'done': return <span className="bg-success-green/10 text-success-green px-3 py-1 rounded-full text-xs font-bold uppercase">{t('status_done')}</span>;
             default: return null;
         }
     };
@@ -52,8 +55,8 @@ export default function AdminLeadsPage() {
         <div>
             <div className="flex items-center justify-between mb-8">
                 <div>
-                    <h1 className="text-3xl font-heading font-extrabold text-primary-main">Заявки</h1>
-                    <p className="text-muted-foreground mt-2">Управление поступающими лидами с сайта.</p>
+                    <h1 className="text-3xl font-heading font-extrabold text-primary-main">{t('title')}</h1>
+                    <p className="text-muted-foreground mt-2">{t('subtitle')}</p>
                 </div>
             </div>
 
@@ -62,11 +65,11 @@ export default function AdminLeadsPage() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 text-sm uppercase tracking-wider">
-                                <th className="py-4 px-6 font-medium">Дата / Время</th>
-                                <th className="py-4 px-6 font-medium">Клиент</th>
-                                <th className="py-4 px-6 font-medium">Детали проблемы</th>
-                                <th className="py-4 px-6 font-medium">Статус</th>
-                                <th className="py-4 px-6 font-medium text-right">Действия</th>
+                                <th className="py-4 px-6 font-medium">{t('col_date')}</th>
+                                <th className="py-4 px-6 font-medium">{t('col_client')}</th>
+                                <th className="py-4 px-6 font-medium">{t('col_details')}</th>
+                                <th className="py-4 px-6 font-medium">{t('col_status')}</th>
+                                <th className="py-4 px-6 font-medium text-right">{t('col_actions')}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -74,7 +77,7 @@ export default function AdminLeadsPage() {
                                 <tr>
                                     <td colSpan={5} className="py-12 text-center text-slate-400">
                                         <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
-                                        Загрузка заявок...
+                                        {t('loading')}
                                     </td>
                                 </tr>
                             ) : leads.map(lead => (
@@ -82,7 +85,7 @@ export default function AdminLeadsPage() {
                                     <td className="py-4 px-6 text-sm text-slate-500">
                                         <div className="flex items-center gap-2">
                                             <Clock className="w-4 h-4 text-slate-400" />
-                                            {new Date(lead.created_at).toLocaleString('ru-RU')}
+                                            {new Date(lead.created_at).toLocaleString(locale === 'ro' ? 'ro-RO' : 'ru-RU')}
                                         </div>
                                     </td>
                                     <td className="py-4 px-6">
@@ -112,16 +115,16 @@ export default function AdminLeadsPage() {
                                                 <div className="mt-2 p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs">
                                                     <div className="font-bold text-primary-main mb-1 flex items-center gap-1 uppercase tracking-wider">
                                                         <ClipboardList className="w-3.5 h-3.5" />
-                                                        Рассчитано через квиз
+                                                        {t('quiz_label')}
                                                     </div>
                                                     <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-slate-600">
-                                                        <span>Услуга:</span> <span className="font-medium text-slate-900">{lead.quiz_data.serviceType || '---'}</span>
-                                                        <span>Метры:</span> <span className="font-medium text-slate-900">{lead.quiz_data.meters || 0}</span>
-                                                        <span>Комнаты:</span> <span className="font-medium text-slate-900">{lead.quiz_data.rooms || 1}</span>
-                                                        <span>Срочность:</span> <span className="font-medium text-slate-900">{lead.quiz_data.urgency || '---'}</span>
+                                                        <span>{t('quiz_service')}:</span> <span className="font-medium text-slate-900">{lead.quiz_data.serviceType || '---'}</span>
+                                                        <span>{t('quiz_meters')}:</span> <span className="font-medium text-slate-900">{lead.quiz_data.meters || 0}</span>
+                                                        <span>{t('quiz_rooms')}:</span> <span className="font-medium text-slate-900">{lead.quiz_data.rooms || 1}</span>
+                                                        <span>{t('quiz_urgency')}:</span> <span className="font-medium text-slate-900">{lead.quiz_data.urgency || '---'}</span>
                                                         {lead.quiz_data.totalPrice && (
                                                             <>
-                                                                <span className="font-bold text-primary-main mt-1 pt-1 border-t border-slate-200">ИТОГО:</span>
+                                                                <span className="font-bold text-primary-main mt-1 pt-1 border-t border-slate-200">{t('quiz_total')}:</span>
                                                                 <span className="font-bold text-accent-cyan mt-1 pt-1 border-t border-slate-200">{lead.quiz_data.totalPrice} MDL</span>
                                                             </>
                                                         )}
@@ -135,7 +138,7 @@ export default function AdminLeadsPage() {
                                     </td>
                                     <td className="py-4 px-6 text-right">
                                         <button className="text-sm font-medium text-accent-cyan hover:underline bg-accent-cyan/5 px-3 py-1.5 rounded-lg border border-accent-cyan/20">
-                                            Редактировать
+                                            {t('btn_edit')}
                                         </button>
                                     </td>
                                 </tr>

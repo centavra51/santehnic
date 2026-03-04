@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Link, useRouter } from '@/i18n/routing';
-import { LayoutDashboard, Users, Settings, LogOut, FileText, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Link, useRouter, usePathname } from '@/i18n/routing';
+import { LayoutDashboard, Users, Settings, LogOut, FileText, Image as ImageIcon, Loader2, Globe } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
+    const pathname = usePathname();
+    const t = useTranslations('Admin');
+    const locale = useLocale();
 
     const [sessionLoading, setSessionLoading] = useState(true);
 
@@ -15,9 +19,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             const supabase = createClient();
             const { data: { session } } = await supabase.auth.getSession();
             if (!session) {
-                // Determine current locale to redirect properly
-                const locale = window.location.pathname.split('/')[1] || 'ru';
-                window.location.href = `/${locale}/admin/login`;
+                const loc = window.location.pathname.split('/')[1] || 'ru';
+                window.location.href = `/${loc}/admin/login`;
             } else {
                 setSessionLoading(false);
             }
@@ -28,8 +31,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const handleLogout = async () => {
         const supabase = createClient();
         await supabase.auth.signOut();
-        const locale = window.location.pathname.split('/')[1] || 'ru';
-        window.location.href = `/${locale}/admin/login`;
+        const loc = window.location.pathname.split('/')[1] || 'ru';
+        window.location.href = `/${loc}/admin/login`;
+    };
+
+    const switchLocale = () => {
+        const newLocale = locale === 'ru' ? 'ro' : 'ru';
+        // Navigate to the same admin page in the other locale
+        window.location.href = `/${newLocale}${pathname}`;
     };
 
     if (sessionLoading) {
@@ -52,26 +61,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <nav className="flex-1 p-4 space-y-2">
                     <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <LayoutDashboard className="w-5 h-5 text-accent-cyan" />
-                        <span className="font-medium">Заявки (Leads)</span>
+                        <span className="font-medium">{t('sidebar.leads')}</span>
                     </Link>
                     <Link href="/admin/calculator" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <Settings className="w-5 h-5 text-accent-cyan" />
-                        <span className="font-medium">Цены (Калькулятор)</span>
+                        <span className="font-medium">{t('sidebar.calculator')}</span>
                     </Link>
                     <Link href="/admin/blog" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <Users className="w-5 h-5 text-accent-cyan" />
-                        <span className="font-medium">Блог (Статьи)</span>
+                        <span className="font-medium">{t('sidebar.blog')}</span>
                     </Link>
                     <Link href="/admin/images" className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <ImageIcon className="w-5 h-5 text-accent-cyan" />
-                        <span className="font-medium">Изображения</span>
+                        <span className="font-medium">{t('sidebar.images')}</span>
                     </Link>
                 </nav>
 
-                <div className="p-4 border-t border-white/10">
+                <div className="p-4 border-t border-white/10 space-y-2">
+                    <button onClick={switchLocale} className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
+                        <Globe className="w-5 h-5 text-accent-cyan" />
+                        <span className="font-medium">{locale === 'ru' ? 'Română' : 'Русский'}</span>
+                    </button>
                     <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors">
                         <LogOut className="w-5 h-5 text-accent-cyan" />
-                        <span className="font-medium">Выйти</span>
+                        <span className="font-medium">{t('sidebar.logout')}</span>
                     </button>
                 </div>
             </aside>
@@ -82,9 +95,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <Link href="/admin" className="text-xl font-heading font-extrabold text-primary-main">
                         Santehnik<span className="text-accent-cyan">Admin</span>
                     </Link>
-                    <button onClick={handleLogout} className="text-slate-500 hover:text-primary-main transition-colors">
-                        <LogOut className="w-6 h-6" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button onClick={switchLocale} className="text-slate-500 hover:text-primary-main transition-colors px-2 py-1 rounded-lg border border-slate-200 text-sm font-bold">
+                            {locale === 'ru' ? 'RO' : 'RU'}
+                        </button>
+                        <button onClick={handleLogout} className="text-slate-500 hover:text-primary-main transition-colors">
+                            <LogOut className="w-6 h-6" />
+                        </button>
+                    </div>
                 </header>
                 <div className="p-4 md:p-8">
                     {children}

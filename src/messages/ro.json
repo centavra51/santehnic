@@ -337,5 +337,45 @@
     "rights": "Toate drepturile rezervate.",
     "privacy": "Politica de confidențialitate",
     "terms": "Termeni și condiții"
+  },
+  "Admin": {
+    "sidebar": {
+      "leads": "Cereri (Leads)",
+      "calculator": "Prețuri (Calculator)",
+      "blog": "Blog (Articole)",
+      "images": "Imagini",
+      "logout": "Ieșire"
+    },
+    "leads": {
+      "title": "Cereri",
+      "subtitle": "Gestionarea cererilor primite de pe site.",
+      "col_date": "Data / Ora",
+      "col_client": "Client",
+      "col_details": "Detalii problemă",
+      "col_status": "Status",
+      "col_actions": "Acțiuni",
+      "loading": "Se încarcă cererile...",
+      "status_new": "Nouă",
+      "status_processing": "În lucru",
+      "status_done": "Finalizată",
+      "quiz_label": "Calculat prin quiz",
+      "quiz_service": "Serviciu",
+      "quiz_meters": "Metri",
+      "quiz_rooms": "Încăperi",
+      "quiz_urgency": "Urgența",
+      "quiz_total": "TOTAL",
+      "btn_edit": "Editare",
+      "no_address": "Adresa nu este indicată"
+    },
+    "login": {
+      "title": "Autentificare Panou",
+      "subtitle": "Panoul de administrare Santehnik",
+      "email_label": "Email administrator",
+      "email_placeholder": "admin@example.com",
+      "password_label": "Parola",
+      "password_placeholder": "••••••••",
+      "btn_login": "Autentificare",
+      "error_credentials": "Email sau parolă incorectă"
+    }
   }
 }
