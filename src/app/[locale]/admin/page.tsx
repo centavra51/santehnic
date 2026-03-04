@@ -130,7 +130,7 @@ export default function AdminLeadsPage() {
     };
 
     const deleteLead = async (leadId: string) => {
-        if (!window.confirm(t('actions_delete'))) return;
+        if (!window.confirm('Вы уверены, что хотите НАВСЕГДА удалить эту заявку из базы данных Supabase? Это действие нельзя отменить.')) return;
 
         const supabase = createClient();
         const { error } = await supabase

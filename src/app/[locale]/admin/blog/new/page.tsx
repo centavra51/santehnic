@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Save, ArrowLeft, Loader2, Upload, Link as LinkIcon, Image as ImageIcon, Bold, Italic, List, Heading1, Heading2 } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Upload, Link as LinkIcon, Image as ImageIcon, Bold, Italic, List, Heading1, Heading2, Minus } from 'lucide-react';
 import Link from 'next/link';
 
 export default function NewArticlePage() {
@@ -192,12 +192,30 @@ export default function NewArticlePage() {
                         <div>
                             <label className="block text-sm font-bold text-slate-700 mb-2 flex justify-between">
                                 Контент (RU)
-                                <div className="flex gap-1">
-                                    <button type="button" onClick={() => insertText('ru', '**', '**')} className="p-1 hover:bg-slate-100 rounded" title="Bold"><Bold className="w-3.5 h-3.5" /></button>
-                                    <button type="button" onClick={() => insertText('ru', '_', '_')} className="p-1 hover:bg-slate-100 rounded" title="Italic"><Italic className="w-3.5 h-3.5" /></button>
-                                    <button type="button" onClick={() => insertText('ru', '# ', '')} className="p-1 hover:bg-slate-100 rounded" title="H1"><Heading1 className="w-3.5 h-3.5" /></button>
-                                    <button type="button" onClick={() => insertText('ru', '## ', '')} className="p-1 hover:bg-slate-100 rounded" title="H2"><Heading2 className="w-3.5 h-3.5" /></button>
-                                    <button type="button" onClick={() => insertText('ru', '[текст](ссылка)', '')} className="p-1 hover:bg-slate-100 rounded" title="Link"><LinkIcon className="w-3.5 h-3.5" /></button>
+                                <div className="flex bg-slate-100 p-1 rounded-lg gap-1 border border-slate-200 shadow-sm">
+                                    <button type="button" onClick={() => insertText('ru', '**', '**')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Жирный - Bold">
+                                        <Bold className="w-5 h-5" />
+                                    </button>
+                                    <button type="button" onClick={() => insertText('ru', '_', '_')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Курсив - Italic">
+                                        <Italic className="w-5 h-5" />
+                                    </button>
+                                    <div className="w-[1px] bg-slate-300 mx-1" />
+                                    <button type="button" onClick={() => insertText('ru', '# ', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Заголовок 1 - H1">
+                                        <Heading1 className="w-5 h-5" />
+                                    </button>
+                                    <button type="button" onClick={() => insertText('ru', '## ', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Заголовок 2 - H2">
+                                        <Heading2 className="w-5 h-5" />
+                                    </button>
+                                    <div className="w-[1px] bg-slate-300 mx-1" />
+                                    <button type="button" onClick={() => insertText('ru', '- ', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Список - List">
+                                        <List className="w-5 h-5" />
+                                    </button>
+                                    <button type="button" onClick={() => insertText('ru', '\n---\n', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Разделитель - HR">
+                                        <Minus className="w-5 h-5" />
+                                    </button>
+                                    <button type="button" onClick={() => insertText('ru', '[текст](ссылка)', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Ссылка - Link">
+                                        <LinkIcon className="w-5 h-5" />
+                                    </button>
                                 </div>
                             </label>
                             <textarea
@@ -264,12 +282,30 @@ export default function NewArticlePage() {
                         <div>
                             <label className="block text-sm font-bold text-slate-700 mb-2 flex justify-between">
                                 Conținut (RO)
-                                <div className="flex gap-1">
-                                    <button type="button" onClick={() => insertText('ro', '**', '**')} className="p-1 hover:bg-slate-100 rounded" title="Bold"><Bold className="w-3.5 h-3.5" /></button>
-                                    <button type="button" onClick={() => insertText('ro', '_', '_')} className="p-1 hover:bg-slate-100 rounded" title="Italic"><Italic className="w-3.5 h-3.5" /></button>
-                                    <button type="button" onClick={() => insertText('ro', '# ', '')} className="p-1 hover:bg-slate-100 rounded" title="H1"><Heading1 className="w-3.5 h-3.5" /></button>
-                                    <button type="button" onClick={() => insertText('ro', '## ', '')} className="p-1 hover:bg-slate-100 rounded" title="H2"><Heading2 className="w-3.5 h-3.5" /></button>
-                                    <button type="button" onClick={() => insertText('ro', '[text](link)', '')} className="p-1 hover:bg-slate-100 rounded" title="Link"><LinkIcon className="w-3.5 h-3.5" /></button>
+                                <div className="flex bg-slate-100 p-1 rounded-lg gap-1 border border-slate-200 shadow-sm">
+                                    <button type="button" onClick={() => insertText('ro', '**', '**')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Bold">
+                                        <Bold className="w-5 h-5" />
+                                    </button>
+                                    <button type="button" onClick={() => insertText('ro', '_', '_')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Italic">
+                                        <Italic className="w-5 h-5" />
+                                    </button>
+                                    <div className="w-[1px] bg-slate-300 mx-1" />
+                                    <button type="button" onClick={() => insertText('ro', '# ', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="H1">
+                                        <Heading1 className="w-5 h-5" />
+                                    </button>
+                                    <button type="button" onClick={() => insertText('ro', '## ', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="H2">
+                                        <Heading2 className="w-5 h-5" />
+                                    </button>
+                                    <div className="w-[1px] bg-slate-300 mx-1" />
+                                    <button type="button" onClick={() => insertText('ro', '- ', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="List">
+                                        <List className="w-5 h-5" />
+                                    </button>
+                                    <button type="button" onClick={() => insertText('ro', '\n---\n', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="HR">
+                                        <Minus className="w-5 h-5" />
+                                    </button>
+                                    <button type="button" onClick={() => insertText('ro', '[text](link)', '')} className="p-1.5 hover:bg-white hover:text-accent-cyan rounded-md transition-all" title="Link">
+                                        <LinkIcon className="w-5 h-5" />
+                                    </button>
                                 </div>
                             </label>
                             <textarea
