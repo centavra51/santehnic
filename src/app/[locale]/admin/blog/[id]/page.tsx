@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Save, ArrowLeft, Loader2, Upload } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Upload, Link as LinkIcon, Image as ImageIcon, Bold, Italic, List, Heading1, Heading2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EditArticlePage({ params }: { params: { id: string } }) {
@@ -23,10 +23,36 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
         content_ru: '',
         content_ro: '',
         image_url: '',
-        is_published: false
+        is_published: false,
+        seo_title_ru: '',
+        seo_title_ro: '',
+        seo_description_ru: '',
+        seo_description_ro: ''
     });
 
     const [uploading, setUploading] = useState(false);
+
+    const insertText = (lang: 'ru' | 'ro', before: string, after: string) => {
+        const textarea = document.getElementById(`content_${lang}`) as HTMLTextAreaElement;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const text = textarea.value;
+        const selected = text.substring(start, end);
+        const newText = text.substring(0, start) + before + selected + after + text.substring(end);
+
+        setFormData(prev => ({
+            ...prev,
+            [`content_${lang}`]: newText
+        }));
+
+        // Reset cursor after state update
+        setTimeout(() => {
+            textarea.focus();
+            textarea.setSelectionRange(start + before.length, end + before.length);
+        }, 0);
+    };
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -72,7 +98,11 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
                     content_ru: data.content_ru || '',
                     content_ro: data.content_ro || '',
                     image_url: data.image_url || '',
-                    is_published: data.is_published || false
+                    is_published: data.is_published || false,
+                    seo_title_ru: data.seo_title_ru || '',
+                    seo_title_ro: data.seo_title_ro || '',
+                    seo_description_ru: data.seo_description_ru || '',
+                    seo_description_ro: data.seo_description_ro || ''
                 });
             } else if (error) {
                 alert('Не удалось загрузить статью: ' + error.message);
@@ -98,6 +128,10 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
             content_ro: formData.content_ro,
             image_url: formData.image_url,
             is_published: formData.is_published,
+            seo_title_ru: formData.seo_title_ru,
+            seo_title_ro: formData.seo_title_ro,
+            seo_description_ru: formData.seo_description_ru,
+            seo_description_ro: formData.seo_description_ro,
             updated_at: new Date().toISOString()
         }).eq('id', articleId);
 
@@ -196,15 +230,45 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
                         <div>
                             <label className="block text-sm font-bold text-slate-700 mb-2 flex justify-between">
                                 Контент (RU)
-                                <span className="text-[10px] text-slate-400 font-normal mt-1">Поддерживает HTML/Markdown</span>
+                                <div className="flex gap-1">
+                                    <button type="button" onClick={() => insertText('ru', '**', '**')} className="p-1 hover:bg-slate-100 rounded" title="Bold"><Bold className="w-3.5 h-3.5" /></button>
+                                    <button type="button" onClick={() => insertText('ru', '_', '_')} className="p-1 hover:bg-slate-100 rounded" title="Italic"><Italic className="w-3.5 h-3.5" /></button>
+                                    <button type="button" onClick={() => insertText('ru', '# ', '')} className="p-1 hover:bg-slate-100 rounded" title="H1"><Heading1 className="w-3.5 h-3.5" /></button>
+                                    <button type="button" onClick={() => insertText('ru', '## ', '')} className="p-1 hover:bg-slate-100 rounded" title="H2"><Heading2 className="w-3.5 h-3.5" /></button>
+                                    <button type="button" onClick={() => insertText('ru', '[текст](ссылка)', '')} className="p-1 hover:bg-slate-100 rounded" title="Link"><LinkIcon className="w-3.5 h-3.5" /></button>
+                                </div>
                             </label>
                             <textarea
+                                id="content_ru"
                                 required
                                 rows={12}
                                 value={formData.content_ru}
                                 onChange={(e) => setFormData({ ...formData, content_ru: e.target.value })}
                                 className="w-full p-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan font-mono text-sm leading-relaxed"
                             />
+                        </div>
+                        <div className="pt-4 border-t border-slate-100 space-y-4">
+                            <label className="block text-xs font-bold text-slate-400 uppercase">SEO Настройки (RU)</label>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">Meta Title (RU)</label>
+                                <input
+                                    type="text"
+                                    value={formData.seo_title_ru}
+                                    onChange={(e) => setFormData({ ...formData, seo_title_ru: e.target.value })}
+                                    className="w-full p-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                                    placeholder="Заголовок для поисковиков"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">Meta Description (RU)</label>
+                                <textarea
+                                    rows={2}
+                                    value={formData.seo_description_ru}
+                                    onChange={(e) => setFormData({ ...formData, seo_description_ru: e.target.value })}
+                                    className="w-full p-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                                    placeholder="Описание для поисковиков"
+                                />
+                            </div>
                         </div>
                     </div>
 
@@ -238,15 +302,45 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
                         <div>
                             <label className="block text-sm font-bold text-slate-700 mb-2 flex justify-between">
                                 Conținut (RO)
-                                <span className="text-[10px] text-slate-400 font-normal mt-1">Acceptă HTML/Markdown</span>
+                                <div className="flex gap-1">
+                                    <button type="button" onClick={() => insertText('ro', '**', '**')} className="p-1 hover:bg-slate-100 rounded" title="Bold"><Bold className="w-3.5 h-3.5" /></button>
+                                    <button type="button" onClick={() => insertText('ro', '_', '_')} className="p-1 hover:bg-slate-100 rounded" title="Italic"><Italic className="w-3.5 h-3.5" /></button>
+                                    <button type="button" onClick={() => insertText('ro', '# ', '')} className="p-1 hover:bg-slate-100 rounded" title="H1"><Heading1 className="w-3.5 h-3.5" /></button>
+                                    <button type="button" onClick={() => insertText('ro', '## ', '')} className="p-1 hover:bg-slate-100 rounded" title="H2"><Heading2 className="w-3.5 h-3.5" /></button>
+                                    <button type="button" onClick={() => insertText('ro', '[text](link)', '')} className="p-1 hover:bg-slate-100 rounded" title="Link"><LinkIcon className="w-3.5 h-3.5" /></button>
+                                </div>
                             </label>
                             <textarea
+                                id="content_ro"
                                 required
                                 rows={12}
                                 value={formData.content_ro}
                                 onChange={(e) => setFormData({ ...formData, content_ro: e.target.value })}
                                 className="w-full p-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan font-mono text-sm leading-relaxed"
                             />
+                        </div>
+                        <div className="pt-4 border-t border-slate-100 space-y-4">
+                            <label className="block text-xs font-bold text-slate-400 uppercase">Setări SEO (RO)</label>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">Meta Title (RO)</label>
+                                <input
+                                    type="text"
+                                    value={formData.seo_title_ro}
+                                    onChange={(e) => setFormData({ ...formData, seo_title_ro: e.target.value })}
+                                    className="w-full p-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                                    placeholder="Titlu pentru motoarele de căutare"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">Meta Description (RO)</label>
+                                <textarea
+                                    rows={2}
+                                    value={formData.seo_description_ro}
+                                    onChange={(e) => setFormData({ ...formData, seo_description_ro: e.target.value })}
+                                    className="w-full p-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                                    placeholder="Descriere pentru motoarele de căutare"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

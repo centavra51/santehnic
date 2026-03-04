@@ -177,7 +177,7 @@ export function QuizCalculator() {
                                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                                     <h3 className="text-2xl font-bold text-primary-main mb-6">{t('step2_title')}</h3>
 
-                                    {data.serviceType === 'pipe_routing' && (
+                                    {(data.serviceType === 'pipe_routing' || data.serviceType === 'heating_install') && (
                                         <div className="mb-8">
                                             <label className="block text-sm font-bold text-primary-main mb-2">{t('meters_title')}</label>
                                             <input

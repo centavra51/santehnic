@@ -2,7 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Loader2, ClipboardList, Clock, MapPin, User, Info } from 'lucide-react';
+import {
+    Loader2,
+    ClipboardList,
+    Clock,
+    MapPin,
+    User,
+    Info,
+    Database,
+    RefreshCw,
+    CheckCircle2,
+    AlertCircle,
+    Search,
+    Calendar,
+    Phone,
+    Download
+} from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 type Lead = {
@@ -20,6 +35,8 @@ type Lead = {
 export default function AdminLeadsPage() {
     const [leads, setLeads] = useState<Lead[]>([]);
     const [loading, setLoading] = useState(true);
+    const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
+    const [testing, setTesting] = useState(false);
     const t = useTranslations('Admin.leads');
     const locale = useLocale();
 
@@ -54,6 +71,35 @@ export default function AdminLeadsPage() {
         }
     };
 
+    const runTest = async () => {
+        setTesting(true);
+        setTestResult(null);
+        const supabase = createClient();
+
+        try {
+            // 1. Try to fetch
+            const { data, error: fetchError } = await supabase.from('leads').select('count', { count: 'exact' }).limit(1);
+            if (fetchError) throw new Error(`Fetch error: ${fetchError.message}`);
+
+            // 2. Try a dummy insert
+            const { error: insertError } = await supabase.from('leads').insert([{
+                name: 'TEST_CONNECTION',
+                phone: '000000000',
+                address: 'TEST',
+                status: 'new'
+            }]);
+
+            if (insertError) throw new Error(`Insert error: ${insertError.message}`);
+
+            setTestResult({ success: true, message: 'Соединение установлено! RLS разрешает чтение и запись.' });
+            fetchLeads(); // Refresh list to see if TEST lead appeared
+        } catch (err: any) {
+            setTestResult({ success: false, message: err.message });
+        } finally {
+            setTesting(false);
+        }
+    };
+
     return (
         <div>
             <div className="flex items-center justify-between mb-8">
@@ -61,7 +107,32 @@ export default function AdminLeadsPage() {
                     <h1 className="text-3xl font-heading font-extrabold text-primary-main">{t('title')}</h1>
                     <p className="text-muted-foreground mt-2">{t('subtitle')}</p>
                 </div>
+                <div className="flex flex-wrap items-center gap-3">
+                    <button
+                        onClick={runTest}
+                        disabled={testing}
+                        className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50"
+                    >
+                        {testing ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Database className="w-4 h-4" />}
+                        Проверить БД
+                    </button>
+                    <button
+                        onClick={fetchLeads}
+                        className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-colors"
+                    >
+                        <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                        {t('sidebar.leads')}
+                    </button>
+                </div>
             </div>
+
+            {testResult && (
+                <div className={`mb-6 p-4 rounded-xl border flex items-center gap-3 ${testResult.success ? 'bg-green-50 border-green-200 text-green-700' : 'bg-red-50 border-red-200 text-red-700'}`}>
+                    {testResult.success ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+                    <span className="text-sm font-medium">{testResult.message}</span>
+                    <button onClick={() => setTestResult(null)} className="ml-auto text-xs underline">Закрыть</button>
+                </div>
+            )}
 
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <div className="overflow-x-auto">
@@ -172,6 +243,6 @@ export default function AdminLeadsPage() {
                     </table>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

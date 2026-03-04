@@ -28,25 +28,36 @@ export async function POST(req: Request) {
             ? SERVICE_NAMES[serviceKey].ru
             : serviceKey || null;
 
-        // ──────────────────────────────────────
-        // 1. Save to Supabase
-        // ──────────────────────────────────────
+        // 1. Save to Supabase (Leads table)
+        console.log('--- SUPABASE INSERTION ATTEMPT ---');
+        console.log('Lead Name:', name);
+
         const supabase = await createClient();
-        const { error: dbError } = await supabase.from('leads').insert({
-            name,
-            phone,
-            address: address || null,
-            service_type: serviceName,
-            problem_description: description || null,
-            quiz_data: quiz_data || {},
-            status: 'new'
-        });
+        const { data: supabaseData, error: dbError, status: dbStatus } = await supabase
+            .from('leads')
+            .insert([{
+                name,
+                phone,
+                address: address || null,
+                service_type: serviceName,
+                problem_description: description || null,
+                quiz_data: quiz_data || {},
+                status: 'new'
+            }])
+            .select();
 
         if (dbError) {
-            console.error('Supabase lead insert error details:', JSON.stringify(dbError, null, 2));
+            console.error('CRITICAL: Supabase Lead Insertion Failed!');
+            console.error('Error Code:', dbError.code);
+            console.error('Error Message:', dbError.message);
+            console.error('Error Details:', dbError.details);
+            console.error('HTTP Status:', dbStatus);
         } else {
-            console.log('Lead successfully inserted into DB');
+            console.log('SUCCESS: Lead saved to Supabase.');
+            console.log('Row inserted:', supabaseData);
+            console.log('HTTP Status:', dbStatus);
         }
+        console.log('--- END SUPABASE INSERTION ---');
 
         // ──────────────────────────────────────
         // 2. Send to Telegram
