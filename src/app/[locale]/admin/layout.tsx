@@ -26,7 +26,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             }
         };
         checkSession();
-    }, [router]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleLogout = async () => {
         const supabase = createClient();
