@@ -13,7 +13,7 @@ export function Hero({ backgroundImage }: HeroProps) {
     const t = useTranslations('Hero');
 
     return (
-        <section className="relative w-full min-h-[90vh] flex items-center bg-background-light overflow-hidden">
+        <section className="relative w-full min-h-[90vh] lg:min-h-screen flex items-center bg-background-light overflow-hidden pt-20 lg:pt-0">
             {/* Background Decor */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-accent-cyan/10 blur-3xl rounded-bl-[100px] -z-10" />
 
@@ -32,7 +32,7 @@ export function Hero({ backgroundImage }: HeroProps) {
                         <span>{t('badge')}</span>
                     </div>
 
-                    <h1 className="text-5xl md:text-6xl font-heading font-extrabold leading-tight text-primary-main">
+                    <h1 className="text-4xl xs:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold leading-[1.1] text-primary-main tracking-tight">
                         {t('title_1')} <br />
                         <span className="text-accent-cyan">{t('title_highlight')}</span> <br />
                         {t('title_2')}
@@ -54,7 +54,7 @@ export function Hero({ backgroundImage }: HeroProps) {
                         </a>
                     </div>
 
-                    <div className="flex items-center space-x-4 pt-4 text-sm text-muted-foreground font-medium">
+                    <div className="flex flex-wrap items-center gap-4 pt-4 text-sm text-muted-foreground font-medium">
                         <div className="flex items-center space-x-1">
                             <span className="text-accent-cyan font-bold">✓</span>
                             <span>{t('no_prepay')}</span>
@@ -70,24 +70,24 @@ export function Hero({ backgroundImage }: HeroProps) {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative hidden lg:block h-[600px] w-full"
+                    className="relative w-full h-[300px] xs:h-[400px] lg:h-[600px]"
                 >
                     <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/20 to-primary-main/5 rounded-3xl border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center">
-                        <Image src={backgroundImage || "/hero-bg.png"} alt={t('img_alt')} fill style={{ objectFit: 'cover' }} priority />
+                        <Image src={backgroundImage || "/hero-bg.png"} alt={t('img_alt')} fill style={{ objectFit: 'cover' }} priority className="transform scale-105" />
                     </div>
 
-                    {/* Floating badge */}
+                    {/* Floating badge - hidden on very small mobiles for clarity */}
                     <motion.div
                         animate={{ y: [0, -10, 0] }}
                         transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                        className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl flex items-center space-x-4 border border-slate-100"
+                        className="absolute -bottom-4 lg:-bottom-6 -left-4 lg:-left-6 bg-white p-4 lg:p-6 rounded-2xl shadow-xl flex items-center space-x-4 border border-slate-100 scale-90 lg:scale-100 origin-bottom-left"
                     >
-                        <div className="w-14 h-14 bg-success-green/10 rounded-full flex items-center justify-center">
-                            <span className="text-2xl font-bold text-success-green">{t('warranty_years')}</span>
+                        <div className="w-10 h-10 lg:w-14 lg:h-14 bg-success-green/10 rounded-full flex items-center justify-center shrink-0">
+                            <span className="text-lg lg:text-2xl font-bold text-success-green">{t('warranty_years')}</span>
                         </div>
                         <div>
-                            <p className="font-bold text-primary-main leading-tight">{t('warranty_label')}</p>
-                            <p className="text-sm text-muted-foreground">{t('warranty_desc')}</p>
+                            <p className="font-bold text-primary-main leading-tight text-sm lg:text-base">{t('warranty_label')}</p>
+                            <p className="text-xs lg:text-sm text-muted-foreground">{t('warranty_desc')}</p>
                         </div>
                     </motion.div>
                 </motion.div>

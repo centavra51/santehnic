@@ -35,8 +35,8 @@ export function PricesTable() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-primary-main text-white">
-                                <th className="py-5 px-6 font-heading font-semibold text-lg">{t('col1')}</th>
-                                <th className="py-5 px-6 font-heading font-semibold text-lg w-1/3">{t('col2')}</th>
+                                <th className="py-4 px-4 sm:py-5 sm:px-6 font-heading font-semibold text-base sm:text-lg">{t('col1')}</th>
+                                <th className="py-4 px-4 sm:py-5 sm:px-6 font-heading font-semibold text-base sm:text-lg w-1/3 sm:w-1/3">{t('col2')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,8 +45,8 @@ export function PricesTable() {
                                     key={idx}
                                     className="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors"
                                 >
-                                    <td className="py-4 px-6 text-primary-main font-medium">{item.name}</td>
-                                    <td className="py-4 px-6 text-accent-cyan font-bold">{item.price}</td>
+                                    <td className="py-3 px-4 sm:py-4 sm:px-6 text-primary-main font-medium text-sm sm:text-base">{item.name}</td>
+                                    <td className="py-3 px-4 sm:py-4 sm:px-6 text-accent-cyan font-bold text-sm sm:text-base whitespace-nowrap">{item.price}</td>
                                 </tr>
                             ))}
                         </tbody>

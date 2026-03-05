@@ -50,13 +50,13 @@ export function WhyChooseUs({ backgroundImage }: WhyChooseUsProps) {
                         <Image src={backgroundImage || "/why-choose-us.png"} alt={t('title_1')} fill style={{ objectFit: 'cover' }} />
                     </div>
 
-                    <div className="absolute -left-12 bottom-12 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4">
-                        <div className="w-12 h-12 bg-accent-cyan/10 rounded-full flex items-center justify-center">
-                            <span className="text-accent-cyan font-extrabold text-xl">{t('exp_value')}</span>
+                    <div className="absolute -left-4 lg:-left-12 bottom-4 lg:bottom-12 bg-white p-4 lg:p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4 scale-90 lg:scale-100 origin-bottom-left max-w-[calc(100%-2rem)]">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-accent-cyan/10 rounded-full flex items-center justify-center shrink-0">
+                            <span className="text-accent-cyan font-extrabold text-lg lg:text-xl">{t('exp_value')}</span>
                         </div>
                         <div>
-                            <p className="font-bold text-primary-main">{t('exp_title')}</p>
-                            <p className="text-sm text-muted-foreground">{t('exp_desc')}</p>
+                            <p className="font-bold text-primary-main text-sm lg:text-base">{t('exp_title')}</p>
+                            <p className="text-xs lg:text-sm text-muted-foreground">{t('exp_desc')}</p>
                         </div>
                     </div>
                 </div>
