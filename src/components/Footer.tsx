@@ -21,7 +21,7 @@ export function Footer() {
                             <li><a href="/#services" className="hover:text-accent-cyan transition-colors">Наши услуги</a></li>
                             <li><a href="/#calculator" className="hover:text-accent-cyan transition-colors">Калькулятор цен</a></li>
                             <li><Link href="/articles" className="hover:text-accent-cyan transition-colors">Полезные статьи</Link></li>
-                            <li><Link href="/faq" className="hover:text-accent-cyan transition-colors">Вопросы и ответы</Link></li>
+                            <li><a href="/#faq" className="hover:text-accent-cyan transition-colors">Вопросы и ответы</a></li>
                         </ul>
                     </div>
 

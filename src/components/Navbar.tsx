@@ -31,9 +31,9 @@ export function Navbar() {
                     <a href="/#reviews" className="transition-colors hover:text-accent-cyan">
                         {t('reviews')}
                     </a>
-                    <Link href="/faq" className="transition-colors hover:text-accent-cyan">
+                    <a href="/#faq" className="transition-colors hover:text-accent-cyan">
                         {t('faq')}
-                    </Link>
+                    </a>
                     <Link href="/articles" className="transition-colors hover:text-accent-cyan">
                         {t('blog')}
                     </Link>
@@ -63,9 +63,9 @@ export function Navbar() {
                     <a href="/#reviews" className="transition-colors hover:text-accent-cyan" onClick={() => setIsMenuOpen(false)}>
                         {t('reviews')}
                     </a>
-                    <Link href="/faq" className="transition-colors hover:text-accent-cyan" onClick={() => setIsMenuOpen(false)}>
+                    <a href="/#faq" className="transition-colors hover:text-accent-cyan" onClick={() => setIsMenuOpen(false)}>
                         {t('faq')}
-                    </Link>
+                    </a>
                     <Link href="/articles" className="transition-colors hover:text-accent-cyan" onClick={() => setIsMenuOpen(false)}>
                         {t('blog')}
                     </Link>
