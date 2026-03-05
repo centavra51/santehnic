@@ -32,13 +32,13 @@ export function Hero({ backgroundImage }: HeroProps) {
                         <span>{t('badge')}</span>
                     </div>
 
-                    <h1 className="text-4xl xs:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold leading-[1.1] text-primary-main tracking-tight">
+                    <h1 className="font-heading font-extrabold leading-[1.1] text-primary-main tracking-tight" style={{ fontSize: 'clamp(1.75rem, 8vw, 4rem)' }}>
                         {t('title_1')} <br />
                         <span className="text-accent-cyan">{t('title_highlight')}</span> <br />
                         {t('title_2')}
                     </h1>
 
-                    <p className="text-lg md:text-xl text-muted-foreground max-w-lg">
+                    <p className="text-sm sm:text-base md:text-xl text-muted-foreground max-w-lg">
                         {t('subtitle')}
                     </p>
 
@@ -70,7 +70,7 @@ export function Hero({ backgroundImage }: HeroProps) {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative w-full h-[300px] xs:h-[400px] lg:h-[600px]"
+                    className="relative w-full h-[280px] sm:h-[400px] lg:h-[600px]"
                 >
                     <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/20 to-primary-main/5 rounded-3xl border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center">
                         <Image src={backgroundImage || "/hero-bg.png"} alt={t('img_alt')} fill style={{ objectFit: 'cover' }} priority className="transform scale-105" />
