@@ -103,12 +103,6 @@
   @apply text-3xl md:text-4xl font-extrabold mb-6 mt-16 text-primary-main relative flex items-center gap-3;
 }
 
-/* Specific styling for steps in instructions */
-.article-content h2:has(+ p):contains("Шаг"),
-.article-content h2:has(+ p):contains("Step") {
-  @apply bg-slate-50 p-4 rounded-2xl border-l-4 border-accent-cyan;
-}
-
 .article-content h3 {
   @apply text-2xl md:text-3xl font-extrabold mb-4 mt-10 text-primary-main;
 }
@@ -144,9 +138,4 @@
 
 .article-content hr {
   @apply my-16 border-t border-slate-100;
-}
-
-/* Custom Alert/Tip blocks via blockquote notation */
-.article-content blockquote:has(strong:contains("!")) {
-  @apply bg-blue-50 border-blue-400 text-blue-800 not-italic;
 }
