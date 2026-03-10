@@ -60,13 +60,14 @@ export default async function ArticlesPage({ params }: { params: Promise<{ local
                 </div>
                 <Link
                   href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
-                  className="mb-3 block"
+                  className="mb-3 block rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-cyan/40"
                 >
                   <h2 className="text-2xl font-heading font-extrabold text-primary-main transition-colors hover:text-accent-cyan">
                     {title}
                   </h2>
+                  <p className="mt-3 text-muted-foreground">{excerpt}</p>
                 </Link>
-                <p className="mb-5 flex-grow text-muted-foreground">{excerpt}</p>
+                <div className="mb-5 flex-grow" />
                 <Link
                   href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
                   className="font-bold text-accent-cyan hover:underline"

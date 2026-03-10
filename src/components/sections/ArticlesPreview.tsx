@@ -77,25 +77,24 @@ export function ArticlesPreview({
                 </div>
 
                 <div className="p-7">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                    <CalendarDays className="h-3.5 w-3.5" />
-                    {new Date(article.created_at).toLocaleDateString(dateLocale, {
-                      day: '2-digit',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </div>
-
                   <Link
                     href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
-                    className="mt-5 block"
+                    className="block rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-cyan/40"
                   >
-                    <h3 className="text-2xl font-heading font-extrabold leading-snug text-primary-main transition-colors group-hover:text-accent-cyan hover:text-accent-cyan">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      <CalendarDays className="h-3.5 w-3.5" />
+                      {new Date(article.created_at).toLocaleDateString(dateLocale, {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </div>
+
+                    <h3 className="mt-5 text-2xl font-heading font-extrabold leading-snug text-primary-main transition-colors group-hover:text-accent-cyan hover:text-accent-cyan">
                       {title}
                     </h3>
+                    <p className="mt-4 text-muted-foreground leading-relaxed">{excerpt}</p>
                   </Link>
-
-                  <p className="mt-4 text-muted-foreground leading-relaxed">{excerpt}</p>
 
                   <Link
                     href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
