@@ -5,18 +5,18 @@ import type { ArticleRecord } from '@/lib/articles';
 
 const copy = {
   ru: {
-    eyebrow: 'Полезные материалы',
-    title: 'Статьи и советы сантехника',
+    eyebrow: 'Полезные статьи',
+    title: 'Полезные советы по сантехнике',
     subtitle:
-      'SEO-оптимизированные материалы о ремонте, замене труб, подключении техники и срочных сантехнических работах в Кишиневе.',
+      'Простые и понятные статьи о поломках, ремонте, замене труб и подключении техники в квартире или доме.',
     readMore: 'Читать статью',
     allArticles: 'Все статьи',
   },
   ro: {
-    eyebrow: 'Materiale utile',
-    title: 'Articole și sfaturi de la instalator',
+    eyebrow: 'Articole utile',
+    title: 'Sfaturi simple de la instalator',
     subtitle:
-      'Materiale optimizate SEO despre reparații, schimbarea țevilor, conectarea tehnicii și intervențiile sanitare urgente în Chișinău.',
+      'Articole clare despre defecțiuni, reparații, schimbarea țevilor și conectarea tehnicii în apartament sau casă.',
     readMore: 'Citește articolul',
     allArticles: 'Toate articolele',
   },

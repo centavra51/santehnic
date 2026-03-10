@@ -1,12 +1,31 @@
 import Image from 'next/image';
 import { ArrowLeft } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
 import { getPublishedArticles } from '@/lib/articles';
 
+const copy = {
+  ru: {
+    back: 'На главную',
+    title: 'Полезные статьи',
+    subtitle:
+      'Понятные советы о сантехнике, ремонте, замене труб и подключении техники без сложных терминов.',
+    readMore: 'Открыть статью',
+    empty: 'Статей пока нет.',
+  },
+  ro: {
+    back: 'Înapoi pe pagina principală',
+    title: 'Articole utile',
+    subtitle:
+      'Sfaturi clare despre instalații sanitare, reparații, schimbarea țevilor și conectarea tehnicii, fără termeni complicați.',
+    readMore: 'Deschide articolul',
+    empty: 'Încă nu există articole.',
+  },
+} as const;
+
 export default async function ArticlesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Articles' });
+  const safeLocale = locale === 'ro' ? 'ro' : 'ru';
+  const t = copy[safeLocale];
   const articles = await getPublishedArticles();
 
   return (
@@ -17,19 +36,19 @@ export default async function ArticlesPage({ params }: { params: Promise<{ local
           className="mb-6 inline-flex items-center text-accent-cyan font-bold hover:underline"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {t('back')}
+          {t.back}
         </Link>
         <h1 className="text-3xl font-heading font-extrabold text-primary-main md:text-5xl">
-          {t('title')}
+          {t.title}
         </h1>
-        <p className="mt-4 text-lg text-muted-foreground">{t('subtitle')}</p>
+        <p className="mt-4 text-lg text-muted-foreground">{t.subtitle}</p>
       </div>
 
       {articles.length > 0 ? (
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {articles.map((article) => {
-            const title = locale === 'ru' ? article.title_ru : article.title_ro;
-            const excerpt = locale === 'ru' ? article.excerpt_ru : article.excerpt_ro;
+            const title = safeLocale === 'ru' ? article.title_ru : article.title_ro;
+            const excerpt = safeLocale === 'ru' ? article.excerpt_ru : article.excerpt_ro;
 
             return (
               <article
@@ -47,7 +66,7 @@ export default async function ArticlesPage({ params }: { params: Promise<{ local
                   href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
                   className="font-bold text-accent-cyan hover:underline"
                 >
-                  {t('read_more')} &rarr;
+                  {t.readMore} &rarr;
                 </Link>
               </article>
             );
@@ -55,7 +74,7 @@ export default async function ArticlesPage({ params }: { params: Promise<{ local
         </div>
       ) : (
         <div className="rounded-2xl border border-slate-100 bg-slate-50 p-12 text-center text-slate-500">
-          {t('no_articles')}
+          {t.empty}
         </div>
       )}
     </div>
