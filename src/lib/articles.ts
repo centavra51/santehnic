@@ -35,7 +35,7 @@ const LOCAL_ARTICLES: ArticleRecord[] = [
       'Узнайте, как устранить засор в раковине без повреждения труб. Советы сантехника, профилактика и срочный выезд по Кишиневу.',
     seo_description_ro:
       'Aflați cum puteți desfunda chiuveta fără a deteriora țevile. Sfaturi de la instalator, prevenție și intervenție rapidă în Chișinău.',
-    image_url: '/articles/clog-cleaning.svg',
+    image_url: '/articles/clog-cleaning.png',
     is_published: true,
     created_at: '2026-03-01T09:00:00.000Z',
     updated_at: '2026-03-01T09:00:00.000Z',
@@ -105,7 +105,7 @@ const LOCAL_ARTICLES: ArticleRecord[] = [
       'Течь смесителя увеличивает расход воды и портит отделку. Узнайте, когда возможен ремонт, а когда нужна замена смесителя с гарантией.',
     seo_description_ro:
       'Scurgerile la baterie cresc consumul de apă și afectează finisajele. Aflați când se repară și când se schimbă bateria cu garanție.',
-    image_url: '/articles/faucet-repair.svg',
+    image_url: '/articles/faucet-repair.png',
     is_published: true,
     created_at: '2026-03-02T09:00:00.000Z',
     updated_at: '2026-03-02T09:00:00.000Z',
@@ -163,7 +163,7 @@ const LOCAL_ARTICLES: ArticleRecord[] = [
       'Старые трубы повышают риск протечек и аварий. Узнайте, как проходит замена труб и стояков в квартире в Кишиневе и что важно предусмотреть.',
     seo_description_ro:
       'Țevile vechi cresc riscul de scurgeri și avarii. Aflați cum se desfășoară înlocuirea țevilor și a coloanelor în apartamentele din Chișinău.',
-    image_url: '/articles/pipe-replacement.svg',
+    image_url: '/articles/pipe-replacement.png',
     is_published: true,
     created_at: '2026-03-03T09:00:00.000Z',
     updated_at: '2026-03-03T09:00:00.000Z',
@@ -231,7 +231,7 @@ const LOCAL_ARTICLES: ArticleRecord[] = [
       'Подбираем бойлер для квартиры: объем, место установки, безопасность и профессиональное подключение в Кишиневе.',
     seo_description_ro:
       'Alegeți corect boilerul pentru apartament: volum, amplasare, siguranță și conectare profesională în Chișinău.',
-    image_url: '/articles/boiler-installation.svg',
+    image_url: '/articles/boiler-installation.png',
     is_published: true,
     created_at: '2026-03-04T09:00:00.000Z',
     updated_at: '2026-03-04T09:00:00.000Z',
@@ -287,7 +287,7 @@ const LOCAL_ARTICLES: ArticleRecord[] = [
       'Холодная батарея зимой требует быстрой диагностики. Основные причины, безопасные проверки и ремонт отопления в Кишиневе.',
     seo_description_ro:
       'Un calorifer rece iarna necesită diagnostic rapid. Cauze principale, verificări sigure și reparații de încălzire în Chișinău.',
-    image_url: '/articles/radiator-repair.svg',
+    image_url: '/articles/radiator-repair.png',
     is_published: true,
     created_at: '2026-03-05T09:00:00.000Z',
     updated_at: '2026-03-05T09:00:00.000Z',
@@ -341,7 +341,7 @@ const LOCAL_ARTICLES: ArticleRecord[] = [
       'Профессиональное подключение стиральной машины в квартире: вода, слив, защита от протечек и проверка после монтажа.',
     seo_description_ro:
       'Conectarea profesională a mașinii de spălat în apartament: apă, scurgere, protecție împotriva scurgerilor și testare după montaj.',
-    image_url: '/articles/washing-machine.svg',
+    image_url: '/articles/washing-machine.png',
     is_published: true,
     created_at: '2026-03-06T09:00:00.000Z',
     updated_at: '2026-03-06T09:00:00.000Z',
