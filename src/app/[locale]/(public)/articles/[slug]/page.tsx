@@ -1,93 +1,79 @@
-import { createClient } from '@/lib/supabase/server';
-import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import { Link } from '@/i18n/routing';
+import { getArticleBySlug } from '@/lib/articles';
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }) {
-    const p = await params;
-    const { slug, locale } = p;
-    const supabase = await createClient();
-    const { data: article } = await supabase
-        .from('articles')
-        .select('*')
-        .eq('slug', slug)
-        .eq('is_published', true)
-        .single();
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: string }>;
+}) {
+  const { slug, locale } = await params;
+  const article = await getArticleBySlug(slug);
 
-    if (!article) return { title: 'Article Not Found' };
+  if (!article) {
+    return { title: 'Article Not Found' };
+  }
 
-    const title = locale === 'ru' ? article.seo_title_ru || article.title_ru : article.seo_title_ro || article.title_ro;
-    const description = locale === 'ru' ? article.seo_description_ru || article.excerpt_ru : article.seo_description_ro || article.excerpt_ro;
+  const title =
+    locale === 'ru' ? article.seo_title_ru || article.title_ru : article.seo_title_ro || article.title_ro;
+  const description =
+    locale === 'ru'
+      ? article.seo_description_ru || article.excerpt_ru
+      : article.seo_description_ro || article.excerpt_ro;
 
-    return {
-        title: title ? `${title} | Santehnik` : 'Santehnik',
-        description: description || '',
-    };
+  return {
+    title: `${title} | Santehnik`,
+    description,
+  };
 }
 
-export default async function ArticleDetailPage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
-    const p = await params;
-    const { slug, locale } = p;
-    const supabase = await createClient();
+export default async function ArticleDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: string }>;
+}) {
+  const { slug, locale } = await params;
+  const article = await getArticleBySlug(slug);
 
-    const { data: article, error } = await supabase
-        .from('articles')
-        .select('*')
-        .eq('slug', slug)
-        .eq('is_published', true)
-        .single();
+  if (!article) {
+    notFound();
+  }
 
-    if (error || !article) {
-        notFound();
-    }
+  const title = locale === 'ru' ? article.title_ru : article.title_ro;
+  const content = locale === 'ru' ? article.content_ru : article.content_ro;
 
-    const title = locale === 'ru' ? article.title_ru : article.title_ro;
-    const content = locale === 'ru' ? article.content_ru : article.content_ro;
+  return (
+    <main className="min-h-screen bg-white">
+      <article className="mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8 md:py-32">
+        <Link
+          href="/articles"
+          className="mb-8 inline-flex items-center font-bold text-accent-cyan hover:underline"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {locale === 'ru' ? 'Назад к статьям' : 'Înapoi la articole'}
+        </Link>
 
-    if (!title || !content) {
-        notFound();
-    }
+        <header className="mb-12">
+          <div className="mb-6 flex items-center gap-4 text-sm font-medium text-slate-500">
+            <time dateTime={article.created_at}>
+              {new Date(article.created_at).toLocaleDateString(
+                locale === 'ru' ? 'ru-RU' : 'ro-RO',
+              )}
+            </time>
+          </div>
+          <h1 className="mb-6 text-4xl font-heading font-extrabold leading-tight text-primary-main md:text-5xl lg:text-6xl">
+            {title}
+          </h1>
+        </header>
 
-    return (
-        <main className="min-h-screen bg-white">
-            <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-                <Link
-                    href={`/${locale}/articles`}
-                    className="inline-flex items-center text-accent-cyan font-bold hover:underline mb-8"
-                >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    {locale === 'ru' ? 'Назад к статьям' : 'Înapoi la articole'}
-                </Link>
+        <div className="relative mb-12 h-64 w-full overflow-hidden rounded-3xl shadow-md md:h-96">
+          <Image src={article.image_url} alt={title} fill className="object-cover" priority />
+        </div>
 
-                <header className="mb-12">
-                    <div className="flex items-center gap-4 text-sm font-medium text-slate-500 mb-6">
-                        <time dateTime={article.created_at}>
-                            {new Date(article.created_at).toLocaleDateString(locale === 'ru' ? 'ru-RU' : 'ro-RO')}
-                        </time>
-                    </div>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-primary-main leading-tight mb-6">
-                        {title}
-                    </h1>
-                </header>
-
-                {article.image_url && (
-                    <div className="relative w-full h-64 md:h-96 rounded-3xl overflow-hidden mb-12 shadow-md">
-                        <Image
-                            src={article.image_url}
-                            alt={title}
-                            fill
-                            className="object-cover"
-                            priority
-                        />
-                    </div>
-                )}
-
-                <div
-                    className="article-content max-w-none"
-                    dangerouslySetInnerHTML={{ __html: content }}
-                />
-            </article>
-        </main>
-    );
+        <div className="article-content max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
+      </article>
+    </main>
+  );
 }

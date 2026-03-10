@@ -1,0 +1,20 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="40" fill="#F8FAFC"/>
+  <rect x="56" y="56" width="1088" height="688" rx="32" fill="url(#a)"/>
+  <circle cx="980" cy="170" r="105" fill="#A2EEF9" fill-opacity=".45"/>
+  <path d="M292 534C292 399 401 290 536 290H675C744 290 800 346 800 415V437H724V415C724 388 702 366 675 366H536C443 366 368 441 368 534V580H292V534Z" fill="#0A2540"/>
+  <rect x="480" y="190" width="120" height="120" rx="30" fill="#0FB7D9"/>
+  <rect x="530" y="152" width="20" height="86" rx="10" fill="#0A2540"/>
+  <rect x="430" y="240" width="220" height="20" rx="10" fill="#0A2540"/>
+  <path d="M812 440H970V492C970 561 914 617 845 617H812V440Z" fill="#EAF8FC"/>
+  <path d="M840 436V602" stroke="#0A2540" stroke-width="24" stroke-linecap="round"/>
+  <path d="M900 436V582" stroke="#0A2540" stroke-width="24" stroke-linecap="round"/>
+  <path d="M930 515C930 547 904 573 872 573C840 573 814 547 814 515C814 470 872 414 872 414C872 414 930 470 930 515Z" fill="#18C1E0"/>
+  <text x="140" y="670" fill="#0A2540" font-family="Arial, sans-serif" font-size="48" font-weight="700">Ремонт смесителя</text>
+  <defs>
+    <linearGradient id="a" x1="96" y1="110" x2="1094" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EDF9FC"/>
+      <stop offset="1" stop-color="#D9F0F7"/>
+    </linearGradient>
+  </defs>
+</svg>

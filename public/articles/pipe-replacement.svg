@@ -1,0 +1,19 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="40" fill="#F8FAFC"/>
+  <rect x="56" y="56" width="1088" height="688" rx="32" fill="url(#a)"/>
+  <circle cx="220" cy="180" r="100" fill="#A0EAF8" fill-opacity=".36"/>
+  <circle cx="1010" cy="614" r="140" fill="#3CCEE8" fill-opacity=".14"/>
+  <rect x="172" y="160" width="116" height="452" rx="36" fill="#0A2540"/>
+  <rect x="912" y="160" width="116" height="452" rx="36" fill="#0A2540"/>
+  <rect x="280" y="320" width="640" height="136" rx="44" fill="#18C1E0"/>
+  <circle cx="315" cy="388" r="34" fill="#DFF7FB"/>
+  <circle cx="885" cy="388" r="34" fill="#DFF7FB"/>
+  <path d="M468 280L590 160L732 280" stroke="#0A2540" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="140" y="670" fill="#0A2540" font-family="Arial, sans-serif" font-size="48" font-weight="700">Замена труб и стояков</text>
+  <defs>
+    <linearGradient id="a" x1="96" y1="110" x2="1094" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAFBFF"/>
+      <stop offset="1" stop-color="#E3F4FA"/>
+    </linearGradient>
+  </defs>
+</svg>

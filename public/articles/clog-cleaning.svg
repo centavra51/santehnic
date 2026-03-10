@@ -1,0 +1,22 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="40" fill="#F8FAFC"/>
+  <rect x="56" y="56" width="1088" height="688" rx="32" fill="url(#a)"/>
+  <circle cx="916" cy="190" r="120" fill="#8EE8F8" fill-opacity=".34"/>
+  <circle cx="250" cy="610" r="170" fill="#39CAE5" fill-opacity=".16"/>
+  <rect x="140" y="160" width="390" height="420" rx="42" fill="#0A2540"/>
+  <rect x="212" y="214" width="246" height="68" rx="18" fill="#0FB7D9"/>
+  <rect x="205" y="310" width="260" height="170" rx="28" fill="#123354"/>
+  <path d="M318 310V480" stroke="#B7F4FF" stroke-width="34" stroke-linecap="round"/>
+  <path d="M250 392H386" stroke="#B7F4FF" stroke-width="34" stroke-linecap="round"/>
+  <path d="M710 215C748 215 780 247 780 285V324H918C956 324 988 356 988 394V507C988 545 956 577 918 577H694C656 577 624 545 624 507V394C624 356 656 324 694 324H708V285C708 247 740 215 778 215H710Z" fill="#EAF8FC"/>
+  <path d="M708 285C708 247 740 215 778 215" stroke="#0A2540" stroke-width="24" stroke-linecap="round"/>
+  <path d="M805 326V254C805 226 828 203 856 203C884 203 907 226 907 254V326" stroke="#0A2540" stroke-width="24" stroke-linecap="round"/>
+  <path d="M700 430C744 462 810 485 914 494" stroke="#0FB7D9" stroke-width="16" stroke-linecap="round"/>
+  <text x="140" y="670" fill="#0A2540" font-family="Arial, sans-serif" font-size="48" font-weight="700">Засоры и прочистка</text>
+  <defs>
+    <linearGradient id="a" x1="96" y1="110" x2="1094" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E7FBFF"/>
+      <stop offset="1" stop-color="#D8F4FB"/>
+    </linearGradient>
+  </defs>
+</svg>
