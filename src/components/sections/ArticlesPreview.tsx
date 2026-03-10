@@ -29,8 +29,9 @@ export function ArticlesPreview({
   locale: 'ru' | 'ro';
   articles: ArticleRecord[];
 }) {
-  const t = copy[locale];
-  const dateLocale = locale === 'ru' ? 'ru-RU' : 'ro-RO';
+  const safeLocale = locale === 'ro' ? 'ro' : 'ru';
+  const t = copy[safeLocale];
+  const dateLocale = safeLocale === 'ru' ? 'ru-RU' : 'ro-RO';
 
   return (
     <section className="py-24 bg-white">
@@ -58,8 +59,8 @@ export function ArticlesPreview({
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
           {articles.map((article) => {
-            const title = locale === 'ru' ? article.title_ru : article.title_ro;
-            const excerpt = locale === 'ru' ? article.excerpt_ru : article.excerpt_ro;
+            const title = safeLocale === 'ru' ? article.title_ru : article.title_ro;
+            const excerpt = safeLocale === 'ru' ? article.excerpt_ru : article.excerpt_ro;
 
             return (
               <article
