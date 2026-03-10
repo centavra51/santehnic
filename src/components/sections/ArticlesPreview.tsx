@@ -86,14 +86,14 @@ export function ArticlesPreview({
                     })}
                   </div>
 
-                  <h3 className="mt-5 text-2xl font-heading font-extrabold leading-snug text-primary-main transition-colors group-hover:text-accent-cyan">
-                    <Link
-                      href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
-                      className="transition-colors hover:text-accent-cyan"
-                    >
+                  <Link
+                    href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
+                    className="mt-5 block"
+                  >
+                    <h3 className="text-2xl font-heading font-extrabold leading-snug text-primary-main transition-colors group-hover:text-accent-cyan hover:text-accent-cyan">
                       {title}
-                    </Link>
-                  </h3>
+                    </h3>
+                  </Link>
 
                   <p className="mt-4 text-muted-foreground leading-relaxed">{excerpt}</p>
 

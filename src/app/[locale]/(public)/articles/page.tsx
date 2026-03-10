@@ -58,14 +58,14 @@ export default async function ArticlesPage({ params }: { params: Promise<{ local
                 <div className="relative mb-5 h-52 overflow-hidden rounded-2xl bg-slate-100">
                   <Image src={article.image_url} alt={title} fill className="object-cover" />
                 </div>
-                <h2 className="mb-3 text-2xl font-heading font-extrabold text-primary-main">
-                  <Link
-                    href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
-                    className="transition-colors hover:text-accent-cyan"
-                  >
+                <Link
+                  href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
+                  className="mb-3 block"
+                >
+                  <h2 className="text-2xl font-heading font-extrabold text-primary-main transition-colors hover:text-accent-cyan">
                     {title}
-                  </Link>
-                </h2>
+                  </h2>
+                </Link>
                 <p className="mb-5 flex-grow text-muted-foreground">{excerpt}</p>
                 <Link
                   href={{ pathname: '/articles/[slug]', params: { slug: article.slug } }}
